@@ -23,6 +23,7 @@ class Settings(BaseSettings):
     jwt_algorithm: str | None = None
     access_token_expire_minutes: int | None = None
     refresh_token_expire_days: int | None = None
+    deepseek_key: str | None = None
 
     model_config = SettingsConfigDict(
         env_file=".env", env_file_encoding="utf-8", extra="ignore"

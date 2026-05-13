@@ -1,3 +1,4 @@
+import asyncio
 import json
 
 import redis.asyncio as aioredis
@@ -6,8 +7,10 @@ from app.core.base_schema import User
 from app.core.file_service import (
     check_file_content_type,
     check_file_extension,
+    check_file_sctructure,
     check_file_size,
 )
+from app.tasks.tasks import processing_chat_task
 from fastapi import HTTPException, UploadFile
 from fastapi.responses import StreamingResponse
 
@@ -28,10 +31,13 @@ class ChatService:
         await self.repo.add_message(
             chat_id=chat.id, type=MessageType.AI_TEXT, content=ai_text
         )
+
+        raw_bytes = await file.read()
         try:
-            check_file_extension(file.filename)
-            check_file_content_type(file.content_type)
-            check_file_size(file)
+            check_file_extension(filename=file.filename)
+            check_file_content_type(content_type=file.content_type)
+            check_file_size(file_size=file.size)
+            check_file_sctructure(raw_bytes=raw_bytes)
         except HTTPException as e:
             await self.repo.add_message(
                 chat_id=chat.id,
@@ -40,8 +46,13 @@ class ChatService:
             )
             raise
 
-        # process_chat_task.delay(chat_id=chat.id, file=file)
-        print(chat.id, type(chat.id))
+        # print(file, file.filename, file.content_type)
+        # print(raw_bytes)
+
+        processing_chat_task.delay(
+            chat_id=chat.id, raw_bytes=raw_bytes, username=user.username
+        )
+
         return AddChatResponse(chat_id=chat.id)
 
     @staticmethod
@@ -53,6 +64,7 @@ class ChatService:
         await pubsub.subscribe(f"chat:{chat_id}")
         try:
             async for message in pubsub.listen():
+                # await asyncio.sleep(1)
                 if message["type"] == "message":
                     data = message["data"].decode()
                     yield data

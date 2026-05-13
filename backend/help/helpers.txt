@@ -1,0 +1,21 @@
+celery -A app.core.celery.celery_app worker --loglevel=info
+
+{
+    id: int
+    timeline: [
+        {
+            type: "message",
+            data: {
+                type: "...",
+                content: "..."
+            }
+        },
+        ...
+        {
+            type: "analys",
+            data: {
+                content: "..."
+            }
+        }
+    ]
+}

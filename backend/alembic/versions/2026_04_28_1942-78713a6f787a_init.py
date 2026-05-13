@@ -21,6 +21,7 @@ enum_chat_status = sa.Enum(
     "EMPTY",
     "VALIDATION_ERROR",
     "UPLOADING_RAW",
+    "PREPROCESSING",
     "UPLOADING_PREPROCESSED",
     "ANALYZING",
     "COMPLETED",

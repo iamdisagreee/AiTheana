@@ -41,6 +41,6 @@ async def get_all_chats(query_params: Annotated[ChatQueryParams, Query()]):
     pass
 
 
-@router.delete("/{chat_id}")
-async def delete_chat(chat_id: Annotated[int, Path(gt=0)]):
-    pass
+# @router.delete("/{chat_id}")
+# async def delete_chat(chat_id: Annotated[int, Path(gt=0)]):
+#     pass
