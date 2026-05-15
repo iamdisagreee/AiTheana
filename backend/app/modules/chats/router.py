@@ -4,7 +4,11 @@ from app.core.base_schema import User
 from app.dependecies import get_chat_service, get_current_user
 from fastapi import APIRouter, Depends, File, Form, Path, Query, UploadFile
 
-from .schemas import AddChatResponse, ChatQueryParams
+from .schemas import (
+    AddChatResponse,
+    ChatQueryParams,
+    EventTimelineResponse,
+)
 from .service import ChatService
 
 router = APIRouter(prefix="/chats", tags=["chats"])
@@ -31,9 +35,12 @@ async def stream_status(
     return await chat_service.stream_status(chat_id=chat_id)
 
 
-@router.get("/{chat_id}")
-async def get_chat_by_id(chat_id: Annotated[int, Path(gt=0)]):
-    pass
+@router.get("/{chat_id}", response_model=EventTimelineResponse)
+async def get_chat_by_id(
+    chat_id: Annotated[int, Path(gt=0)],
+    chat_service: ChatService = Depends(get_chat_service),
+):
+    return await chat_service.get_chat_by_id(chat_id=chat_id)
 
 
 @router.get("/")

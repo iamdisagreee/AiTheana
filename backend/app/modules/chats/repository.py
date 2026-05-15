@@ -1,8 +1,9 @@
-from sqlalchemy import delete, insert, select, update
+from sqlalchemy import delete, insert, literal, select, union_all, update
 from sqlalchemy.ext.asyncio import AsyncSession
+from sqlalchemy.orm import selectinload
 
-from .models import Chat, Message
-from .schemas import ChatStatus, MessageType
+from .models import Analys, Chat, Message
+from .schemas import ChatStatus, EventTimelineType, MessageType
 
 
 class ChatRepository:
@@ -26,3 +27,30 @@ class ChatRepository:
     async def add_all(self, *args: list[Message]):
         await self.postgres.add_all(args)
         await self.postgres.commit()
+
+    async def get_chat_by_id(self, chat_id: int):
+        msgs_query = select(
+            Message.id.label("event_id"),
+            Message.chat_id,
+            Message.created_at,
+            literal(EventTimelineType.MESSAGE).label("event_type"),
+            Message.type.label("message_type"),
+            Message.content,
+        )
+
+        analyses_query = select(
+            Analys.id.label("event_id"),
+            Analys.chat_id,
+            Analys.created_at,
+            literal(EventTimelineType.ANALYS).label("event_type"),
+            literal(None).label("message_type"),
+            Analys.content,
+        )
+
+        timeline_query = union_all(msgs_query, analyses_query).subquery()
+
+        return await self.postgres.execute(
+            select(timeline_query)
+            .where(timeline_query.c.chat_id == chat_id)
+            .order_by(timeline_query.c.created_at)
+        )

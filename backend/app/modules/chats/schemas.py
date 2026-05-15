@@ -1,4 +1,6 @@
+from datetime import datetime
 from enum import StrEnum
+from typing import Literal, Union
 
 from app.core.base_schema import CamelCaseModel
 from pydantic import Field
@@ -16,6 +18,11 @@ class ChatStatus(StrEnum):
     CANCELLED = "CANCELLED"
 
 
+class EventTimelineType(StrEnum):
+    MESSAGE = "MESSAGE"
+    ANALYS = "ANALYS"
+
+
 class FileType(StrEnum):
     RAW = "RAW"
     PREPROCESSED = "PREPROCESSED"
@@ -29,6 +36,34 @@ class MessageType(StrEnum):
 
 class AddChatResponse(CamelCaseModel):
     chat_id: int
+
+
+class MessageData(CamelCaseModel):
+    type: MessageType
+    content: str
+
+
+class AnalysData(CamelCaseModel):
+    content: str
+
+
+class MessageEvent(CamelCaseModel):
+    event_id: int
+    created_at: datetime
+    event_type: Literal[EventTimelineType.MESSAGE]
+    data: MessageData
+
+
+class AnalysEvent(CamelCaseModel):
+    event_id: int
+    created_at: datetime
+    event_type: Literal[EventTimelineType.ANALYS]
+    data: AnalysData
+
+
+class EventTimelineResponse(CamelCaseModel):
+    id: int
+    timeline: list[AnalysEvent | MessageEvent]
 
 
 class SortBy(StrEnum):

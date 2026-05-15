@@ -15,7 +15,17 @@ from fastapi import HTTPException, UploadFile
 from fastapi.responses import StreamingResponse
 
 from .repository import ChatRepository
-from .schemas import AddChatResponse, ChatStatus, MessageType
+from .schemas import (
+    AddChatResponse,
+    AnalysData,
+    AnalysEvent,
+    ChatStatus,
+    EventTimelineResponse,
+    EventTimelineType,
+    MessageData,
+    MessageEvent,
+    MessageType,
+)
 
 settings = get_settings()
 
@@ -85,3 +95,34 @@ class ChatService:
             self.event_generator(chat_id=chat_id),
             media_type="text/event-stream",
         )
+
+    async def get_chat_by_id(self, chat_id: int):
+        raw_chat = await self.repo.get_chat_by_id(chat_id=chat_id)
+        timeline = []
+        for msg in raw_chat.mappings():
+            match msg.event_type:
+                case EventTimelineType.MESSAGE:
+                    timeline.append(
+                        MessageEvent(
+                            event_id=msg["event_id"],
+                            created_at=msg["created_at"],
+                            event_type=msg["event_type"],
+                            data=MessageData(
+                                type=msg["message_type"],
+                                content=msg["content"],
+                            ),
+                        )
+                    )
+                case EventTimelineType.ANALYS:
+                    timeline.append(
+                        AnalysEvent(
+                            event_id=msg["event_id"],
+                            created_at=msg["created_at"],
+                            event_type=msg["event_type"],
+                            data=AnalysData(
+                                content=msg["content"],
+                            ),
+                        )
+                    )
+
+        return EventTimelineResponse(id=chat_id, timeline=timeline)

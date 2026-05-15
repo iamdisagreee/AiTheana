@@ -90,6 +90,7 @@ def processing_chat_task(
     preprocessed_file = preprocessing_raw_json(user_chat=raw_json)
     preprocessed_json = preprocessed_file.model_dump_json()
     chat.title = preprocessed_file.title
+    chat.interlocutor_id = preprocessed_file.interlocutor_id
     chat.original_period_start = preprocessed_file.original_period_start
     chat.original_period_end = preprocessed_file.original_period_end
 
