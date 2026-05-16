@@ -1,6 +1,6 @@
 from datetime import datetime
 from enum import StrEnum
-from typing import Literal, Union
+from typing import Literal
 
 from app.core.base_schema import CamelCaseModel
 from pydantic import Field
@@ -16,6 +16,17 @@ class ChatStatus(StrEnum):
     COMPLETED = "COMPLETED"
     FAILED = "FAILED"
     CANCELLED = "CANCELLED"
+
+
+class Chat(CamelCaseModel):
+    id: int
+    interlocutor_id: int | None
+    title: str | None
+    status: ChatStatus
+    original_period_start: datetime | None
+    original_period_end: datetime | None
+    created_at: datetime
+    updated_at: datetime | None
 
 
 class EventTimelineType(StrEnum):
@@ -48,21 +59,19 @@ class AnalysData(CamelCaseModel):
 
 
 class MessageEvent(CamelCaseModel):
-    event_id: int
     created_at: datetime
     event_type: Literal[EventTimelineType.MESSAGE]
     data: MessageData
 
 
 class AnalysEvent(CamelCaseModel):
-    event_id: int
     created_at: datetime
     event_type: Literal[EventTimelineType.ANALYS]
     data: AnalysData
 
 
 class EventTimelineResponse(CamelCaseModel):
-    id: int
+    chat: Chat
     timeline: list[AnalysEvent | MessageEvent]
 
 
@@ -82,5 +91,8 @@ class ChatQueryParams(CamelCaseModel):
     limit: int = Field(default=10, gt=0)
     sort_by: SortBy = Field(default=SortBy.ID)
     sort_order: SortOrder = Field(default=SortOrder.ASC)
-    interlocutorId: int | None = Field(default=None)
-    groupByinterlocutorId: bool = Field(default=False)
+    interlocutor_id: int | None = Field(default=None)
+
+
+class GetChatsResponse(CamelCaseModel):
+    chats: list[Chat]

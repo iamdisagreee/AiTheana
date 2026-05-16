@@ -13,15 +13,18 @@ from app.core.file_service import (
 from app.tasks.tasks import processing_chat_task
 from fastapi import HTTPException, UploadFile
 from fastapi.responses import StreamingResponse
+from starlette import status
 
 from .repository import ChatRepository
 from .schemas import (
     AddChatResponse,
     AnalysData,
     AnalysEvent,
+    ChatQueryParams,
     ChatStatus,
     EventTimelineResponse,
     EventTimelineType,
+    GetChatsResponse,
     MessageData,
     MessageEvent,
     MessageType,
@@ -96,15 +99,27 @@ class ChatService:
             media_type="text/event-stream",
         )
 
-    async def get_chat_by_id(self, chat_id: int):
-        raw_chat = await self.repo.get_chat_by_id(chat_id=chat_id)
+    async def get_chat_by_id(self, chat_id: int, user: User):
+        chat = await self.repo.get_chat_by_id(
+            chat_id=chat_id, user_id=user.id
+        )
+
+        if not chat:
+            raise HTTPException(
+                status_code=status.HTTP_404_NOT_FOUND,
+                detail=f"Not found chat with id={chat_id}",
+            )
+
+        raw_timeline = await self.repo.get_timeline_by_chat_id(
+            chat_id=chat_id, user_id=user.id
+        )
+
         timeline = []
-        for msg in raw_chat.mappings():
+        for msg in raw_timeline.mappings():
             match msg.event_type:
                 case EventTimelineType.MESSAGE:
                     timeline.append(
                         MessageEvent(
-                            event_id=msg["event_id"],
                             created_at=msg["created_at"],
                             event_type=msg["event_type"],
                             data=MessageData(
@@ -116,7 +131,6 @@ class ChatService:
                 case EventTimelineType.ANALYS:
                     timeline.append(
                         AnalysEvent(
-                            event_id=msg["event_id"],
                             created_at=msg["created_at"],
                             event_type=msg["event_type"],
                             data=AnalysData(
@@ -125,4 +139,11 @@ class ChatService:
                         )
                     )
 
-        return EventTimelineResponse(id=chat_id, timeline=timeline)
+        return EventTimelineResponse(chat=chat, timeline=timeline)
+
+    async def get_all_chats(self, params: ChatQueryParams, user: User):
+        chats = await self.repo.get_all_chats(
+            params=params, user_id=user.id
+        )
+
+        return GetChatsResponse(chats=chats)

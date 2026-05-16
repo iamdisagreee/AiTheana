@@ -79,9 +79,6 @@ def is_valid_message(msg: dict) -> bool:
 
 
 def map_message(msg: dict) -> UserMessage:
-    print(UserMessage(
-        date=msg["date"], from_=msg["from"], text=msg["text"]
-    ))
     return UserMessage(
         date=msg["date"], from_=msg["from"], text=msg["text"]
     )

@@ -8,6 +8,7 @@ from .schemas import (
     AddChatResponse,
     ChatQueryParams,
     EventTimelineResponse,
+    GetChatsResponse,
 )
 from .service import ChatService
 
@@ -38,14 +39,23 @@ async def stream_status(
 @router.get("/{chat_id}", response_model=EventTimelineResponse)
 async def get_chat_by_id(
     chat_id: Annotated[int, Path(gt=0)],
+    current_user: User = Depends(get_current_user),
     chat_service: ChatService = Depends(get_chat_service),
 ):
-    return await chat_service.get_chat_by_id(chat_id=chat_id)
+    return await chat_service.get_chat_by_id(
+        chat_id=chat_id, user=current_user
+    )
 
 
-@router.get("/")
-async def get_all_chats(query_params: Annotated[ChatQueryParams, Query()]):
-    pass
+@router.get("/", response_model=GetChatsResponse)
+async def get_all_chats(
+    params: Annotated[ChatQueryParams, Query()],
+    current_user: User = Depends(get_current_user),
+    chat_service: ChatService = Depends(get_chat_service),
+):
+    return await chat_service.get_all_chats(
+        params=params, user=current_user
+    )
 
 
 # @router.delete("/{chat_id}")

@@ -27,6 +27,7 @@ class User(CamelCaseModel):
     created_at: datetime
 
 
+
 class DetailResponse(CamelCaseModel):
     detail: str
 
