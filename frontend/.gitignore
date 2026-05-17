@@ -1,0 +1,9 @@
+build
+node_modules
+idea
+!config/build
+.vscode/
+storybook-static/
+reg.json
+loki
+.loki/report.thml

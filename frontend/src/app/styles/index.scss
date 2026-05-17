@@ -1,0 +1,24 @@
+@import "./reset.scss";
+@import "themes/dark.scss";
+@import "themes/light.scss";
+@import "themes/orange.scss";
+@import "variables/global.scss";
+
+.app {
+  min-height: 100vh;
+  background: var(--bg-color);
+  color: var(--primary-color);
+  font: var(--font-m);
+}
+
+.content-page {
+  display: flex;
+}
+
+.page-wrapper {
+  flex-grow: 1;
+  padding: 2rem 1rem 2rem 3rem;
+  height: calc(100vh - var(--navbar-height));
+  width: calc(100% - var(--sidebar-width));
+  overflow-y: auto;
+}

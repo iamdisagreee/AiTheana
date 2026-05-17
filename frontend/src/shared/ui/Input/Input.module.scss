@@ -1,0 +1,17 @@
+.Input {
+  outline: none;
+  background: transparent;
+  border: none;
+  color: var(--primary-color);
+}
+
+.inputWrapper {
+  gap: 5px;
+  display: flex;
+  justify-content: left;
+  flex-grow: 1;
+}
+
+.placeholder {
+  color: var(--primary-color);
+}

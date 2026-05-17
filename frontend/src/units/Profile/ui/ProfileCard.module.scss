@@ -1,0 +1,26 @@
+.ProfileCard {
+  border: 2px solid var(--primary-color);
+  padding: 10px;
+}
+
+.inputs {
+  display: flex;
+  flex-direction: column;
+}
+
+.input {
+  flex-grow: 1;
+  margin-bottom: 10px;
+}
+
+.isLoading,
+.error {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 300px;
+}
+
+.readonly {
+  opacity: 0.7;
+}

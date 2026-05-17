@@ -1,0 +1,17 @@
+import { useSelector } from "react-redux";
+import { Navigate, useLocation } from "react-router-dom";
+import { RoutePath } from "shared/config/routeConfig/routeConfig";
+import { getUserAuthData } from "units/User";
+
+export const RequireAuth = ({ children }: { children: JSX.Element }) => {
+  const isAuth = useSelector(getUserAuthData);
+  const location = useLocation();
+
+  console.log(isAuth);
+
+  if (!isAuth) {
+    return <Navigate to={RoutePath.main} state={{ from: location }} replace />;
+  }
+
+  return children;
+};
