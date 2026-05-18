@@ -4,7 +4,7 @@ import { StoreDecorator } from "shared/config/storybook/StoreDecorator/StoreDeco
 import {
   Article,
   ArticleBlockType,
-  Articletype,
+  ArticleType,
 } from "../../model/types/article";
 import { ArticleDetailsSchema } from "../../model/types/ArticleDetailsSchema";
 import { ThemeDecorator } from "shared/config/storybook/ThemeDecorator/ThemeDecorator";
@@ -41,7 +41,7 @@ const store: ArticleDetailsSchema = {
     img: Image,
     views: 1022,
     createdAt: "26.02.2022",
-    type: [Articletype.IT],
+    type: [ArticleType.IT],
     blocks: [
       {
         id: "1",

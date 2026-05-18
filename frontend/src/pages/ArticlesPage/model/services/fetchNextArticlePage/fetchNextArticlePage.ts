@@ -20,8 +20,8 @@ export const fetchNextArticlePage = createAsyncThunk<
   const nextPage = getArticlesPagePage(getState()) + 1;
   try {
     if (!isLoading && hasMore) {
-      dispatch(fetchArticlesList(nextPage));
       dispatch(articlesPageActions.setPage(nextPage));
+      dispatch(fetchArticlesList({ replace: false }));
     }
   } catch (e) {
     return rejectWithValue(e.message);

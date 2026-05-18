@@ -6,8 +6,8 @@
 
 .app {
   min-height: 100vh;
-  background: var(--bg-color);
-  color: var(--primary-color);
+  // background: var(--bg-color);
+  // color: var(--primary-color);
   font: var(--font-m);
 }
 
@@ -15,10 +15,10 @@
   display: flex;
 }
 
-.page-wrapper {
-  flex-grow: 1;
-  padding: 2rem 1rem 2rem 3rem;
-  height: calc(100vh - var(--navbar-height));
-  width: calc(100% - var(--sidebar-width));
-  overflow-y: auto;
-}
+// .page-wrapper {
+//   flex-grow: 1;
+//   padding: 2rem 1rem 2rem 3rem;
+//   height: 100vh;
+//   width: 100%;
+//   overflow-y: auto;
+// }

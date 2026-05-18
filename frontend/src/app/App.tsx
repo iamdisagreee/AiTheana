@@ -20,9 +20,9 @@ const App = () => {
   return (
     <div className={classNames("app", {}, [theme])}>
       <Suspense fallback="">
-        <Navbar />
+        {/* <Navbar /> */}
         <div className="content-page">
-          <Sidebar />
+          {/* <Sidebar /> */}
           {_inited && <AppRouter />}
         </div>
       </Suspense>

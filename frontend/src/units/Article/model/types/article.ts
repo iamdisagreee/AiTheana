@@ -33,7 +33,8 @@ export type ArticleBlock =
   | ArticleBlockImage
   | ArticleBlockText;
 
-export enum Articletype {
+export enum ArticleType {
+  ALL = "ALL",
   IT = "IT",
   SCIENCE = "SCIENCE",
   ECONOMICS = "ECONOMICS",
@@ -47,11 +48,17 @@ export interface Article {
   img: string;
   views: number;
   createdAt: string;
-  type: Articletype[];
+  type: ArticleType[];
   blocks: ArticleBlock[];
 }
 
 export enum ArticleView {
   LIST = "LIST",
   TILE = "TILE",
+}
+
+export enum ArticleSortField {
+  VIEWS = "views",
+  TITLE = "title",
+  CREATED = "createdAt",
 }

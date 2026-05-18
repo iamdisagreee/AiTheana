@@ -1,4 +1,6 @@
 import { StateSchema } from "app/providers/StoreProvider";
+import { SortOrder } from "shared/lib/types/order";
+import { ArticleSortField, ArticleType } from "units/Article";
 
 export const getArticlesPageError = (state: StateSchema) =>
   state.articlesPage?.error;
@@ -20,3 +22,15 @@ export const getArticlesPageHasMore = (state: StateSchema) =>
 
 export const getArticlesPageInited = (state: StateSchema) =>
   state.articlesPage?._inited;
+
+export const getArticlesPageOrder = (state: StateSchema) =>
+  state.articlesPage?.order ?? SortOrder.ASC;
+
+export const getArticlesPageSort = (state: StateSchema) =>
+  state.articlesPage?.sort ?? ArticleSortField.CREATED;
+
+export const getArticlesPageSearch = (state: StateSchema) =>
+  state.articlesPage?.search ?? "";
+
+export const getArticlesPageType = (state: StateSchema) =>
+  state.articlesPage?.type ?? ArticleType.ALL;

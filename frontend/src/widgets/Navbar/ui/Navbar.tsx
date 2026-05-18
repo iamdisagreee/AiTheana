@@ -8,8 +8,6 @@ import Button, { ButtonTheme } from "shared/ui/Button/Button";
 import { LoginModal } from "features/AuthByUsername";
 import { useDispatch, useSelector } from "react-redux";
 import { getUserAuthData, userActions } from "units/User";
-import Text, { ThemeText } from "shared/ui/Text/Text";
-import { RoutePath } from "shared/config/routeConfig/routeConfig";
 
 interface NavbarProps {
   className?: string;
@@ -37,14 +35,6 @@ const Navbar = memo((props: NavbarProps) => {
   if (userAuthData) {
     return (
       <div className={classNames(cls.Navbar, {}, [className])}>
-        <Text
-          title={t("Kharitonov site")}
-          className={cls.nameWeb}
-          theme={ThemeText.INVERTED}
-        ></Text>
-        <AppLink to={RoutePath.article_create}>
-          <Text text={t("Создать статью")} theme={ThemeText.INVERTED}></Text>
-        </AppLink>
         <Button
           theme={ButtonTheme.CLEAR_INVERTED}
           onClick={onLogout}

@@ -5,13 +5,13 @@ import { Article, ArticleView } from "../../model/types/article";
 import { ArticleListItem } from "../ArticleListItem/ArticleListItem";
 import { ArticleListItemSkeleton } from "../ArticleListItem/ArticleListItemSkeleton";
 import { useTranslation } from "react-i18next";
+import Text from "shared/ui/Text/Text";
 
 interface ArticleListProps {
   className?: string;
   articles: Article[];
   isLoading?: boolean;
   view?: ArticleView;
-  target?: string;
 }
 
 const skeletonArticles = (view: ArticleView) => {
@@ -21,23 +21,20 @@ const skeletonArticles = (view: ArticleView) => {
 };
 
 export const ArticleList = memo((props: ArticleListProps) => {
-  const {
-    className,
-    articles,
-    isLoading,
-    view = ArticleView.TILE,
-    target,
-  } = props;
+  const { className, articles, isLoading, view = ArticleView.TILE } = props;
   const { t } = useTranslation();
 
   const renderArticle = (article: Article) => (
-    <ArticleListItem
-      article={article}
-      view={view}
-      key={article.id}
-      target={target}
-    />
+    <ArticleListItem article={article} view={view} key={article.id} />
   );
+
+  if (!isLoading && !articles.length) {
+    return (
+      <div className={classNames(cls.ArticleList, {}, [className, cls[view]])}>
+        <Text title={t("Ничего не найдено...")} />
+      </div>
+    );
+  }
 
   return (
     <div className={classNames(cls.ArticleList, {}, [className, cls[view]])}>

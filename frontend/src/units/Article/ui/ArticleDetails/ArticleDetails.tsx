@@ -43,6 +43,11 @@ export const ArticleDetails = memo(({ className, id }: ArticleDetailsProps) => {
   const error = useSelector(getArticleError);
   const isLoading = useSelector(getArticleIsLoading);
   const { t } = useTranslation();
+  const navigate = useNavigate();
+  const toArticles = useCallback(
+    () => navigate(RoutePath.articles),
+    [navigate],
+  );
 
   useEffect(() => {
     if (__PROJECT__ != "storybook") {
@@ -82,7 +87,7 @@ export const ArticleDetails = memo(({ className, id }: ArticleDetailsProps) => {
   };
 
   let article;
-  if (isLoading || !data) {
+  if (isLoading) {
     article = (
       <>
         <div className={cls.avatarWrapper}>
@@ -126,6 +131,9 @@ export const ArticleDetails = memo(({ className, id }: ArticleDetailsProps) => {
   return (
     <DynamicModuleLoader reducers={reducers}>
       <div className={classNames(cls.ArticleDetails, {}, [className])}>
+        <Button theme={ButtonTheme.OUTLINE} onClick={toArticles}>
+          {t("Назад")}
+        </Button>
         {article}
       </div>
     </DynamicModuleLoader>

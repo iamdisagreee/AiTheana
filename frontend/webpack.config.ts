@@ -9,15 +9,13 @@ export default (env: BuildEnv) => {
     build: path.resolve(__dirname, "build"),
     html: path.resolve(__dirname, "public", "index.html"),
     src: path.resolve(__dirname, "src"),
-    locales: path.resolve(__dirname, "public", "locales"),
-    buildLocales: path.resolve(__dirname, "build", "locales"),
   };
 
   const mode = env.mode || "development";
   const PORT = env.port || 3000;
 
   const isDev = mode === "development";
-  const api = isDev ? "http://localhost:8000/api/v1/" : "tralyalya.com";
+  const api = isDev ? "http://localhost:8000/" : "tralyalya.com";
   const project = "frontend";
 
   const config: webpack.Configuration = buildWebpackConfig({

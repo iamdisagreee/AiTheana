@@ -1,7 +1,7 @@
 import { DeepPartial } from "@reduxjs/toolkit";
 import { LoginSchema } from "features/AuthByUsername";
 import { ArticleDetailsSchema } from "../types/ArticleDetailsSchema";
-import { Article, ArticleBlockType, Articletype } from "../types/article";
+import { Article, ArticleBlockType, ArticleType } from "../types/article";
 import {
   articleDetailsReducer,
   ArticleDetailsSlice,
@@ -21,7 +21,7 @@ const data: Article = {
   img: "...",
   views: 1022,
   createdAt: "26.02.2022",
-  type: [Articletype.IT],
+  type: [ArticleType.IT],
   blocks: [
     {
       id: "1",

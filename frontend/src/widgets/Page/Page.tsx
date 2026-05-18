@@ -13,12 +13,13 @@ import { useThrottle } from "shared/lib/hooks/useThrottle/useThrottle";
 
 interface PageProps {
   className?: string;
+  style?: React.CSSProperties;
   children: ReactNode;
   onScrollEnd?: () => void;
 }
 
 export const Page = memo((props: PageProps) => {
-  const { className, children, onScrollEnd } = props;
+  const { className, style, children, onScrollEnd } = props;
   const triggerRef = useRef() as MutableRefObject<HTMLDivElement>;
   const wrapperRef = useRef() as MutableRefObject<HTMLDivElement>;
   const { pathname } = useLocation();
@@ -51,9 +52,10 @@ export const Page = memo((props: PageProps) => {
       ref={wrapperRef}
       onScroll={onScroll}
       className={classNames(cls.Page, {}, [className])}
+      style={style}
     >
       {children}
-      <div ref={triggerRef}></div>
+      <div ref={triggerRef} className={cls.trigger}></div>
     </section>
   );
 });

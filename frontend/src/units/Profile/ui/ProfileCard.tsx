@@ -50,7 +50,7 @@ const ProfileCard = (props: ProfileCardProps) => {
     [cls.readonly]: readonly,
   };
 
-  if (isLoading || !formData) {
+  if (isLoading) {
     return (
       <div
         className={classNames(cls.ProfileCard, {}, [className, cls.isLoading])}

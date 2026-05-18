@@ -1,19 +1,19 @@
 import { ComponentStory, ComponentMeta } from "@storybook/react";
-import ArticleEditPage from "./ArticleEditPage";
+import { ArticleTypeTabs } from "./ArticleTypeTabs";
 
 export default {
-  title: "pages/ArticleEditPage",
-  component: ArticleEditPage,
+  title: "shared/ArticleTypeTabs",
+  component: ArticleTypeTabs,
   argTypes: {
     backgroundColor: { control: "color" },
   },
   args: {
     to: "/",
   },
-} as ComponentMeta<typeof ArticleEditPage>;
+} as ComponentMeta<typeof ArticleTypeTabs>;
 
-const Template: ComponentStory<typeof ArticleEditPage> = (args) => (
-  <ArticleEditPage {...args} />
+const Template: ComponentStory<typeof ArticleTypeTabs> = (args) => (
+  <ArticleTypeTabs {...args} />
 );
 
 export const Primary = Template.bind({});

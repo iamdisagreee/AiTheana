@@ -5,7 +5,6 @@ import { BuildOptions } from "./types/config";
 import MiniCssExtractPlugin from "mini-css-extract-plugin";
 import ReactRefreshWebpackPlugin from "@pmmmwh/react-refresh-webpack-plugin";
 import { BundleAnalyzerPlugin } from "webpack-bundle-analyzer";
-import CopyPlugin from "copy-webpack-plugin";
 
 export function buildPlugins(
   options: BuildOptions,
@@ -23,11 +22,6 @@ export function buildPlugins(
       __IS_DEV__: JSON.stringify(options.isDev),
       __API__: JSON.stringify(options.api),
       __PROJECT__: JSON.stringify(options.project),
-    }),
-    new CopyPlugin({
-      patterns: [
-        { from: options.paths.locales, to: options.paths.buildLocales },
-      ],
     }),
   ];
 

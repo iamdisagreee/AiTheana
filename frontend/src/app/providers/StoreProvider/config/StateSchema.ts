@@ -10,11 +10,11 @@ import { NavigateOptions, To } from "react-router-dom";
 import { ArticleDetailsSchema } from "units/Article";
 import {
   AddCommentForArticleSchema,
-  ArticleDeailsPageSchema,
+  ArticleDetailsCommentsSchema,
 } from "pages/ArticleDetailsPage";
 import { ArticlesPageSchema } from "pages/ArticlesPage";
 import { ScrollSaveSchema } from "features/ScrollSave";
-import { LoginPageSchema } from "pages/LoginPage/model/types/loginPageSchema";
+import { LoginPageSchema } from "pages/LoginPage";
 
 export interface StateSchema {
   counter: CounterSchema;
@@ -25,10 +25,9 @@ export interface StateSchema {
   login?: LoginSchema;
   profile?: ProfileSchema;
   articleDetails?: ArticleDetailsSchema;
+  articleDetailsComments?: ArticleDetailsCommentsSchema;
   addCommentForArticle?: AddCommentForArticleSchema;
   articlesPage?: ArticlesPageSchema;
-  articleDetailsPage?: ArticleDeailsPageSchema;
-
   //diplom
   loginPage?: LoginPageSchema;
 }

@@ -1,11 +1,8 @@
 import { EntityState } from "@reduxjs/toolkit";
 
-export interface Login {
-  username: string;
-  password: string;
-}
-
-export interface LoginPageSchema extends EntityState<Login> {
+export interface LoginPageSchema {
   isLoading?: boolean;
   error?: string;
+  username: string;
+  password: string;
 }

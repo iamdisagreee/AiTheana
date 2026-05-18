@@ -1,5 +1,5 @@
 import { StateSchema } from "app/providers/StoreProvider";
-import { Article, ArticleBlockType, Articletype } from "../types/article";
+import { Article, ArticleBlockType, ArticleType } from "../types/article";
 import {
   getArticleData,
   getArticleError,
@@ -19,7 +19,7 @@ const data: Article = {
   img: TestImage,
   views: 1022,
   createdAt: "26.02.2022",
-  type: [Articletype.IT],
+  type: [ArticleType.IT],
   blocks: [
     {
       id: "1",

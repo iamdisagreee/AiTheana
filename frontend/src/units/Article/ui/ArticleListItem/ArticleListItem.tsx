@@ -15,19 +15,24 @@ import Avatar from "shared/ui/Avatar/Avatar";
 import { ArticleBlockTextComponent } from "../ArticleBlockTextComponent/ArticleBlockTextComponent";
 import Button, { ButtonTheme } from "shared/ui/Button/Button";
 import { useTranslation } from "react-i18next";
+import { useNavigate } from "react-router-dom";
 import { RoutePath } from "shared/config/routeConfig/routeConfig";
-import AppLink from "shared/ui/AppLink/AppLink";
 
 interface ArticleListItemProps {
   className?: string;
   article: Article;
   view: ArticleView;
-  target?: string;
 }
 
 export const ArticleListItem = memo((props: ArticleListItemProps) => {
-  const { className, article, view, target } = props;
+  const { className, article, view } = props;
   const { t } = useTranslation();
+  const navigate = useNavigate();
+  const toArticleDetails = useCallback(
+    () => navigate(`${RoutePath.articles_details}${article.id}`),
+    [article.id, navigate],
+  );
+
   const createdAt = <Text text={article.createdAt} className={cls.date} />;
   const types = <Text text={article.type.join(", ")} className={cls.types} />;
   const image = (
@@ -58,33 +63,28 @@ export const ArticleListItem = memo((props: ArticleListItemProps) => {
         <div className={cls.imageWrapper}>{image}</div>
         <ArticleBlockTextComponent block={block} className={cls.block} />
         <div className={cls.footer}>
-          <AppLink
-            to={`${RoutePath.articles_details}${article.id}`}
-            target={target}
-          >
-            <Button theme={ButtonTheme.OUTLINE}>{t("Читать далее")}</Button>
-          </AppLink>
-
+          <Button theme={ButtonTheme.OUTLINE} onClick={toArticleDetails}>
+            {t("Читать далее")}
+          </Button>
           {views}
         </div>
       </Card>
     );
 
   return (
-    <AppLink to={`${RoutePath.articles_details}${article.id}`} target={target}>
-      <Card
-        className={classNames(cls.ArticleListItem, {}, [className, cls[view]])}
-      >
-        <div className={cls.imageWrapper}>
-          {image}
-          {createdAt}
-        </div>
-        <div className={cls.infoWrapper}>
-          {types}
-          {views}
-        </div>
-        <Text text={article.title} className={cls.title} />
-      </Card>
-    </AppLink>
+    <Card
+      className={classNames(cls.ArticleListItem, {}, [className, cls[view]])}
+      onClick={toArticleDetails}
+    >
+      <div className={cls.imageWrapper}>
+        {image}
+        {createdAt}
+      </div>
+      <div className={cls.infoWrapper}>
+        {types}
+        {views}
+      </div>
+      <Text text={article.title} className={cls.title} />
+    </Card>
   );
 });

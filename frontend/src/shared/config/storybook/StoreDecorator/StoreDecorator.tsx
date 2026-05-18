@@ -3,7 +3,7 @@ import { Story } from "@storybook/react";
 import { StateSchema, StoreProvider } from "app/providers/StoreProvider";
 import { addCommentForArticleReducer } from "features/AddCommentForm";
 import { loginReducer } from "features/AuthByUsername/model/slice/LoginSlice";
-import { articleDetailsPageReducers } from "pages/ArticleDetailsPage/model/slices";
+import { articleDetailsCommentsReducer } from "pages/ArticleDetailsPage";
 import { articlesPageReducer } from "pages/ArticlesPage";
 import { BrowserRouter } from "react-router-dom";
 import { articleDetailsReducer } from "units/Article";
@@ -14,7 +14,7 @@ export const defaultAsyncReducers: DeepPartial<ReducersMapObject<StateSchema>> =
     login: loginReducer,
     profile: profileReducer,
     articleDetails: articleDetailsReducer,
-    articleDetailsPage: articleDetailsPageReducers,
+    articleDetailsComments: articleDetailsCommentsReducer,
     addCommentForArticle: addCommentForArticleReducer,
     articlesPage: articlesPageReducer,
   };

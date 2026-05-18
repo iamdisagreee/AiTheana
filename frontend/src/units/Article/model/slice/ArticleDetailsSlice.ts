@@ -3,7 +3,7 @@ import { ArticleDetailsSchema } from "../types/ArticleDetailsSchema";
 import { fetchArticleById } from "../services/fetchArticleById/fetchArticleById";
 
 const initialState: ArticleDetailsSchema = {
-  isLoading: true,
+  isLoading: false,
   data: undefined,
   error: undefined,
 };

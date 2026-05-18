@@ -9,9 +9,7 @@ export const fetchArticleById = createAsyncThunk<
 >("article/fetchArticleById", async (id, thunkApi) => {
   const { extra, rejectWithValue } = thunkApi;
   try {
-    const response = await extra.api.get<Article>(`/articles/${id}`, {
-      params: { _expand: "user" },
-    });
+    const response = await extra.api.get<Article>(`/articles/${id}`);
 
     if (!response.data) {
       throw new Error("Данные не загружены!");

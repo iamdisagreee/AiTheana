@@ -4,12 +4,18 @@ import {
   PayloadAction,
 } from "@reduxjs/toolkit";
 import { StateSchema } from "app/providers/StoreProvider";
-import { Article, ArticleView } from "units/Article";
+import {
+  Article,
+  ArticleSortField,
+  ArticleType,
+  ArticleView,
+} from "units/Article";
 import { ArticlesPageSchema } from "../../types/articlesPageSchema";
 import { fetchArticlesList } from "../../services/fetchArticlesList/fetchArticlesList";
 import { ARTICLES_VIEW_LOCALSTORAGE_KEY } from "shared/const/const";
+import { SortOrder } from "shared/lib/types/order";
 
-const articlesAdapter = createEntityAdapter<Article>({
+export const articlesAdapter = createEntityAdapter<Article>({
   selectId: (article: Article) => article.id,
 });
 
@@ -26,9 +32,13 @@ const articlesPageSlice = createSlice({
     isLoading: undefined,
     view: ArticleView.TILE,
     page: 1,
-    limit: undefined,
+    limit: 9,
     hasMore: true,
     _inited: false,
+    order: SortOrder.ASC,
+    sort: ArticleSortField.CREATED,
+    search: "",
+    type: ArticleType.ALL,
   }),
   reducers: {
     setView: (state, action: PayloadAction<ArticleView>) => {
@@ -37,6 +47,18 @@ const articlesPageSlice = createSlice({
     },
     setPage: (state, action: PayloadAction<number>) => {
       state.page = action.payload;
+    },
+    setOrder: (state, action: PayloadAction<SortOrder>) => {
+      state.order = action.payload;
+    },
+    setSort: (state, action: PayloadAction<ArticleSortField>) => {
+      state.sort = action.payload;
+    },
+    setSearch: (state, action: PayloadAction<string>) => {
+      state.search = action.payload;
+    },
+    setType: (state, action: PayloadAction<ArticleType>) => {
+      state.type = action.payload;
     },
     initState: (state) => {
       const view = localStorage.getItem(
@@ -47,17 +69,27 @@ const articlesPageSlice = createSlice({
       state.limit = view === ArticleView.TILE ? 9 : 3;
       state._inited = true;
     },
+    clearState: (state) => {
+      articlesAdapter.removeAll(state);
+    },
   },
   extraReducers: (builder) => {
     builder
-      .addCase(fetchArticlesList.pending, (state) => {
+      .addCase(fetchArticlesList.pending, (state, action) => {
         state.isLoading = true;
         state.error = undefined;
+
+        if (action.meta.arg.replace) {
+          articlesAdapter.removeAll(state);
+        }
       })
       .addCase(fetchArticlesList.fulfilled, (state, action) => {
         state.isLoading = false;
-        articlesAdapter.addMany(state, action.payload);
-        state.hasMore = action.payload.length > 0;
+        // eslint-disable-next-line
+        action.meta.arg.replace
+          ? articlesAdapter.setAll(state, action.payload)
+          : articlesAdapter.addMany(state, action.payload);
+        state.hasMore = action.payload.length === state?.limit;
       })
       .addCase(fetchArticlesList.rejected, (state, action) => {
         state.isLoading = false;
