@@ -14,6 +14,10 @@ type InputPropsExtends = Omit<
   "onFocus" | "onChange" | "readonly"
 >;
 
+export enum InputTheme {
+  PRIMARY = "primary",
+}
+
 interface InputProps extends InputPropsExtends {
   className?: string;
   value?: string | number;
@@ -22,11 +26,13 @@ interface InputProps extends InputPropsExtends {
   type?: string;
   placeholder?: string;
   readonly?: boolean;
+  theme?: InputTheme;
 }
 
 const Input = memo((props: InputProps) => {
   const {
     className,
+    theme = InputTheme.PRIMARY,
     value,
     autofocus,
     onChange,
@@ -49,18 +55,19 @@ const Input = memo((props: InputProps) => {
 
   return (
     <div className={cls.inputWrapper}>
-      {placeholder && (
+      {/* {placeholder && (
         <span className={cls.placeholder}>{placeholder + ">"}</span>
-      )}
+      )} */}
       <input
         ref={ref}
         // autofocus={autofocus}
+        placeholder={placeholder}
         value={value || ""}
         autoFocus={autofocus}
         onChange={handleChange}
         type={type}
         readOnly={readonly}
-        className={classNames(cls.Input, {}, [className])}
+        className={classNames(cls.Input, {}, [className, cls[theme]])}
         {...otherProps}
       ></input>
     </div>

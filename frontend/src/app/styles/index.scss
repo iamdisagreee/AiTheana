@@ -3,12 +3,16 @@
 @import "themes/light.scss";
 @import "themes/orange.scss";
 @import "variables/global.scss";
+@import "./fonts/fonts.scss"; 
+
 
 .app {
   min-height: 100vh;
   // background: var(--bg-color);
   // color: var(--primary-color);
   font: var(--font-m);
+  font-weight: var(--font-regular);
+
 }
 
 .content-page {

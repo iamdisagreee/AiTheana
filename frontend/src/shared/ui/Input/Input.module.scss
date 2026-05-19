@@ -2,7 +2,11 @@
   outline: none;
   background: transparent;
   border: none;
-  color: var(--primary-color);
+  // color: var(--primary-color);
+}
+
+.primary {
+  background: var(--inverted-primary-color);
 }
 
 .inputWrapper {
@@ -12,6 +16,6 @@
   flex-grow: 1;
 }
 
-.placeholder {
-  color: var(--primary-color);
-}
+// .placeholder {
+//   color: var(--primary-color);
+// }

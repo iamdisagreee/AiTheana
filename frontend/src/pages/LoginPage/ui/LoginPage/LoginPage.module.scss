@@ -1,8 +1,78 @@
 .LoginPage {
-  // background-image: url("/public/images/background-login.png");
-  // background-size: cover; /* Растягивает фото на весь блок */
-  // background-position: center; /* Центрирует фото в блоке */
-  // background-repeat: no-repeat; /* Отменяет размножение фото */
-  // background-color: red;
-  
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  color: var(--inverted-primary-color);
+}
+
+.loginForm {
+  display: flex;
+  flex-direction: column;
+  // max-width: 60%;
+  // width: 600px;
+  // height: 640px;
+  padding: 46px 48px 46px 48px;
+  border-radius: 50px;
+  // min-height: 10%;
+  min-width: 35%;
+  min-height: 35%;
+  // max-width: 70%;
+  background: var(--login-form);
+  display: flex;
+}
+
+.entry {
+  font: var(--font-xl);
+  display: flex;
+  justify-content: center;
+  margin-bottom: 70px;
+  font-weight: 500;
+}
+
+.loginWrapper {
+  margin-bottom: 25px;
+}
+
+.loginText {
+  font-weight: 600;
+}
+
+.inputLogin {
+  border-radius: 24px;
+  height: 60px;
+  width: 100%;
+  padding: 20px;
+}
+
+.passwordWrapper {
+  margin-bottom: 70px;
+}
+.inputPassword {
+  border-radius: 24px;
+  height: 60px;
+  width: 100%;
+  padding: 20px;
+}
+
+.passwordText {
+  font-weight: 600;
+}
+
+.buttonsWrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.loginBtn {
+  margin-bottom: 45px;
+  border-radius: 24px;
+  height: 60px;
+  min-width: 60%;
+}
+
+.registrationBtn {
 }
