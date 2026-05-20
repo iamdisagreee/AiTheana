@@ -8,7 +8,7 @@ import ProfileLink from "shared/assets/icons/profile.svg";
 import ArticleLink from "shared/assets/icons/article.svg";
 
 export const getSidebarItems = createSelector(
-  (state: StateSchema) => state.user.authData,
+  (state: StateSchema) => state.userSchema.user,
   (authData) => {
     const sidebarItemList: SidebarItemType[] = [
       {

@@ -60,6 +60,21 @@
   font-weight: 600;
 }
 
+.withError {
+  margin-bottom: 15px;
+}
+
+.errorWrapper {
+  margin-bottom: 55px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.error {
+  max-width: 300px;
+}
+
 .buttonsWrapper {
   display: flex;
   justify-content: center;

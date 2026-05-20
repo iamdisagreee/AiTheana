@@ -18,7 +18,7 @@ import { LoginPageSchema } from "pages/LoginPage";
 
 export interface StateSchema {
   counter: CounterSchema;
-  user: UserSchema;
+  userSchema: UserSchema;
   scrollSave: ScrollSaveSchema;
 
   //async

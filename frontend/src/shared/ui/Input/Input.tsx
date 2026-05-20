@@ -18,6 +18,11 @@ export enum InputTheme {
   PRIMARY = "primary",
 }
 
+export enum InputType {
+  TEXT = "text",
+  PASSWORD = "password",
+}
+
 interface InputProps extends InputPropsExtends {
   className?: string;
   value?: string | number;
@@ -36,7 +41,7 @@ const Input = memo((props: InputProps) => {
     value,
     autofocus,
     onChange,
-    type = "text",
+    type = InputType.TEXT,
     placeholder,
     readonly,
     ...otherProps

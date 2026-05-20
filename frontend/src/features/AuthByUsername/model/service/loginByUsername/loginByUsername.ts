@@ -1,5 +1,4 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { ExtraArgumentType } from "app/providers/StoreProvider";
 import { ThunkConfig } from "app/providers/StoreProvider/config/StateSchema";
 import { User, userActions } from "units/User";
 
@@ -23,7 +22,7 @@ export const loginByUsername = createAsyncThunk<
 
     const user = response.data as User;
 
-    dispatch(userActions.setAuthData(user));
+    // dispatch(userActions.setAuthData(user));
 
     // extra.navigate?.("/profile");
 

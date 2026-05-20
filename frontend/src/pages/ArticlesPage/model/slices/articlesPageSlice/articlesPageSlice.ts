@@ -12,7 +12,7 @@ import {
 } from "units/Article";
 import { ArticlesPageSchema } from "../../types/articlesPageSchema";
 import { fetchArticlesList } from "../../services/fetchArticlesList/fetchArticlesList";
-import { ARTICLES_VIEW_LOCALSTORAGE_KEY } from "shared/const/const";
+import { ACCESS_TOKEN_LOCALSTORAGE_KEY } from "shared/const/const";
 import { SortOrder } from "shared/lib/types/order";
 
 export const articlesAdapter = createEntityAdapter<Article>({
@@ -43,7 +43,7 @@ const articlesPageSlice = createSlice({
   reducers: {
     setView: (state, action: PayloadAction<ArticleView>) => {
       state.view = action.payload;
-      localStorage.setItem(ARTICLES_VIEW_LOCALSTORAGE_KEY, action.payload);
+      localStorage.setItem(ACCESS_TOKEN_LOCALSTORAGE_KEY, action.payload);
     },
     setPage: (state, action: PayloadAction<number>) => {
       state.page = action.payload;
@@ -62,7 +62,7 @@ const articlesPageSlice = createSlice({
     },
     initState: (state) => {
       const view = localStorage.getItem(
-        ARTICLES_VIEW_LOCALSTORAGE_KEY,
+        ACCESS_TOKEN_LOCALSTORAGE_KEY,
       ) as ArticleView;
       state.view = view || ArticleView.TILE;
       state.page = 1;

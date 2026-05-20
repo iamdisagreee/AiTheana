@@ -20,9 +20,9 @@ export const CommentCard = memo(({ className, comment }: CommentCardProps) => {
         className={cls.header}
         to={`${RoutePath.profile}${comment?.user.id}`}
       >
-        {comment?.user?.avatar && (
+        {/* {comment?.user?.avatar && (
           <Avatar src={comment.user.avatar} size={30} />
-        )}
+        )} */}
         <Text text={comment?.user.username} />
       </AppLink>
 

@@ -14,7 +14,7 @@ import { scrollSaveReducer } from "features/ScrollSave";
 
 const staticReducers: ReducersMapObject<StateSchema> = {
   counter: counterReducer,
-  user: userReducer,
+  userSchema: userReducer,
   scrollSave: scrollSaveReducer,
 };
 

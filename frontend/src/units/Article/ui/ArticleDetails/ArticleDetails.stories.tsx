@@ -31,11 +31,11 @@ const store: ArticleDetailsSchema = {
   error: undefined,
   data: {
     id: "1",
-    user: {
-      id: "1",
-      username: "admin",
-      avatar: "https://teknotower.com/wp-content/uploads/2020/11/js.png",
-    },
+    // user: {
+    //   id: "1",
+    //   username: "admin",
+    //   avatar: "https://teknotower.com/wp-content/uploads/2020/11/js.png",
+    // },
     title: "Javascript news",
     subtitle: "Что нового в JS за 2022 год?",
     img: Image,
