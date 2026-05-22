@@ -1,8 +1,6 @@
 import { classNames } from "shared/lib/classNames/classNames";
 import cls from "./LoginPage.module.scss";
-import { memo, useCallback, useEffect } from "react";
-import { Page } from "widgets/Page/Page";
-import backgroundImage from "shared/assets/png/background-login.png";
+import { memo, useCallback } from "react";
 import { useTranslation } from "react-i18next";
 import Button, { ButtonFontWeight, ButtonTheme } from "shared/ui/Button/Button";
 import Input, { InputTheme, InputType } from "shared/ui/Input/Input";
@@ -24,6 +22,7 @@ import {
 import { loginByUsername } from "../../model/services/loginByUsername";
 import Text, { AlignText, ThemeText } from "shared/ui/Text/Text";
 import { useNavigate } from "react-router-dom";
+import { AuthLayout } from "widgets/AuthLayout/ui/AuthLayout/AuthLayout";
 
 interface LoginPageProps {
   className?: string;
@@ -69,76 +68,65 @@ const LoginPage = memo((props: LoginPageProps) => {
 
   return (
     <DynamicModuleLoader reducers={reducers} removeAfterUnmount>
-      <Page
-        style={{
-          backgroundImage: `url(${backgroundImage})`,
-          backgroundSize: "cover",
-          backgroundPosition: "center",
-          backgroundRepeat: "no-repeat",
-        }}
-      >
-        <div className={classNames(cls.LoginPage, {}, [className])}>
-          <div className={cls.loginForm}>
-            <div className={cls.entry}>{t("Вход")}</div>
-            <div className={cls.loginWrapper}>
-              <div className={cls.loginText}>{t("Логин")}</div>
-              <Input
-                placeholder={t("Введите вашу электронную почту")}
-                theme={InputTheme.PRIMARY}
-                onChange={setUsername}
-                value={username}
-                className={cls.inputLogin}
-              />
-            </div>
-
-            <div
-              className={classNames(
-                cls.passwordWrapper,
-                { [cls.withError]: error },
-                [],
-              )}
-            >
-              <div className={cls.passwordText}>{t("Пароль")}</div>
-              <Input
-                placeholder={t("Введите ваш пароль")}
-                theme={InputTheme.PRIMARY}
-                onChange={setPassword}
-                value={password}
-                type={InputType.PASSWORD}
-                className={cls.inputPassword}
-              />
-            </div>
-            {error && (
-              <div className={cls.errorWrapper}>
-                <Text
-                  align={AlignText.CENTER}
-                  text={t(error)}
-                  theme={ThemeText.ERROR}
-                  className={cls.error}
-                />
-              </div>
-            )}
-            <div className={cls.buttonsWrapper}>
-              <Button
-                theme={ButtonTheme.BASE}
-                fontWeight={ButtonFontWeight.MEDIUM}
-                onClick={toggleLogin}
-                className={cls.loginBtn}
-              >
-                {t("Войти")}
-              </Button>
-              <Button
-                theme={ButtonTheme.CLEAR_INVERTED}
-                fontWeight={ButtonFontWeight.SEMIBOLD}
-                onClick={toggleRegistration}
-                className={cls.registrationBtn}
-              >
-                {t("Создать аккаунт")}
-              </Button>
-            </div>
-          </div>
+      <AuthLayout>
+        <div className={cls.entry}>{t("Вход")}</div>
+        <div className={cls.loginWrapper}>
+          <div className={cls.loginText}>{t("Логин")}</div>
+          <Input
+            placeholder={t("Введите вашу электронную почту")}
+            theme={InputTheme.PRIMARY}
+            onChange={setUsername}
+            value={username}
+            className={cls.inputLogin}
+          />
         </div>
-      </Page>
+
+        <div
+          className={classNames(
+            cls.passwordWrapper,
+            { [cls.withError]: error },
+            [],
+          )}
+        >
+          <div className={cls.passwordText}>{t("Пароль")}</div>
+          <Input
+            placeholder={t("Введите ваш пароль")}
+            theme={InputTheme.PRIMARY}
+            onChange={setPassword}
+            value={password}
+            type={InputType.PASSWORD}
+            className={cls.inputPassword}
+          />
+        </div>
+        {error && (
+          <div className={cls.errorWrapper}>
+            <Text
+              align={AlignText.CENTER}
+              text={error}
+              theme={ThemeText.ERROR}
+              className={cls.error}
+            />
+          </div>
+        )}
+        <div className={cls.buttonsWrapper}>
+          <Button
+            theme={ButtonTheme.BASE}
+            fontWeight={ButtonFontWeight.MEDIUM}
+            onClick={toggleLogin}
+            className={cls.loginBtn}
+          >
+            {t("Войти")}
+          </Button>
+          <Button
+            theme={ButtonTheme.CLEAR_INVERTED}
+            fontWeight={ButtonFontWeight.SEMIBOLD}
+            onClick={toggleRegistration}
+            className={cls.registrationBtn}
+          >
+            {t("Создать аккаунт")}
+          </Button>
+        </div>
+      </AuthLayout>
     </DynamicModuleLoader>
   );
 });

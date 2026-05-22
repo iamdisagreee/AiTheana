@@ -1,19 +1,19 @@
 import { ComponentStory, ComponentMeta } from "@storybook/react";
-import LoginPage from "./LoginPage";
+import { AuthLayout } from "./AuthLayout";
 
 export default {
-  title: "pages/LoginPage",
-  component: LoginPage,
+  title: "shared/AuthLayout",
+  component: AuthLayout,
   argTypes: {
     backgroundColor: { control: "color" },
   },
   args: {
     to: "/",
   },
-} as ComponentMeta<typeof LoginPage>;
+} as ComponentMeta<typeof AuthLayout>;
 
-const Template: ComponentStory<typeof LoginPage> = (args) => (
-  <LoginPage {...args} />
+const Template: ComponentStory<typeof AuthLayout> = (args) => (
+  <AuthLayout {...args} />
 );
 
 export const Primary = Template.bind({});

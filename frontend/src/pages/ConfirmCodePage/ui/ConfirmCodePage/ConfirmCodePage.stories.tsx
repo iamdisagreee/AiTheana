@@ -1,19 +1,19 @@
 import { ComponentStory, ComponentMeta } from "@storybook/react";
-import LoginPage from "./LoginPage";
+import ConfirmCodePage from "./ConfirmCodePage";
 
 export default {
-  title: "pages/LoginPage",
-  component: LoginPage,
+  title: "shared/ConfirmCodePage",
+  component: ConfirmCodePage,
   argTypes: {
     backgroundColor: { control: "color" },
   },
   args: {
     to: "/",
   },
-} as ComponentMeta<typeof LoginPage>;
+} as ComponentMeta<typeof ConfirmCodePage>;
 
-const Template: ComponentStory<typeof LoginPage> = (args) => (
-  <LoginPage {...args} />
+const Template: ComponentStory<typeof ConfirmCodePage> = (args) => (
+  <ConfirmCodePage {...args} />
 );
 
 export const Primary = Template.bind({});

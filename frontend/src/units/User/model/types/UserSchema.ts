@@ -11,3 +11,7 @@ export interface UserSchema {
   token_type?: string;
   _inited?: boolean;
 }
+
+export interface SendCodeUser {
+  email: string;
+}

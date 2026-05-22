@@ -3,26 +3,26 @@
 @import "themes/light.scss";
 @import "themes/orange.scss";
 @import "variables/global.scss";
-@import "./fonts/fonts.scss"; 
-
+@import "./fonts/fonts.scss";
 
 .app {
   min-height: 100vh;
+
+  // min-height: 100vh;
   // background: var(--bg-color);
   // color: var(--primary-color);
   font: var(--font-m);
   font-weight: var(--font-regular);
-
 }
 
 .content-page {
   display: flex;
 }
 
-// .page-wrapper {
-//   flex-grow: 1;
-//   padding: 2rem 1rem 2rem 3rem;
-//   height: 100vh;
-//   width: 100%;
-//   overflow-y: auto;
-// }
+.page-wrapper {
+  flex-grow: 1;
+  padding: 2rem 1rem 2rem 3rem;
+  height: 100vh;
+  width: 100%;
+  overflow-y: auto;
+}

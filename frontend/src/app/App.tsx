@@ -23,7 +23,7 @@ const App = () => {
         {/* <Navbar /> */}
         <div className="content-page">
           {/* <Sidebar /> */}
-          {_inited && <AppRouter />}
+          {<AppRouter />}
         </div>
       </Suspense>
     </div>

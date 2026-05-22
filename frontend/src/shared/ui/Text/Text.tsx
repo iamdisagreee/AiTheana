@@ -4,6 +4,7 @@ import cls from "./Text.module.scss";
 
 export enum ThemeText {
   PRIMARY = "primary",
+  INVERTED_PRIMARY = "inverted_primary",
   ERROR = "error",
 }
 
@@ -14,8 +15,13 @@ export enum AlignText {
 }
 
 export enum SizeText {
+  S = "size_s",
   M = "size_m",
   L = "size_l",
+  XL = "size_xl",
+  "2XL" = "size_2xl",
+  "3XL" = "size_3xl",
+  "4XL" = "size_4xl",
 }
 
 interface TextProps {

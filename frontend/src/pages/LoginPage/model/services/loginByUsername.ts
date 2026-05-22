@@ -33,8 +33,8 @@ export const loginByUsername = createAsyncThunk<
 
     return extra.navigate?.("/");
   } catch (e) {
-    const error = e.response?.data?.detail;
-    if (error) return rejectWithValue(error);
-    return rejectWithValue(e.message);
+    return rejectWithValue(
+      e.response?.data?.detail[0].msg ?? e.response?.data?.detail ?? e.message,
+    );
   }
 });

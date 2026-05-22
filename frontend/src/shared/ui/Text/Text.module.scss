@@ -1,5 +1,12 @@
 .Text {
+}
+
+.primary {
   color: var(--primary-color);
+}
+
+.semi_primary {
+  color: var(--semi-primary-color);
 }
 
 .error {
@@ -29,6 +36,41 @@
   }
 }
 
+.size_xl {
+  .title {
+    font: var(--font-2xl);
+  }
+  .text {
+    font: var(--font-xl);
+  }
+}
+
+.size_2xl {
+  .title {
+    font: var(--font-3xl);
+  }
+  .text {
+    font: var(--font-2xl);
+  }
+}
+
+.size_3xl {
+  .title {
+    font: var(--font-4xl);
+  }
+  .text {
+    font: var(--font-3xl);
+  }
+}
+
+.size_4xl {
+  .title {
+    font: var(--font-5xl);
+  }
+  .text {
+    font: var(--font-4xl);
+  }
+}
 
 .left {
   text-align: left;

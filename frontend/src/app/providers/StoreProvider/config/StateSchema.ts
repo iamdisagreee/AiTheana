@@ -15,6 +15,8 @@ import {
 import { ArticlesPageSchema } from "pages/ArticlesPage";
 import { ScrollSaveSchema } from "features/ScrollSave";
 import { LoginPageSchema } from "pages/LoginPage";
+import { RegistrationPageSchema } from "pages/RegistrationPage";
+import { ConfirmCodePageSchema } from "pages/ConfirmCodePage";
 
 export interface StateSchema {
   counter: CounterSchema;
@@ -30,6 +32,8 @@ export interface StateSchema {
   articlesPage?: ArticlesPageSchema;
   //diplom
   loginPage?: LoginPageSchema;
+  registrationPage?: RegistrationPageSchema;
+  confirmCodePage?: ConfirmCodePageSchema;
 }
 
 export type StateSchemaKeys = keyof StateSchema;

@@ -1,0 +1,23 @@
+.AuthLayout {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100vh;
+  color: var(--inverted-primary-color);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  // background-image: url("../../../../shared/assets/png/background-login.png");
+}
+
+.loginForm {
+  display: flex;
+  flex-direction: column;
+  padding: 46px 48px 46px 48px;
+  border-radius: 50px;
+  min-width: 35%;
+  min-height: 35%;
+  background: var(--login-form);
+  display: flex;
+}
