@@ -12,8 +12,9 @@ export const confirmCodePageSlice = createSlice({
   name: "confirmCodePage",
   initialState,
   reducers: {
-    setCode: (state, action: PayloadAction<number>) => {
+    setCode: (state, action: PayloadAction<string>) => {
       state.enteredCode = action.payload;
+      state.error = undefined;
     },
   },
   extraReducers: (builder) => {

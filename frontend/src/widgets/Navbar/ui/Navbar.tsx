@@ -5,7 +5,6 @@ import AppLink, { AppLinkTheme } from "shared/ui/AppLink/AppLink";
 import { useTranslation } from "react-i18next";
 import Modal from "shared/ui/Modal/Modal";
 import Button, { ButtonTheme } from "shared/ui/Button/Button";
-import { LoginModal } from "features/AuthByUsername";
 import { useDispatch, useSelector } from "react-redux";
 import { getUserAuthData, userActions } from "units/User";
 
@@ -55,7 +54,7 @@ const Navbar = memo((props: NavbarProps) => {
       >
         {t("Войти")}
       </Button>
-      {isAuthModal && <LoginModal isOpen={isAuthModal} onClose={closeLogin} />}
+      {/* {isAuthModal && <LoginModal isOpen={isAuthModal} onClose={closeLogin} />} */}
     </div>
   );
 });

@@ -1,6 +1,5 @@
 import { CounterSchema } from "units/Counter";
 import { UserSchema } from "units/User/model/types/UserSchema";
-import { LoginSchema } from "features/AuthByUsername";
 import { ReducerManager } from "./ReducerManager";
 import { EnhancedStore } from "@reduxjs/toolkit";
 import { createReduxStore } from "./store";
@@ -14,9 +13,9 @@ import {
 } from "pages/ArticleDetailsPage";
 import { ArticlesPageSchema } from "pages/ArticlesPage";
 import { ScrollSaveSchema } from "features/ScrollSave";
-import { LoginPageSchema } from "pages/LoginPage";
 import { RegistrationPageSchema } from "pages/RegistrationPage";
 import { ConfirmCodePageSchema } from "pages/ConfirmCodePage";
+import { LoginSchema } from "features/LoginByUsername";
 
 export interface StateSchema {
   counter: CounterSchema;
@@ -24,14 +23,14 @@ export interface StateSchema {
   scrollSave: ScrollSaveSchema;
 
   //async
-  login?: LoginSchema;
+  // login?: LoginSchema;
   profile?: ProfileSchema;
   articleDetails?: ArticleDetailsSchema;
   articleDetailsComments?: ArticleDetailsCommentsSchema;
   addCommentForArticle?: AddCommentForArticleSchema;
   articlesPage?: ArticlesPageSchema;
   //diplom
-  loginPage?: LoginPageSchema;
+  login?: LoginSchema;
   registrationPage?: RegistrationPageSchema;
   confirmCodePage?: ConfirmCodePageSchema;
 }
@@ -44,7 +43,7 @@ export interface ReducerManagerStore extends EnhancedStore<StateSchema> {
 
 export interface ExtraArgumentType {
   api: AxiosInstance;
-  navigate?: (to: To, options?: NavigateOptions) => void;
+  // navigate?: (to: To, options?: NavigateOptions) => void;
 }
 
 export interface ThunkConfig<T> {

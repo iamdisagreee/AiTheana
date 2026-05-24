@@ -1,4 +1,5 @@
-from sqlalchemy import delete, insert, select, update
+from sqlalchemy import delete, select, update
+from sqlalchemy.dialects.postgresql import insert
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from .models import RefreshToken, User
@@ -24,15 +25,40 @@ class AuthRepository:
         email: str,
         hashed_password: str,
     ):
-        new_user = User(
-            username=username,
-            email=email,
-            hashed_password=hashed_password,
+        result = await self.postgres.execute(
+            insert(User)
+            .values(
+                username=username,
+                email=email,
+                hashed_password=hashed_password,
+            )
+            .on_conflict_do_update(
+                index_elements=[User.email],
+                set_={
+                    "username": username,
+                    "hashed_password": hashed_password,
+                },
+            )
+            .returning(User)
         )
-        self.postgres.add(new_user)
         await self.postgres.commit()
-        await self.postgres.refresh(new_user)
-        return new_user
+        return result.scalar()
+        # new_user = User(
+        #     username=username,
+        #     email=email,
+        #     hashed_password=hashed_password,
+        # )
+        # self.postgres.merge(new_user)
+        # await self.postgres.commit()
+        # await self.postgres.refresh(new_user)
+        # return new_user
+
+    async def update_user_activated(self, email: str):
+        await self.postgres.execute(
+            update(User)
+            .where(User.email == email)
+            .values(is_activated=True)
+        )
 
     async def add_refresh_token(
         self,
@@ -48,7 +74,8 @@ class AuthRepository:
         tokenData = await self.postgres.scalar(
             select(RefreshToken).where(RefreshToken.user_id == user_id)
         )
-        if tokenData:
+        print(tokenData)
+        if tokenData is not None:
             tokenData.refresh_token = refresh_token
         else:
             self.postgres.add(

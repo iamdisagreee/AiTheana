@@ -1,42 +1,46 @@
-import React, { useState, useRef, ChangeEvent, KeyboardEvent } from "react";
-import clsx from "clsx";
-import styles from "./CodeInput.module.scss";
+import React, {
+  useState,
+  useRef,
+  ChangeEvent,
+  KeyboardEvent,
+  memo,
+} from "react";
+import cls from "./CodeInput.module.scss";
+import { classNames } from "shared/lib/classNames/classNames";
+import { SizeText, ThemeText } from "../Text/Text";
+import Text from "../Text/Text";
 
 interface CodeInputProps {
+  className?: string;
   maxLength?: number;
-  onComplete?: (code: string) => void;
+  code: string;
+  setCode: (value: string) => void;
+  onComplete: (entereDcode: number) => void;
   disabled?: boolean;
 }
 
-const CodeInput: React.FC<CodeInputProps> = ({
-  maxLength = 6,
-  onComplete,
-  disabled = false,
-}) => {
-  const [code, setCode] = useState("");
+export const CodeInput = memo((props: CodeInputProps) => {
+  const {
+    className,
+    maxLength = 6,
+    code,
+    setCode,
+    onComplete,
+    disabled = false,
+  } = props;
+
   const inputRef = useRef<HTMLInputElement>(null);
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     if (disabled) return;
-
     let value = e.target.value.replace(/\D/g, "");
-
     if (value.length > maxLength) {
       value = value.slice(0, maxLength);
     }
-
     setCode(value);
 
     if (value.length === maxLength) {
-      onComplete?.(value);
-    }
-  };
-
-  const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
-    if (disabled) return;
-
-    if (e.key === "Backspace") {
-      setCode((prev) => prev.slice(0, -1));
+      onComplete?.(Number(value));
     }
   };
 
@@ -45,51 +49,50 @@ const CodeInput: React.FC<CodeInputProps> = ({
       inputRef.current?.focus();
     }
   };
-
   return (
     <div
-      className={clsx(styles.container, {
-        [styles.disabled]: disabled,
-      })}
+      className={classNames(
+        cls.container,
+        {
+          [cls.disabled]: disabled,
+        },
+        [className],
+      )}
       onClick={focusInput}
     >
-      <div className={styles.cells}>
+      <div className={cls.cells}>
         {Array.from({ length: maxLength }).map((_, idx) => {
-          const isActive = idx === code.length;
           const value = code[idx];
-
+          const isActive = idx == code.length;
           return (
             <div
               key={idx}
-              className={clsx(styles.cell, {
-                [styles.active]: isActive,
-                [styles.filled]: !!value,
-              })}
+              className={classNames(cls.cell, { [cls.active]: isActive }, [])}
             >
               {value ? (
-                <span className={styles.number}>{value}</span>
+                <Text
+                  text={value}
+                  size={SizeText["11XL"]}
+                  theme={ThemeText.PRIMARY}
+                />
               ) : (
-                <span className={styles.dot} />
+                <span className={cls.dot} />
               )}
             </div>
           );
         })}
       </div>
-
       <input
         ref={inputRef}
         value={code}
         onChange={handleChange}
-        // onKeyDown={handleKeyDown}
         type="text"
         inputMode="numeric"
         pattern="\d*"
         maxLength={maxLength}
-        className={styles.hiddenInput}
+        className={cls.hiddenInput}
         autoFocus
       />
     </div>
   );
-};
-
-export default CodeInput;
+});

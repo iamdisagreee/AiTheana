@@ -2,11 +2,18 @@ import { classNames } from "shared/lib/classNames/classNames";
 import cls from "./Icon.module.scss";
 import { FC, memo, SVGProps } from "react";
 
-interface IconProps {
-  className?: string;
-  Icon: FC<SVGProps<SVGElement>>;
+export enum IconTheme {
+  CLEAR = "clear",
+  SECONDARY = "secondary",
 }
 
-export const Icon = memo(({ className, Icon }: IconProps) => {
-  return <Icon className={classNames(cls.Icon, {}, [className])} />;
+interface IconProps {
+  className?: string;
+  Svg: FC<SVGProps<SVGElement>>;
+  theme?: IconTheme;
+}
+
+export const Icon = memo((props: IconProps) => {
+  const { className, Svg, theme = IconTheme.CLEAR } = props;
+  return <Svg className={classNames(cls.Icon, {}, [className, cls[theme]])} />;
 });

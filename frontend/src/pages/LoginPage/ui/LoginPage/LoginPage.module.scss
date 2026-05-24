@@ -1,10 +1,7 @@
-
 .entry {
-  font: var(--font-xl);
   display: flex;
   justify-content: center;
   margin-bottom: 70px;
-  font-weight: 500;
 }
 
 .loginWrapper {
@@ -23,17 +20,13 @@
 }
 
 .passwordWrapper {
-  margin-bottom: 70px;
+  margin-bottom: 15px;
 }
 .inputPassword {
   border-radius: 24px;
   height: 60px;
   width: 100%;
   padding: 20px;
-}
-
-.passwordText {
-  font-weight: 600;
 }
 
 .withError {
@@ -45,10 +38,20 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  min-height: calc(var(--font-line-m) * 2);
 }
 
 .error {
-  max-width: 300px;
+  max-width: var(--login-error-width);
+}
+
+.error p {
+  overflow: hidden;
+  word-break: break-word;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
 }
 
 .buttonsWrapper {

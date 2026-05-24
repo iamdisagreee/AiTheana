@@ -18,7 +18,9 @@ async def registration_request(
     body: RegistrationRequest,
     auth_service: AuthService = Depends(get_auth_service),
 ):
-    return await auth_service.registration_request(email=body.email)
+    return await auth_service.registration_request(
+        email=body.email, password=body.password
+    )
 
 
 @router.post("/registration/confirm", response_model=TokenResponse)
@@ -29,7 +31,6 @@ async def registration_confirm(
 ):
     return await auth_service.registration_confirm(
         email=body.email,
-        password=body.password,
         entered_code=body.enteredCode,
         response=response,
     )

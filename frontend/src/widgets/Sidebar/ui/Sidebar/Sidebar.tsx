@@ -13,6 +13,14 @@ import SidebarItem from "../SidebarItem/SidebarItem";
 import { useSelector } from "react-redux";
 import { getUserAuthData } from "units/User";
 import { getSidebarItems } from "../../model/selectors/getSidebarItems";
+import { Icon, IconTheme } from "shared/ui/Icon/Icon";
+import Text, { FontWeightText, SizeText, ThemeText } from "shared/ui/Text/Text";
+import LogoIcon from "shared/assets/icons/logo.svg";
+import LessSignIcon from "shared/assets/icons/less-sign.svg";
+import MoreSignIcon from "shared/assets/icons/more-sign.svg";
+import SearchSvg from "shared/assets/icons/search.svg";
+import Input, { InputTheme, InputType } from "shared/ui/Input/Input";
+import { APPLICATION_NAME } from "shared/const/const";
 
 interface SidebarProps {
   className?: string;
@@ -20,46 +28,68 @@ interface SidebarProps {
 
 const Sidebar = memo(({ className }: SidebarProps) => {
   const [collapsed, setCollapsed] = useState(false);
-  const isAuth = useSelector(getUserAuthData);
-  const sidebarItemList = useSelector(getSidebarItems);
+  const { t } = useTranslation();
+  // const isAuth = useSelector(getUserAuthData);
+  // const sidebarItemList = useSelector(getSidebarItems);
 
   const onToggle = () => setCollapsed((prev) => !prev);
 
-  const sidebarItems = useMemo(
-    () =>
-      sidebarItemList
-        .filter((item) => {
-          if (item.authOnly && !isAuth) return false;
-          return true;
-        })
-        .map((item) => (
-          <SidebarItem item={item} collapsed={collapsed} key={item.link} />
-        )),
-    [collapsed, isAuth, sidebarItemList],
-  );
+  // const sidebarItems = useMemo(
+  //   () =>
+  //     sidebarItemList
+  //       .filter((item) => {
+  //         if (item.authOnly && !isAuth) return false;
+  //         return true;
+  //       })
+  //       .map((item) => (
+  //         <SidebarItem item={item} collapsed={collapsed} key={item.link} />
+  //       )),
+  //   [collapsed, isAuth, sidebarItemList],
+  // );
 
   return (
     <div
-      data-testid="sidebar"
       className={classNames(cls.Sidebar, { [cls.collapsed]: collapsed }, [
         className,
       ])}
     >
-      <div className={cls.items}>{sidebarItems}</div>
-      <Button
-        className={cls.collapsedBtn}
-        theme={ButtonTheme.BACKGROUND}
-        square
-        size={ButtonSize.L}
-        data-testid="toggle-sidebar"
-        onClick={onToggle}
-      >
-        {collapsed ? ">" : "<"}
-      </Button>
-      <div className={cls.switchers}>
+      <div className={cls.header}>
+        <Icon Svg={LogoIcon} theme={IconTheme.SECONDARY} />
+        <Text
+          text={APPLICATION_NAME}
+          theme={ThemeText.SECONDARY}
+          size={SizeText.L}
+          fontWeight={FontWeightText.MEDIUM}
+        />
+        <Button
+          className={cls.collapsedBtn}
+          onClick={onToggle}
+          size={ButtonSize["4XL"]}
+          theme={ButtonTheme.CLEAR_SECONDARY}
+        >
+          {collapsed ? ">" : "<"}
+        </Button>
+      </div>
+      <div className={cls.searchWrapper}>
+        <Icon
+          Svg={SearchSvg}
+          theme={IconTheme.CLEAR}
+          className={cls.searchSvg}
+        />
+        <Input
+          placeholder={t("Поиск")}
+          theme={InputTheme.CLEAR}
+          onChange={() => {}}
+          value={""}
+          type={InputType.TEXT}
+          className={cls.searchInput}
+        />
+      </div>
+
+      {/* <div className={cls.switchers}>
         <ThemeSwitcher />
         <LanguageSwitcher short={collapsed} className={cls.language} />
-      </div>
+      </div> */}
     </div>
   );
 });

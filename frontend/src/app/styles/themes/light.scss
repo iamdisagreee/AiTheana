@@ -2,10 +2,17 @@
   // --bg-color: #e8e8ea;
   // --inverted-bg-color: #090949;
   --primary-color: rgba(13, 12, 12, 1);
+  --primary-color-rgb: 13, 12, 12;
+
   // --secondary-color: ;
   --inverted-primary-color: rgba(246, 239, 239, 1);
   // --inverted-secondary-color: #049604;
-  //skeleton
+  --secondary-color: rgba(233, 162, 186, 1);
+
+  --sidebar-color: rgba(255, 228, 229, 1);
+
+  --semi-primary-opacity: 0.6
+
   --skeleton-color: #fff;
   --skeleton-shadow: rgba(0 0 0 / 20%);
 
@@ -14,4 +21,9 @@
 
   //card
   --card-bg: #d8d8e4;
+
+  // auth
+  --login-form:
+    linear-gradient(rgba(200, 90, 86, 0.5), rgba(200, 90, 86, 0.5)),
+    rgba(216, 176, 176, 0.5);
 }

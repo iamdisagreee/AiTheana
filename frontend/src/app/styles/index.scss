@@ -10,8 +10,10 @@
 
   // min-height: 100vh;
   // background: var(--bg-color);
-  // color: var(--primary-color);
-  font: var(--font-m);
+  color: var(--primary-color);
+  font-family: var(--font-family-main);
+  font-size: var(--font-size-m);
+  line-height: var(--font-line-m);
   font-weight: var(--font-regular);
 }
 

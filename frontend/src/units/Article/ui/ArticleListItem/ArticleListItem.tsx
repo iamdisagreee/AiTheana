@@ -44,7 +44,7 @@ export const ArticleListItem = memo((props: ArticleListItemProps) => {
   const views = (
     <>
       <Text text={article.views.toString()} className={cls.views} />
-      <Icon Icon={EyeIcon} />
+      <Icon Svg={EyeIcon} />
     </>
   );
 

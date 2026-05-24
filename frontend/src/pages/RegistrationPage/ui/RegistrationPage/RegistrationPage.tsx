@@ -19,10 +19,16 @@ import {
   getRegistrationPagePasswordSecond,
   getRegistrationPageUsername,
 } from "pages/RegistrationPage/model/selectors/getRegistrationPageSelectors";
-import Text, { AlignText, ThemeText } from "shared/ui/Text/Text";
+import Text, {
+  AlignText,
+  FontWeightText,
+  SizeText,
+  ThemeText,
+} from "shared/ui/Text/Text";
 import Button, { ButtonFontWeight, ButtonTheme } from "shared/ui/Button/Button";
 import { useNavigate } from "react-router-dom";
 import { sendCodeByEmail } from "pages/RegistrationPage/model/services/sendCodeByEmail";
+import { RoutePath } from "shared/config/routeConfig/routeConfig";
 
 interface RegistrationPageProps {
   className?: string;
@@ -64,19 +70,36 @@ const RegistrationPage = memo((props: RegistrationPageProps) => {
   );
 
   const toggleRegistration = useCallback(async () => {
-    await dispatch(sendCodeByEmail());
-  }, [dispatch]);
+    const result = await dispatch(sendCodeByEmail());
+    if (result.meta.requestStatus === "fulfilled") {
+      navigate(RoutePath.confirm_code);
+    }
+  }, [dispatch, navigate]);
 
   const toggleLogin = useCallback(() => {
-    navigate("/login");
+    navigate(RoutePath.login);
   }, [navigate]);
 
   return (
-    <DynamicModuleLoader reducers={reducers} removeAfterUnmount>
+    <DynamicModuleLoader reducers={reducers} removeAfterUnmount={false}>
       <AuthLayout>
-        <div className={cls.entry}>{t("Регистрация")}</div>
+        <Text
+          text={t("Регистрация")}
+          size={SizeText["4XL"]}
+          theme={ThemeText.INVERTED_PRIMARY}
+          align={AlignText.CENTER}
+          fontWeight={FontWeightText.MEDIUM}
+          className={cls.entry}
+        />
         <div className={cls.loginWrapper}>
-          <div className={cls.loginText}>{t("Логин")}</div>
+          <Text
+            text={t("Логин")}
+            size={SizeText["M"]}
+            theme={ThemeText.INVERTED_PRIMARY}
+            align={AlignText.LEFT}
+            fontWeight={FontWeightText.SEMIBOLD}
+            className={cls.passwordText}
+          />
           <Input
             placeholder={t("Введите вашу электронную почту")}
             theme={InputTheme.PRIMARY}
@@ -86,14 +109,15 @@ const RegistrationPage = memo((props: RegistrationPageProps) => {
           />
         </div>
 
-        <div
-          className={classNames(
-            cls.passwordWrapper,
-            { [cls.withError]: error },
-            [],
-          )}
-        >
-          <div className={cls.passwordText}>{t("Пароль")}</div>
+        <div className={classNames(cls.passwordWrapper, {}, [])}>
+          <Text
+            text={t("Пароль")}
+            size={SizeText["M"]}
+            theme={ThemeText.INVERTED_PRIMARY}
+            align={AlignText.LEFT}
+            fontWeight={FontWeightText.SEMIBOLD}
+            className={cls.passwordText}
+          />
           <Input
             placeholder={t("Введите ваш пароль")}
             theme={InputTheme.PRIMARY}
@@ -102,7 +126,14 @@ const RegistrationPage = memo((props: RegistrationPageProps) => {
             type={InputType.PASSWORD}
             className={cls.inputPasswordFirst}
           />
-          <div className={cls.passwordText}>{t("Введите пароль еще раз")}</div>
+          <Text
+            text={t("Введите пароль еще раз")}
+            size={SizeText["M"]}
+            theme={ThemeText.INVERTED_PRIMARY}
+            align={AlignText.LEFT}
+            fontWeight={FontWeightText.SEMIBOLD}
+            className={cls.passwordText}
+          />
           <Input
             placeholder={t("Введите ваш пароль")}
             theme={InputTheme.PRIMARY}
@@ -112,16 +143,17 @@ const RegistrationPage = memo((props: RegistrationPageProps) => {
             className={cls.inputPasswordSecond}
           />
         </div>
-        {error && (
-          <div className={cls.errorWrapper}>
+        <div className={cls.errorWrapper}>
+          {error && (
             <Text
               align={AlignText.CENTER}
               text={error}
               theme={ThemeText.ERROR}
               className={cls.error}
             />
-          </div>
-        )}
+          )}
+        </div>
+
         <div className={cls.buttonsWrapper}>
           <Button
             theme={ButtonTheme.BASE}

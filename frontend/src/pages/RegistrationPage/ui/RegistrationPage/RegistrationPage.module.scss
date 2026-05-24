@@ -1,9 +1,7 @@
 .entry {
-  font: var(--font-xl);
   display: flex;
   justify-content: center;
   margin-bottom: 70px;
-  font-weight: 500;
 }
 
 .loginWrapper {
@@ -22,8 +20,9 @@
 }
 
 .passwordWrapper {
-  margin-bottom: 70px;
+  margin-bottom: 15px;
 }
+
 .inputPasswordFirst,
 .inputPasswordSecond {
   border-radius: 24px;
@@ -36,28 +35,25 @@
   margin-bottom: 25px;
 }
 
-.passwordText {
-  font-weight: 600;
-}
-
-.withError {
-  margin-bottom: 15px;
-}
-
 .errorWrapper {
   margin-bottom: 55px;
   display: flex;
   justify-content: center;
   align-items: center;
+  min-height: calc(var(--font-line-m) * 2);
+}
+
+.error {
+  max-width: var(--login-error-width);
 }
 
 .error p {
-  max-width: 300px;
-  display: -webkit-box;
-  -webkit-line-clamp: 2; /* количество строк до обрезки */
-  -webkit-box-orient: vertical;
   overflow: hidden;
-  /* Никакого white-space: nowrap; */
+  word-break: break-word;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
 }
 
 .buttonsWrapper {

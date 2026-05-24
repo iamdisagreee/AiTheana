@@ -9,6 +9,16 @@
   background: var(--inverted-primary-color);
 }
 
+.clear {
+  padding: 0px;
+  border: none;
+  background: none;
+  outline: none;
+  background: none;
+  color: var(--primary-color);
+  opacity: var(--semi-primary-opacity);
+}
+
 .inputWrapper {
   gap: 5px;
   display: flex;

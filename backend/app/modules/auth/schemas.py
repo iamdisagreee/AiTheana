@@ -4,11 +4,11 @@ from pydantic import BaseModel, EmailStr, Field
 
 class RegistrationRequest(CamelCaseModel):
     email: EmailStr
+    password: str
 
 
 class RegistrationConfirm(CamelCaseModel):
     email: EmailStr
-    password: str
     enteredCode: int
 
 

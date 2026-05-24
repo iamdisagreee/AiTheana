@@ -1,6 +1,7 @@
 import { AboutPage } from "pages/AboutPage";
 import { ArticleDetailsPage } from "pages/ArticleDetailsPage";
 import { ArticlesPage } from "pages/ArticlesPage";
+import { ChatsPage } from "pages/ChatsPage";
 import { ConfirmCodePage } from "pages/ConfirmCodePage";
 import { LoginPage } from "pages/LoginPage";
 import { MainPage } from "pages/MainPage";
@@ -24,6 +25,7 @@ export enum AppRoutes {
   REGISTRATION = "registration",
   // AUTH_LAYOUT = "auth_layout",
   CONFIRM_CODE = "confirm_code",
+  CHATS = "chats",
   //
   NOT_FOUND = "not_found",
 }
@@ -37,6 +39,7 @@ export const RoutePath: Record<AppRoutes, string> = {
   [AppRoutes.LOGIN]: "/login",
   [AppRoutes.REGISTRATION]: "/registration",
   [AppRoutes.CONFIRM_CODE]: "/confirm-code",
+  [AppRoutes.CHATS]: "/chats",
   [AppRoutes.NOT_FOUND]: "*",
 };
 
@@ -75,6 +78,10 @@ export const routeConfig: Record<AppRoutes, AppRouterProps> = {
   [AppRoutes.CONFIRM_CODE]: {
     path: RoutePath.confirm_code,
     element: <ConfirmCodePage />,
+  },
+  [AppRoutes.CHATS]: {
+    path: RoutePath.chats,
+    element: <ChatsPage />,
   },
   // [AppRoutes.AUTH_LAYOUT]: {
   //   element: <AuthLayout />,

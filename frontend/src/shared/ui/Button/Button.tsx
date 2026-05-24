@@ -4,7 +4,8 @@ import cls from "./Button.module.scss";
 
 export enum ButtonTheme {
   CLEAR = "clear",
-  CLEAR_INVERTED = "clearInverted",
+  CLEAR_INVERTED = "clear_inverted",
+  CLEAR_SECONDARY = "clear_secondary",
   OUTLINE = "outline",
   OUTLINE_RED = "outline_red",
   BACKGROUND = "background",
@@ -13,9 +14,12 @@ export enum ButtonTheme {
 }
 
 export enum ButtonSize {
-  "M" = "sizeM",
-  "L" = "sizeL",
-  "XL" = "sizeXL",
+  "M" = "size_m",
+  "L" = "size_l",
+  "XL" = "size_xl",
+  "2XL" = "size_2xl",
+  "3XL" = "size_3xl",
+  "4XL" = "size_4xl",
 }
 
 export enum ButtonFontWeight {
@@ -40,7 +44,7 @@ const Button = memo((props: ButtonProps) => {
     children,
     theme = ButtonTheme.CLEAR,
     square,
-    size = ButtonSize.L,
+    size = ButtonSize.M,
     fontWeight = ButtonFontWeight.REGULAR,
     disabled,
     ...otherProps

@@ -26,12 +26,12 @@ class AuthService:
         self.repo = repo
         self.redis = redis
 
-    async def registration_request(self, email: str):
+    async def registration_request(self, email: str, password: str):
         user = await self.repo.get_user_by_email(email)
-        if user:
+        if user and user.is_activated:
             raise HTTPException(
                 status_code=status.HTTP_400_BAD_REQUEST,
-                detail=f"Email {email} already registered",
+                detail="Email already registered",
             )
 
         header = "Код подтверждения"
@@ -56,6 +56,13 @@ class AuthService:
                 detail="Invalide credentials for smtplib",
             ) from None
 
+        username = self.create_username(email=email)
+        user = await self.repo.add_user(
+            username=username,
+            email=email,
+            hashed_password=hash_password(password=password),
+        )
+
         # Добавляем в redis-хранилище email:auth_code
         await self.redis.set(email, auth_code)
 
@@ -64,10 +71,23 @@ class AuthService:
     async def registration_confirm(
         self,
         email: str,
-        password: str,
         entered_code: int,
         response: Response,
     ):
+        user = await self.repo.get_user_by_email(email)
+
+        if not user:
+            raise HTTPException(
+                status_code=status.HTTP_404_NOT_FOUND,
+                detail="Email did not start activation",
+            )
+
+        if user.is_activated:
+            raise HTTPException(
+                status_code=status.HTTP_400_BAD_REQUEST,
+                detail="Email already activated",
+            )
+
         correct_code = await self.redis.get(email)
 
         if not correct_code:
@@ -82,12 +102,13 @@ class AuthService:
                 detail="Incorrect code entered",
             )
 
-        username = self.create_username(email=email)
-        user = await self.repo.add_user(
-            username=username,
-            email=email,
-            hashed_password=hash_password(password=password),
-        )
+        # username = self.create_username(email=email)
+        # user = await self.repo.add_user(
+        #     username=username,
+        #     email=email,
+        #     hashed_password=hash_password(password=password),
+        # )
+        await self.repo.update_user_activated(email=email)
 
         access_token, refresh_token = create_tokens(
             access_data={"sub": str(user.id)},
@@ -119,6 +140,12 @@ class AuthService:
                 status_code=status.HTTP_401_UNAUTHORIZED,
                 detail="Incorrect email",
                 headers={"WWW-Authentication": "Bearer"},
+            )
+
+        if not user.is_activated:
+            raise HTTPException(
+                status_code=status.HTTP_400_BAD_REQUEST,
+                detail="User not activated",
             )
 
         try:
@@ -153,6 +180,12 @@ class AuthService:
         return TokenResponse(access_token=access_token, user=user)
 
     async def logout(self, response: Response, user: User):
+        if not user.is_activated:
+            raise HTTPException(
+                status_code=status.HTTP_400_BAD_REQUEST,
+                detail="User not activated",
+            )
+
         await self.repo.delete_refresh_token(user_id=user.id)
         response.delete_cookie(COOKIE_REFRESH_TOKEN_KEY)
 
@@ -163,7 +196,7 @@ class AuthService:
         response: Response,
         refresh_token: str | None,
     ):
-        if refresh_token is None:
+        if not refresh_token:
             raise HTTPException(
                 status_code=status.HTTP_401_UNAUTHORIZED,
                 detail="Refresh token not found in cookies",
@@ -196,6 +229,12 @@ class AuthService:
             )
 
         user = await self.repo.get_user_by_id(user_id=token_data.id)
+
+        if not user.is_activated:
+            raise HTTPException(
+                status_code=status.HTTP_400_BAD_REQUEST,
+                detail="User not activated",
+            )
 
         access_token, refresh_token = create_tokens(
             access_data={"sub": str(user.id)},

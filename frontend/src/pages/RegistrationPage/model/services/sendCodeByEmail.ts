@@ -2,7 +2,10 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import { ThunkConfig } from "app/providers/StoreProvider/config/StateSchema";
 import { SendCodeUser, User, userActions, UserSchema } from "units/User";
 
-import { getRegistrationPageUsername } from "../selectors/getRegistrationPageSelectors";
+import {
+  getRegistrationPagePasswordFirst,
+  getRegistrationPageUsername,
+} from "../selectors/getRegistrationPageSelectors";
 
 export const sendCodeByEmail = createAsyncThunk<
   void,
@@ -12,11 +15,13 @@ export const sendCodeByEmail = createAsyncThunk<
   const { extra, dispatch, rejectWithValue, getState } = thunkApi;
 
   const username = getRegistrationPageUsername(getState());
+  const password = getRegistrationPagePasswordFirst(getState());
   try {
     const response = await extra.api.post<SendCodeUser>(
       "auth/registration/request",
       {
         email: username,
+        password,
       },
     );
 
@@ -24,7 +29,11 @@ export const sendCodeByEmail = createAsyncThunk<
       throw new Error("Непредвиденная ошибка!");
     }
 
-    return extra.navigate?.("/confirm-code");
+    const userSchema: UserSchema = { user: { email: username } };
+
+    dispatch(userActions.setAuthData(userSchema));
+
+    // return extra.navigate?.("/confirm-code");
   } catch (e) {
     return rejectWithValue(
       e.response?.data?.detail[0].msg ?? e.response?.data?.detail ?? e.message,

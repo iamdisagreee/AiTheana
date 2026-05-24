@@ -24,8 +24,8 @@ class User(CamelCaseModel):
     id: int
     email: str
     username: str
+    is_activated: bool
     created_at: datetime
-
 
 
 class DetailResponse(CamelCaseModel):

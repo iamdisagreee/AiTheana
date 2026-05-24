@@ -2,10 +2,13 @@
   position: relative;
 
   width: var(--sidebar-width);
-  height: calc(100vh - var(--navbar-height));
+  height: 100vh;
 
-  background: var(--inverted-bg-color);
+  background: var(--sidebar-color);
   transition: width 0.3s linear;
+}
+
+.header {
 }
 
 .switchers {
@@ -37,9 +40,9 @@
 }
 
 .collapsedBtn {
-  position: absolute;
-  right: -32px;
-  bottom: 40px;
+  // position: absolute;
+  // right: -32px;
+  // bottom: 40px;
 }
 
 .items {
@@ -53,4 +56,29 @@
   display: flex;
   align-items: center;
   gap: 20px;
+}
+
+.searchWrapper {
+  margin: 0 30px;
+  padding: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(var(--primary-color-rgb), 0.11);
+  gap: 20px;
+  border-radius: 36px;
+}
+
+.searchSvg {
+  fill: none;
+  stroke: var(--primary-color);
+  stroke-width: 1.6px;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-opacity: 0.3;
+  flex-shrink: 0;
+}
+
+.searchInput {
+  width: 100%;
 }

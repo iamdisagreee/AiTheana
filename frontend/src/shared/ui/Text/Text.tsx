@@ -4,7 +4,9 @@ import cls from "./Text.module.scss";
 
 export enum ThemeText {
   PRIMARY = "primary",
+  SEMI_PRIMARY = "semi_primary",
   INVERTED_PRIMARY = "inverted_primary",
+  SECONDARY = "secondary",
   ERROR = "error",
 }
 
@@ -22,6 +24,13 @@ export enum SizeText {
   "2XL" = "size_2xl",
   "3XL" = "size_3xl",
   "4XL" = "size_4xl",
+  "11XL" = "size_11xl",
+}
+
+export enum FontWeightText {
+  "REGULAR" = "regular",
+  "MEDIUM" = "medium",
+  "SEMIBOLD" = "semibold",
 }
 
 interface TextProps {
@@ -31,6 +40,7 @@ interface TextProps {
   theme?: ThemeText;
   align?: AlignText;
   size?: SizeText;
+  fontWeight?: FontWeightText;
 }
 
 const Text = memo((props: TextProps) => {
@@ -41,6 +51,7 @@ const Text = memo((props: TextProps) => {
     theme = ThemeText.PRIMARY,
     align = AlignText.LEFT,
     size = SizeText.M,
+    fontWeight = FontWeightText.REGULAR,
   } = props;
 
   return (
@@ -52,8 +63,12 @@ const Text = memo((props: TextProps) => {
         cls[size],
       ])}
     >
-      {title && <p className={cls.title}>{title}</p>}
-      {text && <p className={cls.text}>{text}</p>}
+      {title && (
+        <p className={classNames(cls.title, {}, [cls[fontWeight]])}>{title}</p>
+      )}
+      {text && (
+        <p className={classNames(cls.text, {}, [cls[fontWeight]])}>{text}</p>
+      )}
     </div>
   );
 });

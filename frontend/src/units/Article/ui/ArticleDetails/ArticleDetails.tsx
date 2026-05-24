@@ -116,11 +116,11 @@ export const ArticleDetails = memo(({ className, id }: ArticleDetailsProps) => {
           <Text title={data?.title} text={data?.subtitle} size={SizeText.L} />
         </div>
         <div className={cls.views}>
-          <Icon Icon={EyeIcon} />
+          <Icon Svg={EyeIcon} />
           <Text text={data?.views.toString()} />
         </div>
         <div className={cls.calendar}>
-          <Icon Icon={Calendar} />
+          <Icon Svg={Calendar} />
           <Text text={data?.createdAt} />
         </div>
         <>{data?.blocks.map(renderBlock)}</>

@@ -40,7 +40,7 @@ export const ArticleViewSelector = memo((props: ArticleViewSelectorProps) => {
           theme={ButtonTheme.CLEAR}
         >
           <Icon
-            Icon={iconView.icon}
+            Svg={iconView.icon}
             className={classNames(
               "",
               { [cls.notSelected]: iconView.view !== view },

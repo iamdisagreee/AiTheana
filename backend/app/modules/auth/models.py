@@ -1,7 +1,15 @@
 from datetime import datetime
 
 from app.database import BaseSchema
-from sqlalchemy import DateTime, ForeignKey, Integer, String, func
+from sqlalchemy import (
+    Boolean,
+    DateTime,
+    ForeignKey,
+    Integer,
+    String,
+    false,
+    func,
+)
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 
@@ -14,6 +22,9 @@ class User(BaseSchema):
     username: Mapped[str] = mapped_column(String, nullable=False)
     email: Mapped[str] = mapped_column(String, unique=True, nullable=False)
     hashed_password: Mapped[str] = mapped_column(String, nullable=False)
+    is_activated: Mapped[bool] = mapped_column(
+        Boolean, server_default=false(), nullable=False
+    )
     created_at: Mapped[datetime] = mapped_column(
         DateTime(timezone=True), server_default=func.now(), nullable=False
     )

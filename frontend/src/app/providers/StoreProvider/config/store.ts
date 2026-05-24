@@ -21,7 +21,7 @@ const staticReducers: ReducersMapObject<StateSchema> = {
 export const createReduxStore = (
   initialState?: StateSchema,
   asyncReducers?: ReducersMapObject<StateSchema>,
-  navigate?: (to: To, options?: NavigateOptions) => void,
+  // navigate?: (to: To, options?: NavigateOptions) => void,
 ) => {
   const reducerManager = createReducerManager({
     ...staticReducers,
@@ -30,7 +30,7 @@ export const createReduxStore = (
 
   const extraArgument: ExtraArgumentType = {
     api: $api,
-    navigate,
+    // navigate,
   };
 
   const store = configureStore({

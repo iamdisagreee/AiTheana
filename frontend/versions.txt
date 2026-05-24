@@ -82,3 +82,8 @@ devDependencies - npm i -D @types/react@17.0.39,
     "react-redux": "^7.2.6",
     "react-router-dom": "^6.2.1"
   },
+
+
+
+
+npm install @fontsource/poppins

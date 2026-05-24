@@ -1,4 +1,5 @@
 .AuthLayout {
+  transition: transform 0.5s ease-out;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -19,5 +20,4 @@
   min-width: 35%;
   min-height: 35%;
   background: var(--login-form);
-  display: flex;
 }

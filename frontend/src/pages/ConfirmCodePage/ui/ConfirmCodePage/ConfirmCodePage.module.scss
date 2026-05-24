@@ -1,3 +1,36 @@
 .ConfirmCodePage {
-  
+}
+
+.entry {
+  margin-bottom: 70px;
+}
+
+.subtitle,
+.codeInput {
+  margin-bottom: 30px;
+}
+
+.withError {
+  margin-bottom: 30px;
+}
+
+.errorWrapper {
+  margin-bottom: 66px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: calc(var(--font-line-m) * 2);
+}
+
+.error {
+  max-width: var(--login-error-width);
+}
+
+.error p {
+  overflow: hidden;
+  word-break: break-word;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
 }

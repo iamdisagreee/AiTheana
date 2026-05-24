@@ -37,9 +37,21 @@
   --font-5xl: var(--font-size-5xl) / var(--font-line-5xl)
     var(--font-family-main);
 
+  --font-size-11xl: 68px;
+  --font-line-11xl: 76px;
+  --font-11xl: var(--font-size-11xl) / var(--font-line-11xl)
+    var(--font-family-main);
+
+  --font-size-12xl: 72px;
+  --font-line-12xl: 80px;
+  --font-12xl: var(--font-size-12xl) / var(--font-line-12xl)
+    var(--font-family-main);
+
   --font-regular: 400;
   --font-medium: 500;
   --font-semibold: 600;
+
+  --login-error-width: 250px;
   //Размеры
 
   --navbar-height: 50px;
@@ -54,7 +66,4 @@
   --error-secondary: #5c1111;
 
   //
-  --login-form:
-    linear-gradient(rgba(200, 90, 86, 0.5), rgba(200, 90, 86, 0.5)),
-    rgba(216, 176, 176, 0.5);
 }

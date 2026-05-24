@@ -1,12 +1,17 @@
 .Text {
 }
 
-.primary {
+.primary,
+.semi_primary {
   color: var(--primary-color);
 }
 
 .semi_primary {
-  color: var(--semi-primary-color);
+  opacity: var(--semi-primary-opacity);
+}
+
+.secondary {
+  color: var(--secondary-color);
 }
 
 .error {
@@ -20,55 +25,78 @@
 
 .size_m {
   .title {
-    font: var(--font-l);
+    font-size: var(--font-size-l);
+    line-height: var(--font-line-l);
   }
   .text {
-    font: var(--font-m);
+    font-size: var(--font-size-m);
+    line-height: var(--font-line-m);
   }
 }
 
 .size_l {
   .title {
-    font: var(--font-xl);
+    font-size: var(--font-size-xl);
+    line-height: var(--font-line-xl);
   }
   .text {
-    font: var(--font-l);
+    font-size: var(--font-size-l);
+    line-height: var(--font-line-l);
   }
 }
 
 .size_xl {
   .title {
-    font: var(--font-2xl);
+    font-size: var(--font-size-2xl);
+    line-height: var(--font-line-2xl);
   }
   .text {
-    font: var(--font-xl);
+    font-size: var(--font-size-xl);
+    line-height: var(--font-line-xl);
   }
 }
 
 .size_2xl {
   .title {
-    font: var(--font-3xl);
+    font-size: var(--font-size-3xl);
+    line-height: var(--font-line-3xl);
   }
   .text {
-    font: var(--font-2xl);
+    font-size: var(--font-size-2xl);
+    line-height: var(--font-line-2xl);
   }
 }
 
 .size_3xl {
   .title {
-    font: var(--font-4xl);
+    font-size: var(--font-size-4xl);
+    line-height: var(--font-line-4xl);
   }
   .text {
-    font: var(--font-3xl);
+    font-size: var(--font-size-3xl);
+    line-height: var(--font-line-3xl);
   }
 }
 
 .size_4xl {
   .title {
-    font: var(--font-5xl);
+    font-size: var(--font-size-5xl);
+    line-height: var(--font-line-5xl);
   }
   .text {
-    font: var(--font-4xl);
+    font-size: var(--font-size-4xl);
+    line-height: var(--font-line-4xl);
+  }
+}
+
+.size_11xl {
+  .title {
+    font-size: var(--font-size-12xl);
+    line-height: var(--font-line-12xl);
+  }
+  .text {
+    font-size: var(--font-size-11xl);
+    line-height: var(--font-line-11xl);
   }
 }
 
@@ -82,4 +110,16 @@
 
 .right {
   text-align: right;
+}
+
+.regular {
+  font-weight: var(--font-regular);
+}
+
+.medium {
+  font-weight: var(--font-medium);
+}
+
+.semibold {
+  font-weight: var(--font-semibold);
 }

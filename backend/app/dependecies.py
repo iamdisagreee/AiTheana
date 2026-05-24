@@ -59,7 +59,6 @@ async def get_current_user(
     token: Annotated[str, Depends(oauth2_scheme)],
     auth_repo: AuthRepository = Depends(get_auth_repository),
 ) -> User:
-    print("token", token)
     try:
         token_data = validate_access_token(token)
     except jwt.ExpiredSignatureError:
@@ -82,5 +81,10 @@ async def get_current_user(
             detail="User not found",
             headers={"WWW-Authentication": "Bearer"},
         ) from None
+    if not user.is_activated:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="User not activated",
+        )
 
     return user

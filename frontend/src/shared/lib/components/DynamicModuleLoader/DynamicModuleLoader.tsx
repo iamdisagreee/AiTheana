@@ -24,20 +24,20 @@ const DynamicModuleLoader: FC<DynamicModuleLoaderProps> = (props) => {
   const store = useStore() as ReducerManagerStore;
   const dispatch = useDispatch();
 
+  const initializedReducers = store.reducerManager.getReducerMap();
+
+  Object.entries(reducers).forEach(([name, reducer]) => {
+    if (!initializedReducers[name as StateSchemaKeys]) {
+      store.reducerManager.add(name as StateSchemaKeys, reducer);
+      dispatch({ type: `@INIT GOGO ${name}` });
+    }
+  });
   useEffect(() => {
-    const initializedReducers = store.reducerManager.getReducerMap();
-
-    Object.entries(reducers).forEach(([name, reducer]) => {
-      if (!initializedReducers[name as StateSchemaKeys]) {
-        store.reducerManager.add(name as StateSchemaKeys, reducer);
-        dispatch({ type: `@INIT GOGO ${name}` });
-      }
-    });
-
     return () => {
       if (removeAfterUnmount) {
         Object.entries(reducers).forEach(([name, _]) => {
           store.reducerManager.remove(name as StateSchemaKeys);
+          console.log(`@END ${name}`);
           dispatch({ type: `@END ${name}` });
         });
       }

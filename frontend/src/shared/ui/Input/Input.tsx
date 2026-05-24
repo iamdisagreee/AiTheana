@@ -16,6 +16,7 @@ type InputPropsExtends = Omit<
 
 export enum InputTheme {
   PRIMARY = "primary",
+  CLEAR = "clear",
 }
 
 export enum InputType {
