@@ -89,7 +89,7 @@ const ConfirmCodePage = memo((props: ConfirmCodePageProps) => {
         <Text
           text={`${t("Мы отправили код на почту")} ${user?.email}`}
           size={SizeText.L}
-          theme={ThemeText.SEMI_PRIMARY}
+          theme={ThemeText.SEMI_PRIMARY_HIGH}
           align={AlignText.CENTER}
           fontWeight={FontWeightText.REGULAR}
           className={cls.subtitle}
@@ -116,7 +116,7 @@ const ConfirmCodePage = memo((props: ConfirmCodePageProps) => {
           <Text
             text={t("Вернуться")}
             size={SizeText.L}
-            theme={ThemeText.SEMI_PRIMARY}
+            theme={ThemeText.SEMI_PRIMARY_HIGH}
             fontWeight={FontWeightText.MEDIUM}
             className={cls.back}
           />

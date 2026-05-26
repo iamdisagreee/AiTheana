@@ -4,6 +4,7 @@ import { FC, memo, SVGProps } from "react";
 
 export enum IconTheme {
   CLEAR = "clear",
+  INVERTED_PRIMARY = "inverted_primary",
   SECONDARY = "secondary",
 }
 

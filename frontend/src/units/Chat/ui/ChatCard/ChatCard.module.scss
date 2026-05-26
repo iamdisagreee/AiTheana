@@ -1,0 +1,12 @@
+.ChatCard {
+  display: flex;
+  align-items: center;
+  background-color: var(--secondary-color);
+  border-radius: 36px;
+  padding: 10px 18px;
+  width: 210px;
+  height: 47px;
+  margin-bottom: 10px;
+  opacity: var(--inactive-opacity);
+  // margin-bottom: 200px;
+}

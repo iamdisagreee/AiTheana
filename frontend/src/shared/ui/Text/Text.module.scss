@@ -2,12 +2,21 @@
 }
 
 .primary,
-.semi_primary {
+.semi_primary_high,
+.semi_primary_low {
   color: var(--primary-color);
 }
 
-.semi_primary {
-  opacity: var(--semi-primary-opacity);
+.semi_primary_high {
+  opacity: var(--semi-primary-opacity-high);
+}
+
+.semi_primary_low {
+  opacity: var(--semi-primary-opacity-low);
+}
+
+.inverted_primary {
+  color: var(--inverted-primary-color);
 }
 
 .secondary {

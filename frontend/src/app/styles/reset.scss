@@ -12,7 +12,25 @@ select {
   font: inherit;
 }
 
+::-webkit-scrollbar {
+  width: 10px; /* Ширина всего элемента навигации */
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(
+    var(--secindary-color-rgb),
+    var(--inactive-opacity)
+  ); /* Цвет дорожки */
+  border-radius: 20px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(var(--secindary-color-rgb), 1); /* Цвет дорожки */
+
+  border-radius: 20px;
+}
+
 // .input {
 //   border-bottom: none;
-//   outline: none; 
+//   outline: none;
 // }

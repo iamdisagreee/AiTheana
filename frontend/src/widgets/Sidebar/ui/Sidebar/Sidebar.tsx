@@ -19,14 +19,18 @@ import LogoIcon from "shared/assets/icons/logo.svg";
 import LessSignIcon from "shared/assets/icons/less-sign.svg";
 import MoreSignIcon from "shared/assets/icons/more-sign.svg";
 import SearchSvg from "shared/assets/icons/search.svg";
+import PlusSvg from "shared/assets/icons/plus.svg";
 import Input, { InputTheme, InputType } from "shared/ui/Input/Input";
 import { APPLICATION_NAME } from "shared/const/const";
+import { Chat, ChatList } from "units/Chat";
 
 interface SidebarProps {
   className?: string;
+  chats: Chat[];
 }
 
-const Sidebar = memo(({ className }: SidebarProps) => {
+const Sidebar = memo((props: SidebarProps) => {
+  const { className, chats } = props;
   const [collapsed, setCollapsed] = useState(false);
   const { t } = useTranslation();
   // const isAuth = useSelector(getUserAuthData);
@@ -54,21 +58,27 @@ const Sidebar = memo(({ className }: SidebarProps) => {
       ])}
     >
       <div className={cls.header}>
-        <Icon Svg={LogoIcon} theme={IconTheme.SECONDARY} />
+        <Icon
+          Svg={LogoIcon}
+          theme={IconTheme.SECONDARY}
+          className={cls.headerSvg}
+        />
         <Text
           text={APPLICATION_NAME}
           theme={ThemeText.SECONDARY}
           size={SizeText.L}
           fontWeight={FontWeightText.MEDIUM}
+          className={cls.application}
         />
-        <Button
-          className={cls.collapsedBtn}
+        {/* Будущая фича */}
+        {/* <Button
           onClick={onToggle}
           size={ButtonSize["4XL"]}
           theme={ButtonTheme.CLEAR_SECONDARY}
+          className={cls.collapsedBtn}
         >
           {collapsed ? ">" : "<"}
-        </Button>
+        </Button> */}
       </div>
       <div className={cls.searchWrapper}>
         <Icon
@@ -86,10 +96,25 @@ const Sidebar = memo(({ className }: SidebarProps) => {
         />
       </div>
 
-      {/* <div className={cls.switchers}>
-        <ThemeSwitcher />
-        <LanguageSwitcher short={collapsed} className={cls.language} />
-      </div> */}
+      <Button onClick={() => {}} className={cls.addWrapper}>
+        {/* <div className={cls.addWrapper}> */}
+        <div className={cls.addSvgWrapper}>
+          <Icon
+            Svg={PlusSvg}
+            theme={IconTheme.INVERTED_PRIMARY}
+            className={cls.addSvg}
+          />
+        </div>
+        <Text
+          text={t("Новый чат")}
+          size={SizeText.M}
+          theme={ThemeText.SEMI_PRIMARY_LOW}
+          fontWeight={FontWeightText.MEDIUM}
+        ></Text>
+        {/* </div> */}
+      </Button>
+      <div className={cls.line} />
+      <ChatList chats={chats} className={cls.chatList} />
     </div>
   );
 });

@@ -8,10 +8,14 @@
   --inverted-primary-color: rgba(246, 239, 239, 1);
   // --inverted-secondary-color: #049604;
   --secondary-color: rgba(233, 162, 186, 1);
+  --secindary-color-rgb: 233, 162, 186;
 
   --sidebar-color: rgba(255, 228, 229, 1);
 
-  --semi-primary-opacity: 0.6
+  //opacity
+  --semi-primary-opacity-high: 0.6;
+  --semi-primary-opacity-low: 0.3;
+  --inactive-opacity: 0.7;
 
   --skeleton-color: #fff;
   --skeleton-shadow: rgba(0 0 0 / 20%);

@@ -4,7 +4,8 @@ import cls from "./Text.module.scss";
 
 export enum ThemeText {
   PRIMARY = "primary",
-  SEMI_PRIMARY = "semi_primary",
+  SEMI_PRIMARY_HIGH = "semi_primary_high",
+  SEMI_PRIMARY_LOW = "semi_primary_low",
   INVERTED_PRIMARY = "inverted_primary",
   SECONDARY = "secondary",
   ERROR = "error",

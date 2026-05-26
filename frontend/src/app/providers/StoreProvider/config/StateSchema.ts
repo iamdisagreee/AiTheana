@@ -16,6 +16,7 @@ import { ScrollSaveSchema } from "features/ScrollSave";
 import { RegistrationPageSchema } from "pages/RegistrationPage";
 import { ConfirmCodePageSchema } from "pages/ConfirmCodePage";
 import { LoginSchema } from "features/LoginByUsername";
+import { ChatRequestSchema } from "features/ChatRequest";
 
 export interface StateSchema {
   counter: CounterSchema;
@@ -33,6 +34,7 @@ export interface StateSchema {
   login?: LoginSchema;
   registrationPage?: RegistrationPageSchema;
   confirmCodePage?: ConfirmCodePageSchema;
+  chatRequest?: ChatRequestSchema;
 }
 
 export type StateSchemaKeys = keyof StateSchema;
