@@ -1,5 +1,6 @@
 from contextlib import asynccontextmanager
 
+from app.core.celery import celery_app
 from app.modules.auth import router as auth
 from app.modules.chats import router as chats
 from fastapi import APIRouter, FastAPI

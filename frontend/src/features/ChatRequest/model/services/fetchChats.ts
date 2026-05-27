@@ -3,26 +3,25 @@ import { ThunkConfig } from "app/providers/StoreProvider/config/StateSchema";
 import { Chat } from "units/Chat";
 import { Comment } from "units/Comment";
 import { ChatQueryParams } from "../types/chatQueryParams";
+import { FetchChatsResponse } from "../types/fetchChatsResponse";
 
-// limit: int = Field(default=10, gt=0)
-// sort_by: SortBy = Field(default=SortBy.ID)
-// sort_order: SortOrder = Field(default=SortOrder.ASC)
-// interlocutor_id: int | None = Field(default=Non
-
-export const fetchChatsByParams = createAsyncThunk<
+export const fetchChats = createAsyncThunk<
   Chat[],
   ChatQueryParams,
   ThunkConfig<string>
->("chats/fetchChatsByParams", async (params, thunkApi) => {
+>("chats/fetchChats", async (params, thunkApi) => {
   const { extra, rejectWithValue } = thunkApi;
 
   try {
-    const response = await extra.api.get<Chat[]>(`/chats`, { params });
+    const response = await extra.api.get<FetchChatsResponse>(`/chats`, {
+      params,
+    });
 
     if (!response.data) {
       throw new Error("Данные не загружены!");
     }
-    const chats = response.data;
+    const chats = response.data.chats;
+
     return chats;
   } catch (e) {
     return rejectWithValue(e.message);

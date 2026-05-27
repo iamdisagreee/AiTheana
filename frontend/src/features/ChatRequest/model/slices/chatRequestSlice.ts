@@ -1,9 +1,8 @@
 import { createEntityAdapter, createSlice } from "@reduxjs/toolkit";
-import { Comment } from "units/Comment";
 import { StateSchema } from "app/providers/StoreProvider";
 import { Chat } from "units/Chat";
 import { ChatRequestSchema } from "../types/chatRequestSchema";
-import { fetchChatsByParams } from "../services/fetchChatsByParams";
+import { fetchChats } from "../services/fetchChats";
 import { SortBy } from "../types/chatQueryParams";
 import { SortOrder } from "../types/chatQueryParams";
 
@@ -11,12 +10,12 @@ const chatsAdapter = createEntityAdapter<Chat>({
   selectId: (chat: Chat) => chat.id,
 });
 
-export const getArticleComments = chatsAdapter.getSelectors<StateSchema>(
+export const getChats = chatsAdapter.getSelectors<StateSchema>(
   (state) => state.chatRequest || chatsAdapter.getInitialState(),
 );
 
 const chatRequestSlice = createSlice({
-  name: "chatRequestSlice",
+  name: "chatRequest",
   initialState: chatsAdapter.getInitialState<ChatRequestSchema>({
     ids: [],
     entities: {},
@@ -36,14 +35,14 @@ const chatRequestSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder
-      .addCase(fetchChatsByParams.pending, (state, action) => {
+      .addCase(fetchChats.pending, (state, action) => {
         state.isLoading = true;
         if (action.meta.arg.replace) {
           chatsAdapter.removeAll(state);
         }
         state.error = undefined;
       })
-      .addCase(fetchChatsByParams.fulfilled, (state, action) => {
+      .addCase(fetchChats.fulfilled, (state, action) => {
         // eslint-disable-next-line
         action.meta.arg.replace
           ? chatsAdapter.setAll(state, action.payload)
@@ -51,7 +50,7 @@ const chatRequestSlice = createSlice({
         state.isLoading = false;
         state.params.hasMore = action.payload.length === state?.params?.limit;
       })
-      .addCase(fetchChatsByParams.rejected, (state, action) => {
+      .addCase(fetchChats.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.payload;
       });

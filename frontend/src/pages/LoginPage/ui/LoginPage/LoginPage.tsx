@@ -69,7 +69,7 @@ const LoginPage = memo((props: LoginPageProps) => {
   const toggleLogin = useCallback(async () => {
     const result = await dispatch(loginByUsername({ username, password }));
     if (result.meta.requestStatus === "fulfilled") {
-      navigate(RoutePath.main);
+      navigate(RoutePath.chats);
     }
   }, [dispatch, navigate, username, password]);
 

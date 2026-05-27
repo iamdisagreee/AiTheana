@@ -36,6 +36,8 @@ export enum FontWeightText {
 
 interface TextProps {
   className?: string;
+  titleClassName?: string;
+  textClassName?: string;
   title?: string;
   text?: string;
   theme?: ThemeText;
@@ -47,6 +49,8 @@ interface TextProps {
 const Text = memo((props: TextProps) => {
   const {
     className,
+    titleClassName,
+    textClassName,
     title,
     text,
     theme = ThemeText.PRIMARY,
@@ -65,10 +69,21 @@ const Text = memo((props: TextProps) => {
       ])}
     >
       {title && (
-        <p className={classNames(cls.title, {}, [cls[fontWeight]])}>{title}</p>
+        <p
+          className={classNames(cls.title, {}, [
+            cls[fontWeight],
+            titleClassName,
+          ])}
+        >
+          {title}
+        </p>
       )}
       {text && (
-        <p className={classNames(cls.text, {}, [cls[fontWeight]])}>{text}</p>
+        <p
+          className={classNames(cls.text, {}, [cls[fontWeight], textClassName])}
+        >
+          {text}
+        </p>
       )}
     </div>
   );

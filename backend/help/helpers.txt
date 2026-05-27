@@ -1,4 +1,4 @@
-celery -A app.core.celery.celery_app worker --loglevel=info
+uv run celery -A app.core.celery.celery_app worker --loglevel=info
 
 {
     id: int

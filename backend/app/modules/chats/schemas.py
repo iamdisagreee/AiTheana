@@ -89,6 +89,7 @@ class SortOrder(StrEnum):
 class ChatQueryParams(CamelCaseModel):
     page: int = Field(default=1, gt=0)
     limit: int = Field(default=10, gt=0)
+    search: str | None = Field(default=None)
     sort_by: SortBy = Field(default=SortBy.ID)
     sort_order: SortOrder = Field(default=SortOrder.ASC)
     interlocutor_id: int | None = Field(default=None)

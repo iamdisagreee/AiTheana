@@ -26,6 +26,8 @@ export const ChatCard = memo((props: ChatCardProps) => {
         text={chat.title}
         theme={ThemeText.INVERTED_PRIMARY}
         fontWeight={FontWeightText.MEDIUM}
+        className={cls.title}
+        textClassName={cls.text}
       />
     </Button>
   );

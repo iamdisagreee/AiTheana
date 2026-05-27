@@ -29,7 +29,6 @@ export const loginByUsername = createAsyncThunk<
     const userSchema = response.data as UserSchema;
 
     dispatch(userActions.setAuthData(userSchema));
-
   } catch (e) {
     return rejectWithValue(
       e.response?.data?.detail[0].msg ?? e.response?.data?.detail ?? e.message,

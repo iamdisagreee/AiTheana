@@ -13,7 +13,7 @@ export const ChatList = memo((props: ChatListProps) => {
   const { className, chats } = props;
 
   const renderChat = (chat: Chat) => {
-    return <ChatCard chat={chat} />;
+    return <ChatCard key={chat.id} chat={chat} />;
   };
 
   return (

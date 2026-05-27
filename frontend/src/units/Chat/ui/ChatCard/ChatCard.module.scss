@@ -8,5 +8,14 @@
   height: 47px;
   margin-bottom: 10px;
   opacity: var(--inactive-opacity);
-  // margin-bottom: 200px;
+}
+
+.title {
+  width: 100%;
+}
+
+.text {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }

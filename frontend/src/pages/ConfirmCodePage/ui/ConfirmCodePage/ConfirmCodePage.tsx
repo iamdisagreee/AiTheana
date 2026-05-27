@@ -62,7 +62,7 @@ const ConfirmCodePage = memo((props: ConfirmCodePageProps) => {
   const confirmCode = useCallback(async () => {
     const resultConfirm = await dispatch(confirmCodeByEmail());
     if (resultConfirm.meta.requestStatus === "fulfilled") {
-      navigate(RoutePath.main);
+      navigate(RoutePath.chats);
     }
   }, [dispatch, navigate]);
 

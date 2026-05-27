@@ -96,11 +96,18 @@ class ChatRepository:
             Chat.user_id == user_id,
         )
 
+        if params.search:
+            stmt = stmt.filter(Chat.title.ilike(f"%{params.search}%"))
+
         if params.interlocutor_id:
             stmt = stmt.where(
                 Chat.interlocutor_id == params.interlocutor_id
-            )
+            ).order_by(sort_order)
+        else:
+            stmt = stmt.order_by(
+                Chat.interlocutor_id, sort_order
+            ).distinct(Chat.interlocutor_id)
 
         return await self.postgres.scalars(
-            stmt.offset(offset).limit(params.limit).order_by(sort_order)
+            stmt.offset(offset).limit(params.limit)
         )

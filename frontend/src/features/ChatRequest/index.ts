@@ -1,3 +1,30 @@
 import { ChatRequestSchema } from "./model/types/chatRequestSchema";
+import {
+  ChatQueryParams,
+  SortOrder,
+  SortBy,
+} from "./model/types/chatQueryParams";
+import {
+  getChatRequestError,
+  getChatRequestIsLoading,
+} from "./model/selectors/chatRequestSelectors";
+import {
+  getChats,
+  chatRequestActions,
+  chatRequestReducer,
+} from "./model/slices/chatRequestSlice";
 
-export { ChatRequestSchema };
+import { fetchChats } from "./model/services/fetchChats";
+
+export {
+  ChatRequestSchema,
+  ChatQueryParams,
+  SortOrder,
+  SortBy,
+  getChatRequestError,
+  getChatRequestIsLoading,
+  getChats,
+  chatRequestActions,
+  chatRequestReducer,
+  fetchChats,
+};
