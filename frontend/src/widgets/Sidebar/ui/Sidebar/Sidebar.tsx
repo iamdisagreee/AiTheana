@@ -1,4 +1,4 @@
-import React, { memo, useMemo, useState } from "react";
+import React, { memo, useCallback, useMemo, useState } from "react";
 import { classNames } from "shared/lib/classNames/classNames";
 import cls from "./Sidebar.module.scss";
 import { ThemeSwitcher } from "widgets/ThemeSwitcher";
@@ -22,7 +22,7 @@ import SearchSvg from "shared/assets/icons/search.svg";
 import PlusSvg from "shared/assets/icons/plus.svg";
 import Input, { InputTheme, InputType } from "shared/ui/Input/Input";
 import { APPLICATION_NAME } from "shared/const/const";
-import { Chat, ChatList } from "units/Chat";
+import { Chat, ChatList, ChatListModal } from "units/Chat";
 
 interface SidebarProps {
   className?: string;
@@ -33,23 +33,20 @@ const Sidebar = memo((props: SidebarProps) => {
   const { className, chats } = props;
   const [collapsed, setCollapsed] = useState(false);
   const { t } = useTranslation();
-  // const isAuth = useSelector(getUserAuthData);
-  // const sidebarItemList = useSelector(getSidebarItems);
+  const [currentChat, setCurrentChat] = useState<Chat | undefined>(undefined);
 
-  const onToggle = () => setCollapsed((prev) => !prev);
+  const onCloseModal = useCallback(() => {
+    setCurrentChat(undefined);
+  }, []);
 
-  // const sidebarItems = useMemo(
-  //   () =>
-  //     sidebarItemList
-  //       .filter((item) => {
-  //         if (item.authOnly && !isAuth) return false;
-  //         return true;
-  //       })
-  //       .map((item) => (
-  //         <SidebarItem item={item} collapsed={collapsed} key={item.link} />
-  //       )),
-  //   [collapsed, isAuth, sidebarItemList],
-  // );
+  // const onShowModal = useCallback(() => {
+  //   setIsChatsModal(true);
+  // }, []);
+
+  // const onToggleCollaps = () => setCollapsed((prev) => !prev);
+  const onToggleChat = (chat: Chat) => {
+    setCurrentChat(chat);
+  };
 
   return (
     <div
@@ -115,6 +112,14 @@ const Sidebar = memo((props: SidebarProps) => {
       </Button>
       <div className={cls.line} />
       <ChatList chats={chats} className={cls.chatList} />
+      {currentChat && (
+        <ChatListModal
+          chat={currentChat}
+          isOpen={!!currentChat}
+          onClose={onCloseModal}
+          onChatClick={onToggleChat}
+        />
+      )}
     </div>
   );
 });

@@ -137,7 +137,7 @@ const LoginPage = memo((props: LoginPageProps) => {
         </div>
         <div className={cls.buttonsWrapper}>
           <Button
-            theme={ButtonTheme.BASE}
+            theme={ButtonTheme.BACKGROUND_INVERTED}
             size={ButtonSize.M}
             fontWeight={ButtonFontWeight.MEDIUM}
             onClick={toggleLogin}

@@ -30,6 +30,21 @@
   color: var(--secondary-color);
 }
 
+.background_inverted,
+.background_secondary {
+  border: none;
+  outline: none;
+}
+
+.background_inverted {
+  background: var(--inverted-primary-color);
+}
+
+.background_secondary {
+  background: var(--secondary-color);
+  color: var(--inverted-primary-color);
+}
+
 .outline {
   padding: 10px 15px;
   border: 1px solid var(--primary-color);
@@ -107,12 +122,6 @@
 
 .disabled {
   opacity: 0.5;
-}
-
-.base {
-  background: var(--inverted-primary-color);
-  border: none;
-  outline: none;
 }
 
 .regular {

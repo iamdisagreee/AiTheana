@@ -156,7 +156,7 @@ const RegistrationPage = memo((props: RegistrationPageProps) => {
 
         <div className={cls.buttonsWrapper}>
           <Button
-            theme={ButtonTheme.BASE}
+            theme={ButtonTheme.BACKGROUND_INVERTED}
             fontWeight={ButtonFontWeight.MEDIUM}
             onClick={toggleRegistration}
             className={cls.registrationBtn}

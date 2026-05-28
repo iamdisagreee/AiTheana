@@ -14,9 +14,9 @@ export interface Chat {
   id: number;
   interlocutor_id?: number;
   title?: string;
-  status: ChatStatus;
+  status?: ChatStatus;
   original_period_start?: string;
   original_period_end?: string;
-  created_at: string;
+  created_at?: string;
   updated_at?: string;
 }
