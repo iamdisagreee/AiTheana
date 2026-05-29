@@ -12,11 +12,11 @@ export enum ChatStatus {
 
 export interface Chat {
   id: number;
-  interlocutor_id?: number;
+  interlocutorId?: number;
   title?: string;
   status?: ChatStatus;
-  original_period_start?: string;
-  original_period_end?: string;
-  created_at?: string;
-  updated_at?: string;
+  originalPeriodStart?: string;
+  originalPeriodEnd?: string;
+  createdAt?: string;
+  updatedAt?: string;
 }

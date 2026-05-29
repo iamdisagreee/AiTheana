@@ -7,9 +7,10 @@ import {
 import {
   getChatRequestError,
   getChatRequestIsLoading,
+  getChats,
+  getChatsByInterlocutorId,
 } from "./model/selectors/chatRequestSelectors";
 import {
-  getChats,
   chatRequestActions,
   chatRequestReducer,
 } from "./model/slices/chatRequestSlice";
@@ -24,6 +25,7 @@ export {
   getChatRequestError,
   getChatRequestIsLoading,
   getChats,
+  getChatsByInterlocutorId,
   chatRequestActions,
   chatRequestReducer,
   fetchChats,

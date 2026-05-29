@@ -93,7 +93,7 @@ const reducers: ReducersList = {
 
 const ChatsPage = memo((props: ChatsPageProps) => {
   const { className } = props;
-  const chats = useSelector(getChats.selectAll);
+  const chats = useSelector(getChats);
   const isLoading = useSelector(getChatRequestIsLoading);
   const dispatch = useAppDispatch();
 

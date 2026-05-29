@@ -1,22 +1,63 @@
 import { classNames } from "shared/lib/classNames/classNames";
 import cls from "./ChatListModal.module.scss";
-import { memo } from "react";
-import { Chat } from "units/Chat";
+import { memo, ReactNode, useCallback } from "react";
+import { Chat } from "../../model/types/chat";
+import { ChatList } from "../ChatList/ChatList";
 import Modal from "shared/ui/Modal/Modal";
-import Text, { FontWeightText, SizeText, ThemeText } from "shared/ui/Text/Text";
+import Text, {
+  AlignText,
+  FontWeightText,
+  SizeText,
+  ThemeText,
+} from "shared/ui/Text/Text";
 import Button, { ButtonTheme } from "shared/ui/Button/Button";
 import { t } from "i18next";
+import { Icon, IconTheme } from "shared/ui/Icon/Icon";
+import PlusSvg from "shared/assets/icons/plus.svg";
+import { useSelector } from "react-redux";
+import { fetchChats, getChatsByInterlocutorId } from "features/ChatRequest";
+import { useInitialEffect } from "shared/lib/hooks/useInitialEffect/useInitialEffect";
+import { useAppDispatch } from "shared/lib/hooks/useAppDispatch/useAppDispatch";
+import { useNavigate } from "react-router-dom";
+import { prettyTime } from "shared/lib/functions/prettyTime";
 
 interface ChatListModalProps {
   className?: string;
   chat?: Chat;
   isOpen: boolean;
   onClose: () => void;
-  onChatClick: (chat: Chat) => void;
 }
 
 export const ChatListModal = memo((props: ChatListModalProps) => {
-  const { className, chat, isOpen, onClose, onChatClick } = props;
+  const { className, chat, isOpen, onClose } = props;
+  const chats = useSelector(getChatsByInterlocutorId(chat?.interlocutorId));
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+
+  // console.log(chats);
+
+  useInitialEffect(async () => {
+    await dispatch(fetchChats({ interlocutorId: chat?.interlocutorId }));
+  });
+
+  const onChatClick = useCallback(
+    (chat: Chat) => navigate(`/chats/${chat.id}`),
+    [navigate],
+  );
+
+  const renderChat = (chat: Chat) => {
+    // className={""}
+    const mask = "dd.MM.yy";
+    const text = `${prettyTime(chat.originalPeriodStart || "", mask)}-${prettyTime(chat.originalPeriodEnd || "", mask)}`;
+    return (
+      <Text
+        text={text}
+        theme={ThemeText.INVERTED_PRIMARY}
+        fontWeight={FontWeightText.MEDIUM}
+        align={AlignText.LEFT}
+      />
+    );
+  };
 
   return (
     <Modal
@@ -25,6 +66,13 @@ export const ChatListModal = memo((props: ChatListModalProps) => {
       onClose={onClose}
       lazy
     >
+      <Button onClick={onClose} theme={ButtonTheme.CLEAR}>
+        <Icon
+          Svg={PlusSvg}
+          theme={IconTheme.SECONDARY}
+          className={cls.closeBtn}
+        />
+      </Button>
       <Text
         text={chat?.title}
         size={SizeText["2XL"]}
@@ -47,6 +95,12 @@ export const ChatListModal = memo((props: ChatListModalProps) => {
             fontWeight={FontWeightText.MEDIUM}
           />
         </Button>
+        <ChatList
+          chats={chats}
+          onChatClick={onChatClick}
+          renderContent={renderChat}
+          cardClassName={cls.card}
+        />
       </div>
     </Modal>
   );

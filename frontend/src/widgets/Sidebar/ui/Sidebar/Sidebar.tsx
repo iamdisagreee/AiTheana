@@ -44,8 +44,20 @@ const Sidebar = memo((props: SidebarProps) => {
   // }, []);
 
   // const onToggleCollaps = () => setCollapsed((prev) => !prev);
-  const onToggleChat = (chat: Chat) => {
+  const onChatClick = (chat: Chat) => {
     setCurrentChat(chat);
+  };
+
+  const renderChat = (chat: Chat) => {
+    return (
+      <Text
+        text={chat?.title}
+        theme={ThemeText.INVERTED_PRIMARY}
+        fontWeight={FontWeightText.MEDIUM}
+        className={cls.titleChat}
+        textClassName={cls.textChat}
+      />
+    );
   };
 
   return (
@@ -107,17 +119,21 @@ const Sidebar = memo((props: SidebarProps) => {
           size={SizeText.M}
           theme={ThemeText.SEMI_PRIMARY_LOW}
           fontWeight={FontWeightText.MEDIUM}
-        ></Text>
-        {/* </div> */}
+        />
       </Button>
       <div className={cls.line} />
-      <ChatList chats={chats} className={cls.chatList} />
+      <ChatList
+        chats={chats}
+        onChatClick={onChatClick}
+        renderContent={renderChat}
+        className={cls.chatList}
+        cardClassName={cls.card}
+      />
       {currentChat && (
         <ChatListModal
           chat={currentChat}
           isOpen={!!currentChat}
           onClose={onCloseModal}
-          onChatClick={onToggleChat}
         />
       )}
     </div>

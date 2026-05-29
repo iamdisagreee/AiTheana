@@ -1,4 +1,8 @@
-import { createEntityAdapter, createSlice } from "@reduxjs/toolkit";
+import {
+  createEntityAdapter,
+  createSelector,
+  createSlice,
+} from "@reduxjs/toolkit";
 import { StateSchema } from "app/providers/StoreProvider";
 import { Chat } from "units/Chat";
 import { ChatRequestSchema } from "../types/chatRequestSchema";
@@ -10,15 +14,13 @@ const chatsAdapter = createEntityAdapter<Chat>({
   selectId: (chat: Chat) => chat.id,
 });
 
-export const getChats = chatsAdapter.getSelectors<StateSchema>(
+export const chatsSelector = chatsAdapter.getSelectors<StateSchema>(
   (state) => state.chatRequest || chatsAdapter.getInitialState(),
 );
 
 const chatRequestSlice = createSlice({
   name: "chatRequest",
   initialState: chatsAdapter.getInitialState<ChatRequestSchema>({
-    ids: [],
-    entities: {},
     error: undefined,
     isLoading: false,
     params: {
@@ -31,6 +33,10 @@ const chatRequestSlice = createSlice({
       replace: false,
       hasMore: true,
     },
+    chatIds: [],
+    chatsByInterlocutorId: {},
+    ids: [],
+    entities: {},
   }),
   reducers: {},
   extraReducers: (builder) => {
@@ -43,12 +49,39 @@ const chatRequestSlice = createSlice({
         state.error = undefined;
       })
       .addCase(fetchChats.fulfilled, (state, action) => {
-        // eslint-disable-next-line
-        action.meta.arg.replace
-          ? chatsAdapter.setAll(state, action.payload)
-          : chatsAdapter.addMany(state, action.payload);
         state.isLoading = false;
-        state.params.hasMore = action.payload.length === state?.params?.limit;
+        const chats = action.payload;
+        const params = action.meta.arg;
+
+        chatsAdapter.upsertMany(state, action);
+
+        const chatIds = chats.map((chat) => chat.id);
+
+        //sidebar
+        if (!params.interlocutorId) {
+          if (params.replace) {
+            state.chatIds = chatIds;
+          } else {
+            state.chatIds.push(...chatIds);
+          }
+        }
+
+        //modal
+        else {
+          const currentIds =
+            state.chatsByInterlocutorId[params.interlocutorId] || [];
+
+          state.chatsByInterlocutorId[params.interlocutorId] = params.replace
+            ? chatIds
+            : [...currentIds, ...chatIds];
+        }
+
+        // eslint-disable-next-line
+        // action.meta.arg.replace
+        //   ? chatsAdapter.setAll(state, action.payload)
+        //   : chatsAdapter.addMany(state, action.payload);
+        // state.isLoading = false;
+        // state.params.hasMore = action.payload.length === state?.params?.limit;
       })
       .addCase(fetchChats.rejected, (state, action) => {
         state.isLoading = false;

@@ -1,7 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { ThunkConfig } from "app/providers/StoreProvider/config/StateSchema";
 import { Chat } from "units/Chat";
-import { Comment } from "units/Comment";
 import { ChatQueryParams } from "../types/chatQueryParams";
 import { FetchChatsResponse } from "../types/fetchChatsResponse";
 
@@ -11,7 +10,6 @@ export const fetchChats = createAsyncThunk<
   ThunkConfig<string>
 >("chats/fetchChats", async (params, thunkApi) => {
   const { extra, rejectWithValue } = thunkApi;
-
   try {
     const response = await extra.api.get<FetchChatsResponse>(`/chats`, {
       params,

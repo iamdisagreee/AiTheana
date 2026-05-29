@@ -127,11 +127,22 @@
 }
 
 .chatList {
-  display: flex;
-  flex-direction: column;
-  // justify-content: center;
-  // align-items: center;
-  flex-grow: 1;
-  // min-height: 0;
-  overflow-y: auto;
+  // display: flex;
+  // flex-direction: column;
+  // flex-grow: 1;
+  // overflow-y: auto;
+}
+
+.titleChat {
+  width: 100%;
+}
+
+.textChat {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.card {
+  width: 210px;
 }

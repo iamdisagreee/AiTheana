@@ -37,6 +37,7 @@ $api.interceptors.response.use(
         console.log(e);
       }
     }
+    window.location.href = "/login";
     throw error;
   },
 );

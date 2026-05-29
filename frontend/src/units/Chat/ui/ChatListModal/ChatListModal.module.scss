@@ -1,3 +1,18 @@
 .ChatListModal {
-  
+  position: relative;
+}
+
+.closeBtn {
+  position: absolute;
+  right: 0;
+  top: 0;
+  transform: rotate(45deg);
+}
+
+// .chatsWrapper {
+//   margin: 0px 10px 0px 20px;
+// }
+
+.card {
+  width: 100%;
 }
