@@ -1,6 +1,10 @@
 :root {
   --font-family-main: "Inter", "Times New Roman", Serif;
 
+  --font-size-xs: 12px;
+  --font-line-xs: 20px;
+  --font-xs: var(--font-size-xs) / var(--font-line-xs) var(--font-family-main);
+
   --font-size-s: 16px;
   --font-line-s: 24px;
   --font-s: var(--font-size-s) / var(--font-line-s) var(--font-family-main);
@@ -63,7 +67,7 @@
   --modal-z-index: 10;
 
   --error-primary: #381111;
-  --error-secondary: #5c1111;
+  --error-secondary: #8b1313;
 
   //
 }

@@ -22,7 +22,8 @@ import SearchSvg from "shared/assets/icons/search.svg";
 import PlusSvg from "shared/assets/icons/plus.svg";
 import Input, { InputTheme, InputType } from "shared/ui/Input/Input";
 import { APPLICATION_NAME } from "shared/const/const";
-import { Chat, ChatList, ChatListModal } from "units/Chat";
+import { Chat, ChatList } from "units/Chat";
+import { ChatListModal } from "widgets/ChatListModal";
 
 interface SidebarProps {
   className?: string;

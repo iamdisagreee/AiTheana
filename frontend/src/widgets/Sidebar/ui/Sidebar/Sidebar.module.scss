@@ -8,6 +8,7 @@
   background: var(--back-end-color);
   transition: width 0.3s linear;
   padding: 50px 10px 0px 10px;
+  flex-shrink: 0;
   // overflow: hidden;
 }
 
@@ -127,6 +128,7 @@
 }
 
 .chatList {
+  margin: 0px 10px 0px 20px;
   // display: flex;
   // flex-direction: column;
   // flex-grow: 1;

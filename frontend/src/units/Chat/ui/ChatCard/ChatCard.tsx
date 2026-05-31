@@ -2,7 +2,6 @@ import { classNames } from "shared/lib/classNames/classNames";
 import cls from "./ChatCard.module.scss";
 import { memo, ReactNode, useCallback } from "react";
 import { Chat } from "units/Chat";
-import Text, { FontWeightText, ThemeText } from "shared/ui/Text/Text";
 import Button from "shared/ui/Button/Button";
 
 interface ChatCardProps {

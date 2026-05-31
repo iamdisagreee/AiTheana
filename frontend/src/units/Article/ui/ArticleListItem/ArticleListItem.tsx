@@ -74,7 +74,7 @@ export const ArticleListItem = memo((props: ArticleListItemProps) => {
   return (
     <Card
       className={classNames(cls.ArticleListItem, {}, [className, cls[view]])}
-      onClick={toArticleDetails}
+      // onClick={toArticleDetails}
     >
       <div className={cls.imageWrapper}>
         {image}

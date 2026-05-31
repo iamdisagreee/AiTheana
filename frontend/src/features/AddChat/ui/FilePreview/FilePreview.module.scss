@@ -1,0 +1,48 @@
+.FilePreview {
+  width: 230px;
+  height: 80px;
+  padding: 12px 15px;
+  background-color: var(--back-end-color);
+  border-radius: 34px;
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.fileSvg {
+  fill-rule: nonzero;
+  stroke: var(--primary-color);
+  stroke-linecap: round;
+  stroke-width: 2;
+  flex-shrink: 0;
+}
+
+.info {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+  margin: 0 auto;
+  min-width: 0;
+  padding: 0 10px;
+}
+
+.name {
+  width: 100%;
+}
+
+.nameText {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.plusBtn {
+  // margin-left: auto;
+}
+
+.plusSvg {
+  transform: rotate(45deg);
+  flex-shrink: 0;
+}

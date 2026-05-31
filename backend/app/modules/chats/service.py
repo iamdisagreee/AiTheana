@@ -22,8 +22,8 @@ from .schemas import (
     AnalysEvent,
     ChatQueryParams,
     ChatStatus,
+    EventTimelineItemType,
     EventTimelineResponse,
-    EventTimelineType,
     GetChatsResponse,
     MessageData,
     MessageEvent,
@@ -38,12 +38,6 @@ class ChatService:
         self.repo = repo
 
     async def add_chat(self, file: UploadFile, ai_text: str, user: User):
-        chat = await self.repo.add_chat(
-            user_id=user.id, status=ChatStatus.EMPTY
-        )
-        await self.repo.add_message(
-            chat_id=chat.id, type=MessageType.AI_TEXT, content=ai_text
-        )
 
         raw_bytes = await file.read()
         try:
@@ -52,12 +46,19 @@ class ChatService:
             check_file_size(file_size=file.size)
             check_file_sctructure(raw_bytes=raw_bytes)
         except HTTPException as e:
-            await self.repo.add_message(
-                chat_id=chat.id,
-                type=MessageType.AI_ERROR,
-                content=e.detail,
-            )
+            # await self.repo.add_message(
+            #     chat_id=chat.id,
+            #     type=MessageType.AI_ERROR,
+            #     content=e.detail,
+            # )
             raise
+
+        chat = await self.repo.add_chat(
+            user_id=user.id, status=ChatStatus.EMPTY
+        )
+        await self.repo.add_message(
+            chat_id=chat.id, type=MessageType.AI_TEXT, content=ai_text
+        )
 
         # print(file, file.filename, file.content_type)
         # print(raw_bytes)
@@ -79,8 +80,8 @@ class ChatService:
             async for message in pubsub.listen():
                 # await asyncio.sleep(1)
                 if message["type"] == "message":
-                    data = message["data"].decode()
-                    yield data
+                    data = message["data"]
+                    yield f"data: {data}\n\n"
                     status = json.loads(data).get("status")
                     if status in (
                         "COMPLETED",
@@ -117,9 +118,10 @@ class ChatService:
         timeline = []
         for msg in raw_timeline.mappings():
             match msg.event_type:
-                case EventTimelineType.MESSAGE:
+                case EventTimelineItemType.MESSAGE:
                     timeline.append(
                         MessageEvent(
+                            id=msg["id"],
                             created_at=msg["created_at"],
                             event_type=msg["event_type"],
                             data=MessageData(
@@ -128,9 +130,10 @@ class ChatService:
                             ),
                         )
                     )
-                case EventTimelineType.ANALYS:
+                case EventTimelineItemType.ANALYS:
                     timeline.append(
                         AnalysEvent(
+                            id=msg["id"],
                             created_at=msg["created_at"],
                             event_type=msg["event_type"],
                             data=AnalysData(

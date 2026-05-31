@@ -9,6 +9,9 @@ import React, {
 import { classNames } from "shared/lib/classNames/classNames";
 import cls from "./Modal.module.scss";
 import Portal from "shared/ui/Portal/Portal";
+import Button, { ButtonTheme } from "../Button/Button";
+import { Icon, IconTheme } from "../Icon/Icon";
+import PlusSvg from "shared/assets/icons/plus.svg";
 
 interface ModalProps {
   className?: string;
@@ -79,6 +82,17 @@ const Modal = (props: ModalProps) => {
             className={classNames(cls.content, {}, [className])}
             onClick={stopContent}
           >
+            <Button
+              onClick={handleClosing}
+              theme={ButtonTheme.CLEAR}
+              className={cls.closeBtn}
+            >
+              <Icon
+                Svg={PlusSvg}
+                theme={IconTheme.SECONDARY}
+                className={cls.closeBtnSvg}
+              />
+            </Button>
             {children}
           </div>
         </div>

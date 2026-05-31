@@ -1,0 +1,24 @@
+.ChatContent {
+  display: flex;
+  flex-grow: 1;
+  padding-left: 10%;
+  height: 100vh;
+}
+
+
+.chat {
+  display: flex;
+  flex-direction: column;
+  width: 70%;
+
+}
+
+.eventTimelineList {
+  margin-top: 150px;
+  height: 100%;
+}
+
+.chatInput {
+  margin-top: auto;
+  margin-bottom: 10px;
+}

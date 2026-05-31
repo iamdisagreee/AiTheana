@@ -19,69 +19,11 @@ import DynamicModuleLoader, {
 import { Page } from "widgets/Page/Page";
 import { useInitialEffect } from "shared/lib/hooks/useInitialEffect/useInitialEffect";
 import { useAppDispatch } from "shared/lib/hooks/useAppDispatch/useAppDispatch";
-
-// const chats: Chat[] = [
-//   {
-//     id: 1,
-//     interlocutor_id: 123,
-//     status: ChatStatus.EMPTY,
-//     title: "Chat Владимир",
-//     original_period_start: "2026-05-26T06:15:30Z",
-//     original_period_end: "2026-05-26T06:15:30Z",
-//     created_at: "2026-05-26T06:15:30Z",
-//     updated_at: "2026-05-26T06:15:30Z",
-//   },
-//   {
-//     id: 2,
-//     interlocutor_id: 123,
-//     status: ChatStatus.EMPTY,
-//     title: "Chat Петр",
-//     original_period_start: "2026-05-26T06:15:30Z",
-//     original_period_end: "2026-05-26T06:15:30Z",
-//     created_at: "2026-05-26T06:15:30Z",
-//     updated_at: "2026-05-26T06:15:30Z",
-//   },
-//   {
-//     id: 3,
-//     interlocutor_id: 123,
-//     status: ChatStatus.EMPTY,
-//     title: "Chat Петр",
-//     original_period_start: "2026-05-26T06:15:30Z",
-//     original_period_end: "2026-05-26T06:15:30Z",
-//     created_at: "2026-05-26T06:15:30Z",
-//     updated_at: "2026-05-26T06:15:30Z",
-//   },
-//   {
-//     id: 4,
-//     interlocutor_id: 123,
-//     status: ChatStatus.EMPTY,
-//     title: "Chat Петр",
-//     original_period_start: "2026-05-26T06:15:30Z",
-//     original_period_end: "2026-05-26T06:15:30Z",
-//     created_at: "2026-05-26T06:15:30Z",
-//     updated_at: "2026-05-26T06:15:30Z",
-//   },
-//   {
-//     id: 5,
-//     interlocutor_id: 123,
-//     status: ChatStatus.EMPTY,
-//     title: "Chat Петр",
-//     original_period_start: "2026-05-26T06:15:30Z",
-//     original_period_end: "2026-05-26T06:15:30Z",
-//     created_at: "2026-05-26T06:15:30Z",
-//     updated_at: "2026-05-26T06:15:30Z",
-//   },
-//   {
-//     id: 6,
-//     interlocutor_id: 123,
-//     status: ChatStatus.EMPTY,
-//     title: "Chat Петр",
-//     original_period_start: "2026-05-26T06:15:30Z",
-//     original_period_end: "2026-05-26T06:15:30Z",
-//     created_at: "2026-05-26T06:15:30Z",
-//     updated_at: "2026-05-26T06:15:30Z",
-//   },
-// ];
+import { EventTimelineList } from "units/EventTimeline";
+import { addChatReducer } from "features/AddChat";
+import { ChatContent } from "widgets/ChatContent";
+import { chatStreamReducer } from "features/ChatStream/slices/chatStreamSlice";
+import { eventTimelineReducer } from "features/EventTimeline";
 
 interface ChatsPageProps {
   className?: string;
@@ -89,6 +31,9 @@ interface ChatsPageProps {
 
 const reducers: ReducersList = {
   chatRequest: chatRequestReducer,
+  addChat: addChatReducer,
+  chatStream: chatStreamReducer,
+  eventTimeline: eventTimelineReducer,
 };
 
 const ChatsPage = memo((props: ChatsPageProps) => {
@@ -110,6 +55,7 @@ const ChatsPage = memo((props: ChatsPageProps) => {
       <Page>
         <div className={classNames(cls.ChatsPage, {}, [className])}>
           <Sidebar chats={chats} />
+          <ChatContent />
         </div>
       </Page>
     </DynamicModuleLoader>

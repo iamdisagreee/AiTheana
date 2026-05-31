@@ -1,8 +1,6 @@
 import { classNames } from "shared/lib/classNames/classNames";
 import cls from "./ChatListModal.module.scss";
 import { memo, ReactNode, useCallback } from "react";
-import { Chat } from "../../model/types/chat";
-import { ChatList } from "../ChatList/ChatList";
 import Modal from "shared/ui/Modal/Modal";
 import Text, {
   AlignText,
@@ -20,6 +18,7 @@ import { useInitialEffect } from "shared/lib/hooks/useInitialEffect/useInitialEf
 import { useAppDispatch } from "shared/lib/hooks/useAppDispatch/useAppDispatch";
 import { useNavigate } from "react-router-dom";
 import { prettyTime } from "shared/lib/functions/prettyTime";
+import { Chat, ChatList } from "units/Chat";
 
 interface ChatListModalProps {
   className?: string;
@@ -34,10 +33,10 @@ export const ChatListModal = memo((props: ChatListModalProps) => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
-  // console.log(chats);
-
   useInitialEffect(async () => {
-    await dispatch(fetchChats({ interlocutorId: chat?.interlocutorId }));
+    await dispatch(
+      fetchChats({ interlocutorId: chat?.interlocutorId, replace: true }),
+    );
   });
 
   const onChatClick = useCallback(
@@ -61,47 +60,46 @@ export const ChatListModal = memo((props: ChatListModalProps) => {
 
   return (
     <Modal
-      className={classNames("", {}, [className])}
+      className={classNames(cls.ChatListModal, {}, [className])}
       isOpen={isOpen}
       onClose={onClose}
       lazy
     >
-      <Button onClick={onClose} theme={ButtonTheme.CLEAR}>
-        <Icon
-          Svg={PlusSvg}
-          theme={IconTheme.SECONDARY}
-          className={cls.closeBtn}
-        />
-      </Button>
       <Text
         text={chat?.title}
         size={SizeText["2XL"]}
         theme={ThemeText.SECONDARY}
         fontWeight={FontWeightText.MEDIUM}
+        align={AlignText.CENTER}
         className={cls.title}
       />
       <div className={cls.chatSelectionWrapper}>
         <Text
-          text={t("Выберите предыдущий или")}
+          text={t("Выбери предыдущий или")}
           size={SizeText.M}
           theme={ThemeText.PRIMARY}
           fontWeight={FontWeightText.REGULAR}
           className={cls.selectPrevious}
         />
-        <Button theme={ButtonTheme.BACKGROUND_SECONDARY}>
+        <Button
+          theme={ButtonTheme.BACKGROUND_SECONDARY}
+          className={cls.addChatBtn}
+        >
           <Text
-            text={t("Создать новый чат")}
+            text={t("Создай новый чат")}
             theme={ThemeText.INVERTED_PRIMARY}
             fontWeight={FontWeightText.MEDIUM}
+            align={AlignText.CENTER}
           />
         </Button>
-        <ChatList
-          chats={chats}
-          onChatClick={onChatClick}
-          renderContent={renderChat}
-          cardClassName={cls.card}
-        />
       </div>
+      <ChatList
+        chats={chats}
+        onChatClick={onChatClick}
+        renderContent={renderChat}
+        className={cls.chatList}
+        cardClassName={cls.card}
+      />
     </Modal>
   );
 });

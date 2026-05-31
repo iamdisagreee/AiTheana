@@ -18,6 +18,7 @@ export enum AlignText {
 }
 
 export enum SizeText {
+  XS = "size_xs",
   S = "size_s",
   M = "size_m",
   L = "size_l",

@@ -6,7 +6,7 @@ import { ChatCard } from "../ChatCard/ChatCard";
 
 interface ChatListProps {
   className?: string;
-  chats?: Chat[];
+  chats: Chat[];
   onChatClick: (chat: Chat) => void;
   renderContent: (chat: Chat) => ReactNode;
   cardClassName?: string;
@@ -29,7 +29,7 @@ export const ChatList = memo((props: ChatListProps) => {
 
   return (
     <div className={classNames(cls.chatsWrapper, {}, [className])}>
-      {chats?.map(renderChat)}
+      {chats.map(renderChat)}
     </div>
   );
 });

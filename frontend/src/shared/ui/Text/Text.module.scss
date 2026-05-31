@@ -32,6 +32,28 @@
   }
 }
 
+.size_xs {
+  .title {
+    font-size: var(--font-size-s);
+    line-height: var(--font-line-s);
+  }
+  .text {
+    font-size: var(--font-size-xs);
+    line-height: var(--font-line-xs);
+  }
+}
+
+.size_s {
+  .title {
+    font-size: var(--font-size-m);
+    line-height: var(--font-line-m);
+  }
+  .text {
+    font-size: var(--font-size-s);
+    line-height: var(--font-line-s);
+  }
+}
+
 .size_m {
   .title {
     font-size: var(--font-size-l);

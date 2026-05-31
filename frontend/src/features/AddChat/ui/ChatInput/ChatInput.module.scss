@@ -1,0 +1,44 @@
+.ChatInput {
+  background: var(--chat-input-color);
+  height: 130px;
+  border: 1px solid rgba(var(--primary-color-rgb), 0.15);
+  border-radius: 24px;
+  padding: 16px;
+  display: flex;
+  gap: 20px;
+}
+
+.clipBtn,
+.arrowBtn {
+  width: 55px;
+  height: 55px;
+  background: var(--secondary-color);
+  border-radius: 38px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.arrowBtn {
+  margin: auto 0;
+}
+
+.clipSvg {
+  stroke: var(--inverted-primary-color);
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 1.6;
+}
+
+.arrowSvg {
+  stroke: var(--inverted-primary-color);
+  stroke-width: 3;
+  stroke-miterlimit: 10;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.textarea {
+  width: 100%;
+}

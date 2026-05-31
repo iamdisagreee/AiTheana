@@ -20,24 +20,28 @@ $api.interceptors.response.use(
     const originalRequest = error.config;
     if (
       error.response.status === 401 &&
-      error.config &&
-      !error.config._isRetry
+      originalRequest &&
+      !originalRequest._isRetry
     ) {
       originalRequest._isRetry = true;
       try {
-        const response = await axios.post(`${__API__}/auth/refresh`, {
-          withCredentials: true,
-        });
+        const response = await axios.post(
+          `${__API__}/auth/refresh`,
+          {},
+          {
+            withCredentials: true,
+          },
+        );
         localStorage.setItem(
           ACCESS_TOKEN_LOCALSTORAGE_KEY,
-          response.data.accessToken,
+          response.data.access_token,
         );
         return $api.request(originalRequest);
-      } catch (e) {
-        console.log(e);
+      } catch (refreshError) {
+        window.location.href = "/login";
+        throw refreshError;
       }
     }
-    window.location.href = "/login";
     throw error;
   },
 );

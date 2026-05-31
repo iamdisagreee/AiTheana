@@ -88,6 +88,7 @@
     "webpack-dev-server": "^4.7.4"
   },
   "dependencies": {
+    "@microsoft/fetch-event-source": "^2.0.1",
     "@reduxjs/toolkit": "^1.8.0",
     "date-fns": "^4.3.0",
     "i18next": "^21.6.11",

@@ -29,7 +29,7 @@ class Chat(CamelCaseModel):
     updated_at: datetime | None
 
 
-class EventTimelineType(StrEnum):
+class EventTimelineItemType(StrEnum):
     MESSAGE = "MESSAGE"
     ANALYS = "ANALYS"
 
@@ -59,14 +59,16 @@ class AnalysData(CamelCaseModel):
 
 
 class MessageEvent(CamelCaseModel):
+    id: int
     created_at: datetime
-    event_type: Literal[EventTimelineType.MESSAGE]
+    event_type: Literal[EventTimelineItemType.MESSAGE]
     data: MessageData
 
 
 class AnalysEvent(CamelCaseModel):
+    id: int
     created_at: datetime
-    event_type: Literal[EventTimelineType.ANALYS]
+    event_type: Literal[EventTimelineItemType.ANALYS]
     data: AnalysData
 
 

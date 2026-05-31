@@ -8,13 +8,33 @@ export enum IconTheme {
   SECONDARY = "secondary",
 }
 
+// export enum IconColorMode {
+//   FILL = "fill",
+//   STROKE = "stroke",
+//   BOTH = "both",
+// }
+
 interface IconProps {
   className?: string;
   Svg: FC<SVGProps<SVGElement>>;
   theme?: IconTheme;
+  // colorMode?: IconColorMode;
 }
 
 export const Icon = memo((props: IconProps) => {
-  const { className, Svg, theme = IconTheme.CLEAR } = props;
-  return <Svg className={classNames(cls.Icon, {}, [className, cls[theme]])} />;
+  const {
+    className,
+    Svg,
+    theme = IconTheme.CLEAR,
+    // colorMode = IconColorMode.FILL,
+  } = props;
+  return (
+    <Svg
+      className={classNames(cls.Icon, {}, [
+        className,
+        cls[theme],
+        // cls[colorMode],
+      ])}
+    />
+  );
 });

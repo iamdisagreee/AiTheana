@@ -17,10 +17,7 @@ select {
 }
 
 ::-webkit-scrollbar-track {
-  background: rgba(
-    var(--secindary-color-rgb),
-    var(--inactive-opacity)
-  ); /* Цвет дорожки */
+  background: var(--scrollbar-track); /* Цвет дорожки */
   border-radius: 20px;
 }
 

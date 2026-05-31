@@ -17,6 +17,9 @@ import { RegistrationPageSchema } from "pages/RegistrationPage";
 import { ConfirmCodePageSchema } from "pages/ConfirmCodePage";
 import { LoginSchema } from "features/LoginByUsername";
 import { ChatRequestSchema } from "features/ChatRequest";
+import { AddChatSchema } from "features/AddChat";
+import { ChatStreamSchema } from "features/ChatStream";
+import { EventTimelineSchema } from "features/EventTimeline";
 
 export interface StateSchema {
   counter: CounterSchema;
@@ -35,6 +38,9 @@ export interface StateSchema {
   registrationPage?: RegistrationPageSchema;
   confirmCodePage?: ConfirmCodePageSchema;
   chatRequest?: ChatRequestSchema;
+  addChat?: AddChatSchema;
+  eventTimeline?: EventTimelineSchema;
+  chatStream?: ChatStreamSchema;
 }
 
 export type StateSchemaKeys = keyof StateSchema;

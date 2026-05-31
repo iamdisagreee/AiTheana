@@ -14,7 +14,7 @@ from .models import Analys, Chat, Message
 from .schemas import (
     ChatQueryParams,
     ChatStatus,
-    EventTimelineType,
+    EventTimelineItemType,
     MessageType,
     SortOrder,
 )
@@ -45,9 +45,10 @@ class ChatRepository:
     async def get_timeline_by_chat_id(self, chat_id: int, user_id: int):
         msgs_query = (
             select(
+                Message.id,
                 Message.chat_id,
                 Message.created_at,
-                literal(EventTimelineType.MESSAGE).label("event_type"),
+                literal(EventTimelineItemType.MESSAGE).label("event_type"),
                 Message.type.label("message_type"),
                 Message.content,
             )
@@ -57,9 +58,10 @@ class ChatRepository:
 
         analyses_query = (
             select(
+                Analys.id,
                 Analys.chat_id,
                 Analys.created_at,
-                literal(EventTimelineType.ANALYS).label("event_type"),
+                literal(EventTimelineItemType.ANALYS).label("event_type"),
                 literal(None).label("message_type"),
                 Analys.content,
             )

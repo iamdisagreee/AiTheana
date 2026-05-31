@@ -83,7 +83,7 @@ def processing_chat_task(
     publish_status(
         chat_id=chat_id,
         status=ChatStatus.PREPROCESSING,
-        extra={"content": "The chat has started preprocessing"},
+        extra={"content": "Чат успешно загружен!"},
     )
     # print(raw_bytes)
     raw_json = UserChatPreprocessing.model_validate_json(raw_bytes)
@@ -152,5 +152,5 @@ def processing_chat_task(
     publish_status(
         chat_id=chat_id,
         status=ChatStatus.COMPLETED,
-        extra={"content": "The chat was successfully analyzed"},
+        extra={"content": answer},
     )

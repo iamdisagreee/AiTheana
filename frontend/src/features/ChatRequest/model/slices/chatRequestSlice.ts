@@ -41,21 +41,22 @@ const chatRequestSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder
-      .addCase(fetchChats.pending, (state, action) => {
+      .addCase(fetchChats.pending, (state) => {
         state.isLoading = true;
-        if (action.meta.arg.replace) {
-          chatsAdapter.removeAll(state);
-        }
         state.error = undefined;
       })
       .addCase(fetchChats.fulfilled, (state, action) => {
         state.isLoading = false;
+        state.params.hasMore = action.payload.length === state.params?.limit;
+
         const chats = action.payload;
         const params = action.meta.arg;
 
-        chatsAdapter.upsertMany(state, action);
+        chatsAdapter.upsertMany(state, chats);
 
-        const chatIds = chats.map((chat) => chat.id);
+        const chatIds = chats.map((chat: Chat) => chat.id);
+
+        // console.log(chatIds, params.replace);
 
         //sidebar
         if (!params.interlocutorId) {
@@ -81,7 +82,6 @@ const chatRequestSlice = createSlice({
         //   ? chatsAdapter.setAll(state, action.payload)
         //   : chatsAdapter.addMany(state, action.payload);
         // state.isLoading = false;
-        // state.params.hasMore = action.payload.length === state?.params?.limit;
       })
       .addCase(fetchChats.rejected, (state, action) => {
         state.isLoading = false;
