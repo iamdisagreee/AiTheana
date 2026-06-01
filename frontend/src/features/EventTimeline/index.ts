@@ -4,10 +4,11 @@ import {
   eventTimelineReducer,
 } from "./model/slices/eventTimelineSlice";
 import { getEventTimelineByChatId } from "./model/selectors/eventTimelineSelectors";
-
+import { fetchEventTimeline } from "./model/services/fetchEventTimeline";
 export {
   EventTimelineSchema,
   eventTimelineActions,
   eventTimelineReducer,
   getEventTimelineByChatId,
+  fetchEventTimeline,
 };

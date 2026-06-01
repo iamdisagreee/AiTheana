@@ -43,7 +43,7 @@ const ChatsPage = memo((props: ChatsPageProps) => {
   const dispatch = useAppDispatch();
 
   useInitialEffect(() => {
-    dispatch(fetchChats({}));
+    dispatch(fetchChats({ replace: true }));
   });
 
   // const onLoadNextPart = useCallback(() => {
@@ -51,7 +51,7 @@ const ChatsPage = memo((props: ChatsPageProps) => {
   // }, [dispatch]);
 
   return (
-    <DynamicModuleLoader reducers={reducers} removeAfterUnmount>
+    <DynamicModuleLoader reducers={reducers} removeAfterUnmount={false}>
       <Page>
         <div className={classNames(cls.ChatsPage, {}, [className])}>
           <Sidebar chats={chats} />

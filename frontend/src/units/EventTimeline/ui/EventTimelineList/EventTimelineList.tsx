@@ -7,6 +7,11 @@ import {
 } from "../../model/types/eventTimeline";
 import { EventTimelineItem } from "../EventTimelineItem/EventTimelineItem";
 import { MessageType } from "units/Message";
+import { useSelector } from "react-redux";
+import { getChatStreamStatusByChatId } from "features/ChatStream";
+import { useParams } from "react-router-dom";
+import { ChatStatus } from "units/Chat";
+import Loader from "shared/ui/Loader/Loader";
 
 interface EventTimelineListProps {
   className?: string;
@@ -26,6 +31,8 @@ const initTimeline = {
 
 export const EventTimelineList = memo((props: EventTimelineListProps) => {
   const { className, eventTimelines } = props;
+  const { id: chatId } = useParams();
+  const status = useSelector(getChatStreamStatusByChatId(Number(chatId)));
 
   const renderEventTimeline = (eventTimeline: EventTimeline) => {
     return (
@@ -36,8 +43,13 @@ export const EventTimelineList = memo((props: EventTimelineListProps) => {
   const timelines = [initTimeline, ...eventTimelines];
 
   return (
-    <div className={classNames(cls.EventTimelineList, {}, [className])}>
-      {timelines.map(renderEventTimeline)}
-    </div>
+    <>
+      <div className={classNames(cls.EventTimelineList, {}, [className])}>
+        {timelines.map(renderEventTimeline)}
+        {chatId && status !== ChatStatus.COMPLETED && (
+          <Loader className={cls.loader} />
+        )}
+      </div>
+    </>
   );
 });

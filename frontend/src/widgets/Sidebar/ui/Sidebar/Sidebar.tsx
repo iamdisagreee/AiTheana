@@ -24,6 +24,7 @@ import Input, { InputTheme, InputType } from "shared/ui/Input/Input";
 import { APPLICATION_NAME } from "shared/const/const";
 import { Chat, ChatList } from "units/Chat";
 import { ChatListModal } from "widgets/ChatListModal";
+import { useNavigate } from "react-router-dom";
 
 interface SidebarProps {
   className?: string;
@@ -32,9 +33,14 @@ interface SidebarProps {
 
 const Sidebar = memo((props: SidebarProps) => {
   const { className, chats } = props;
+  const navigate = useNavigate();
   const [collapsed, setCollapsed] = useState(false);
   const { t } = useTranslation();
   const [currentChat, setCurrentChat] = useState<Chat | undefined>(undefined);
+
+  const onAddChat = useCallback(() => {
+    navigate(RoutePath.chats);
+  }, [navigate]);
 
   const onCloseModal = useCallback(() => {
     setCurrentChat(undefined);
@@ -106,7 +112,7 @@ const Sidebar = memo((props: SidebarProps) => {
         />
       </div>
 
-      <Button onClick={() => {}} className={cls.addWrapper}>
+      <Button onClick={onAddChat} className={cls.addWrapper}>
         {/* <div className={cls.addWrapper}> */}
         <div className={cls.addSvgWrapper}>
           <Icon

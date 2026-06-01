@@ -2,4 +2,15 @@
   overflow-y: auto;
   overflow-y: scroll;
   scrollbar-gutter: stable;
+  // display: flex;
+  // flex-direction: column;
+}
+
+.loaderWrapper {
+  display: flex;
+  width: 100%;
+}
+
+.loader {
+  // margin-right: auto;
 }

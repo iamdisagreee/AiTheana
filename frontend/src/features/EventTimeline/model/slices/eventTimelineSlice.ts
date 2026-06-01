@@ -10,6 +10,7 @@ import {
 } from "units/EventTimeline/model/types/eventTimeline";
 import { EventTimelineSchema } from "../types/eventTimelinSchema";
 import { MessageType } from "units/Message";
+import { fetchEventTimeline } from "../services/fetchEventTimeline";
 
 const initTimeline = {
   id: -2,
@@ -55,12 +56,21 @@ const eventTimelineSlice = createSlice({
     },
   },
   extraReducers: (builder) => {
-    // builder
-    //   .addCase(fetchChats.pending, (state) => {
-    //     state.isLoading = true;
-    //     state.error = undefined;
-    //   })
-    //   .addCase(fetchChats.fulfilled, (state, action) => {
+    builder
+      .addCase(fetchEventTimeline.pending, (state) => {
+        state.isLoading = true;
+        state.error = undefined;
+      })
+      .addCase(fetchEventTimeline.fulfilled, (state, action) => {
+        const { chat, timeline } = action.payload;
+        state.isLoading = false;
+        timelineAdapter.addMany(state, action.payload.timeline);
+        state.timelines[chat.id] = timeline.map((event) => event.id);
+      })
+      .addCase(fetchEventTimeline.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload;
+      });
     //     state.isLoading = false;
     //     state.params.hasMore = action.payload.length === state.params?.limit;
     //     const chats = action.payload;

@@ -8,7 +8,7 @@ export const addChat = createAsyncThunk<
   AddChatProps,
   ThunkConfig<string>
 >("chats/addChat", async (props, thunkApi) => {
-  const { extra, dispatch, rejectWithValue, getState } = thunkApi;
+  const { extra, rejectWithValue } = thunkApi;
   const { file, aiText } = props;
 
   const formData = new FormData();

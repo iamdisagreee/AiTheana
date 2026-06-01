@@ -7,6 +7,12 @@ import { useSelector } from "react-redux";
 import { getEventTimelineByChatId } from "features/EventTimeline";
 import { useNavigate, useParams } from "react-router-dom";
 import { useAppDispatch } from "shared/lib/hooks/useAppDispatch/useAppDispatch";
+import {
+  getChatStreamStatusByChatId,
+  startChatStream,
+} from "features/ChatStream";
+import { ChatStatus } from "units/Chat";
+import Loader from "shared/ui/Loader/Loader";
 
 interface ChatContentProps {
   className?: string;
@@ -15,13 +21,14 @@ interface ChatContentProps {
 export const ChatContent = memo((props: ChatContentProps) => {
   const { className } = props;
   const navigate = useNavigate();
-  const { chatId } = useParams<{ chatId: string }>();
+  const { id: chatId } = useParams();
   const eventTimelines = useSelector(getEventTimelineByChatId(Number(chatId)));
   const dispatch = useAppDispatch();
 
   useEffect(() => {
     if (chatId) {
       dispatch(addChatActions.setChatId(Number(chatId)));
+      dispatch(startChatStream(Number(chatId)));
     }
   }, [chatId, navigate, dispatch]);
 

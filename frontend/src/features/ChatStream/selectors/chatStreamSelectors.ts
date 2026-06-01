@@ -1,7 +1,7 @@
 import { StateSchema } from "app/providers/StoreProvider";
 
-export const getChatStremPartialTextByChatId =
+export const getChatStreamStatusByChatId =
   (chatId?: number) => (state: StateSchema) => {
     if (!chatId) return;
-    return state.chatStream?.partialTextByChatId[chatId];
+    return state.chatStream?.statusByChatId[chatId];
   };

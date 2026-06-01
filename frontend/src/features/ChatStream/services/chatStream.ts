@@ -25,6 +25,8 @@ export const startChatStream = (chatId: number) => {
       onmessage(event) {
         const data = JSON.parse(event.data) as EventOnMessage;
 
+        console.log(data.status);
+
         if (data.status === ChatStatus.PREPROCESSING) {
           dispatch(
             eventTimelineActions.setTimeline({
