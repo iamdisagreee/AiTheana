@@ -76,10 +76,12 @@ class ChatService:
         )
         pubsub = redis.pubsub()
         await pubsub.subscribe(f"chat:{chat_id}")
+        print("CONNECT")
         try:
             async for message in pubsub.listen():
                 # await asyncio.sleep(1)
                 if message["type"] == "message":
+                    # await asyncio.sleep(5)
                     data = message["data"]
                     yield f"data: {data}\n\n"
                     status = json.loads(data).get("status")
@@ -90,6 +92,7 @@ class ChatService:
                     ):
                         break
         finally:
+            print("DISCONNECT")
             await pubsub.unsubscribe(f"chat:{chat_id}")
             await pubsub.close()
             await redis.close()

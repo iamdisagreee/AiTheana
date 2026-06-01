@@ -1,4 +1,5 @@
 import json
+from time import sleep
 
 from app.config import get_settings
 from app.core.base_schema import UserChatPreprocessing
@@ -21,7 +22,7 @@ def publish_status(chat_id: int, status: str, extra: dict | None = None):
     data = {"status": status}
     if extra:
         data.update(extra)
-
+    # print(status)
     redis_client_celery.publish(f"chat:{chat_id}", json.dumps(data))
 
 
@@ -62,9 +63,9 @@ def processing_chat_task(
         endpoint_url=settings.s3_endpoint_url,
         bucket_name=settings.s3_bucket_name,
     )
-    s3_sync_client.upload_bytes(
-        data=raw_bytes, object_name=raw_storage_path
-    )
+    # s3_sync_client.upload_bytes(
+    #     data=raw_bytes, object_name=raw_storage_path
+    # )
 
     file = File(
         chat_id=chat_id,
@@ -111,9 +112,9 @@ def processing_chat_task(
     preprocessed_storage_path = f"{FileType.PREPROCESSED.lower()}/{chat_id}/{preprocessed_filename}"  # noqa
     preprocessed_file_size = get_file_size(raw_bytes)
 
-    s3_sync_client.upload_bytes(
-        data=preprocessed_json, object_name=preprocessed_storage_path
-    )
+    # s3_sync_client.upload_bytes(
+    #     data=preprocessed_json, object_name=preprocessed_storage_path
+    # )
     file = File(
         chat_id=chat_id,
         type=FileType.PREPROCESSED,
