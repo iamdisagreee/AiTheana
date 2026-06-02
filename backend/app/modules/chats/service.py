@@ -37,7 +37,7 @@ class ChatService:
     def __init__(self, repo: ChatRepository):
         self.repo = repo
 
-    async def add_chat(self, file: UploadFile, ai_text: str, user: User):
+    async def add_chat(self, file: UploadFile, user: User):
 
         raw_bytes = await file.read()
         try:
@@ -56,9 +56,9 @@ class ChatService:
         chat = await self.repo.add_chat(
             user_id=user.id, status=ChatStatus.EMPTY
         )
-        await self.repo.add_message(
-            chat_id=chat.id, type=MessageType.AI_TEXT, content=ai_text
-        )
+        # await self.repo.add_message(
+        #     chat_id=chat.id, type=MessageType.AI_TEXT, content=ai_text
+        # )
 
         # print(file, file.filename, file.content_type)
         # print(raw_bytes)

@@ -31,7 +31,7 @@ export const timelineSelector = timelineAdapter.getSelectors<StateSchema>(
   (state) => state.eventTimeline || timelineAdapter.getInitialState(),
 );
 
-let initialState = timelineAdapter.getInitialState<EventTimelineSchema>({
+const initialState = timelineAdapter.getInitialState<EventTimelineSchema>({
   error: undefined,
   isLoading: false,
   timelines: {},
@@ -39,7 +39,7 @@ let initialState = timelineAdapter.getInitialState<EventTimelineSchema>({
   entities: {},
 });
 
-initialState = timelineAdapter.addOne(initialState, initTimeline);
+// initialState = timelineAdapter.addOne(initialState, initTimeline);
 
 const eventTimelineSlice = createSlice({
   name: "eventTimeline",

@@ -26,6 +26,8 @@ export enum SizeText {
   "2XL" = "size_2xl",
   "3XL" = "size_3xl",
   "4XL" = "size_4xl",
+  "5XL" = "size_5xl",
+  "6XL" = "size_6xl",
   "11XL" = "size_11xl",
 }
 

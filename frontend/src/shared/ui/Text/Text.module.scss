@@ -120,6 +120,29 @@
   }
 }
 
+.size_5xl {
+  .title {
+    font-size: var(--font-size-6xl);
+    line-height: var(--font-line-6xl);
+  }
+  .text {
+    font-size: var(--font-size-5xl);
+    line-height: var(--font-line-5xl);
+  }
+}
+
+.size_6xl {
+  .title {
+    font-size: var(--font-size-7xl);
+    line-height: var(--font-line-7xl);
+  }
+  .text {
+    font-size: var(--font-size-6xl);
+    line-height: var(--font-line-6xl);
+  }
+}
+
+
 .size_11xl {
   .title {
     font-size: var(--font-size-12xl);

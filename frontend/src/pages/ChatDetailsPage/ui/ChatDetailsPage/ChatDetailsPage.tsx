@@ -1,6 +1,6 @@
 import { classNames } from "shared/lib/classNames/classNames";
 import cls from "./ChatDetailsPage.module.scss";
-import { memo } from "react";
+import { memo, useEffect } from "react";
 import { useSelector } from "react-redux";
 import {
   chatRequestReducer,
@@ -17,12 +17,19 @@ import { Page } from "widgets/Page/Page";
 import { Sidebar } from "widgets/Sidebar";
 import { ChatContent } from "widgets/ChatContent";
 import { addChatReducer } from "features/AddChat";
-import { chatStreamReducer } from "features/ChatStream/slices/chatStreamSlice";
+import {
+  chatStreamActions,
+  chatStreamReducer,
+} from "features/ChatStream/slices/chatStreamSlice";
 import {
   eventTimelineReducer,
   fetchEventTimeline,
+  getEventTimelineErrorByChatId,
+  getEventTimelineIsLoadedByChatId,
 } from "features/EventTimeline";
 import { useParams } from "react-router-dom";
+import { ChatStatus } from "units/Chat";
+import { InfoPanel } from "widgets/InfoPanel";
 
 interface ChatDetailsPageProps {
   className?: string;
@@ -39,18 +46,30 @@ const ChatDetailsPage = memo((props: ChatDetailsPageProps) => {
   const { className } = props;
   const chats = useSelector(getChats);
   const dispatch = useAppDispatch();
+  const { id } = useParams();
+  const chatId = Number(id);
+  const eventTimelineIsLoaded = useSelector(
+    getEventTimelineIsLoadedByChatId(chatId),
+  );
 
-  useInitialEffect(async () => {
-    await dispatch(fetchEventTimeline(11));
-    await dispatch(fetchChats({ replace: true }));
-  });
+  useEffect(() => {
+    dispatch(fetchChats({ replace: true }));
+    console.log("AAAA", chatId, eventTimelineIsLoaded);
+    if (chatId && !eventTimelineIsLoaded) {
+      dispatch(fetchEventTimeline(chatId));
+      dispatch(
+        chatStreamActions.setStatus({ chatId, status: ChatStatus.COMPLETED }),
+      );
+    }
+  }, [chatId, dispatch, eventTimelineIsLoaded]);
 
   return (
-    <DynamicModuleLoader reducers={reducers} removeAfterUnmount>
+    <DynamicModuleLoader reducers={reducers} removeAfterUnmount={false}>
       <Page>
         <div className={classNames(cls.ChatsPage, {}, [className])}>
           <Sidebar chats={chats} />
           <ChatContent />
+          <InfoPanel />
         </div>
       </Page>
     </DynamicModuleLoader>

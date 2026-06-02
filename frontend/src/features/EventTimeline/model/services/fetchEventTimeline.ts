@@ -6,7 +6,7 @@ export const fetchEventTimeline = createAsyncThunk<
   FetchEventTimelineResponse,
   number,
   ThunkConfig<string>
->("chats/fetchChatById", async (chatId, thunkApi) => {
+>("chats/fetchTimelineByChatId", async (chatId, thunkApi) => {
   const { extra, rejectWithValue } = thunkApi;
   try {
     const response = await extra.api.get<FetchEventTimelineResponse>(

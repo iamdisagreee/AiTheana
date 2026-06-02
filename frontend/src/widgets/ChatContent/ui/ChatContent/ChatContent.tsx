@@ -4,7 +4,11 @@ import { memo, useEffect } from "react";
 import { EventTimelineList } from "units/EventTimeline";
 import { addChatActions, ChatInput, getAddChatChatId } from "features/AddChat";
 import { useSelector } from "react-redux";
-import { getEventTimelineByChatId } from "features/EventTimeline";
+import {
+  getEventTimelineByChatId,
+  getEventTimelineErrorByChatId,
+  getEventTimelineIsLoadedByChatId,
+} from "features/EventTimeline";
 import { useNavigate, useParams } from "react-router-dom";
 import { useAppDispatch } from "shared/lib/hooks/useAppDispatch/useAppDispatch";
 import {
@@ -13,6 +17,8 @@ import {
 } from "features/ChatStream";
 import { ChatStatus } from "units/Chat";
 import Loader from "shared/ui/Loader/Loader";
+import Text, { AlignText, ThemeText } from "shared/ui/Text/Text";
+import { useTranslation } from "react-i18next";
 
 interface ChatContentProps {
   className?: string;
@@ -21,16 +27,31 @@ interface ChatContentProps {
 export const ChatContent = memo((props: ChatContentProps) => {
   const { className } = props;
   const navigate = useNavigate();
-  const { id: chatId } = useParams();
-  const eventTimelines = useSelector(getEventTimelineByChatId(Number(chatId)));
+  const { t } = useTranslation();
+  const { id } = useParams();
+  const chatId = Number(id);
+  const eventTimelines = useSelector(getEventTimelineByChatId(chatId));
   const dispatch = useAppDispatch();
+  const errorFetchTimeline = useSelector(getEventTimelineErrorByChatId(chatId));
 
   useEffect(() => {
     if (chatId) {
-      dispatch(addChatActions.setChatId(Number(chatId)));
-      dispatch(startChatStream(Number(chatId)));
+      dispatch(addChatActions.setChatId(chatId));
     }
   }, [chatId, navigate, dispatch]);
+
+  if (errorFetchTimeline && chatId) {
+    return (
+      <div className={classNames(cls.ChatContent, {}, [className])}>
+        <Text
+          text={t("Ошибка! Попробуйте создать новый чат")}
+          theme={ThemeText.ERROR}
+          align={AlignText.CENTER}
+          className={classNames("", {}, [cls.chat, cls.eventTimelineList])}
+        />
+      </div>
+    );
+  }
 
   return (
     <div className={classNames(cls.ChatContent, {}, [className])}>

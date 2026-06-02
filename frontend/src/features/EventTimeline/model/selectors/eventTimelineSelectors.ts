@@ -15,3 +15,19 @@ export const getEventTimelineByChatId = (chatId?: number) =>
         .map((id) => entities[id])
         .filter((timeline): timeline is EventTimeline => Boolean(timeline)),
   );
+
+export const getEventTimelineErrorByChatId =
+  (chatId?: number) => (state: StateSchema) => {
+    if (!chatId) return true;
+    return state.eventTimeline?.error;
+  };
+
+export const getEventTimelineIsLoadedByChatId =
+  (chatId?: number) => (state: StateSchema) => {
+    if (!chatId) return;
+    // console.log(
+    //   state.eventTimeline?.timelines[chatId],
+    //   state.eventTimeline?.timelines[chatId]?.length,
+    // );
+    return !!state.eventTimeline?.timelines[chatId]?.length;
+  };

@@ -24,6 +24,7 @@ import { addChatReducer } from "features/AddChat";
 import { ChatContent } from "widgets/ChatContent";
 import { chatStreamReducer } from "features/ChatStream/slices/chatStreamSlice";
 import { eventTimelineReducer } from "features/EventTimeline";
+import { InfoPanel } from "widgets/InfoPanel";
 
 interface ChatsPageProps {
   className?: string;
@@ -56,6 +57,7 @@ const ChatsPage = memo((props: ChatsPageProps) => {
         <div className={classNames(cls.ChatsPage, {}, [className])}>
           <Sidebar chats={chats} />
           <ChatContent />
+          <InfoPanel />
         </div>
       </Page>
     </DynamicModuleLoader>

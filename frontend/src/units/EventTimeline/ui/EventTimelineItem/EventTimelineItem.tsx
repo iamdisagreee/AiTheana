@@ -1,6 +1,6 @@
 import { classNames } from "shared/lib/classNames/classNames";
 import cls from "./EventTimelineItem.module.scss";
-import { memo } from "react";
+import { memo, ReactNode, useCallback, useState } from "react";
 import {
   EventTimeline,
   EventTimelineItemType,
@@ -10,6 +10,7 @@ import { Icon, IconTheme } from "shared/ui/Icon/Icon";
 import CopySvg from "shared/assets/icons/copy.svg";
 import Button from "shared/ui/Button/Button";
 import { Analys } from "units/Analys";
+import MarkSvg from "shared/assets/icons/mark.svg";
 
 interface EventTimelineItemProps {
   className?: string;
@@ -18,8 +19,14 @@ interface EventTimelineItemProps {
 
 export const EventTimelineItem = memo((props: EventTimelineItemProps) => {
   const { className, eventTimeline } = props;
-  let item;
+  const [isCopied, setIsCopied] = useState<boolean>(false);
 
+  const onCopy = () => {
+    setIsCopied((prev) => !prev);
+    navigator.clipboard.writeText(eventTimeline.data.content);
+  };
+
+  let item;
   if (eventTimeline.eventType === EventTimelineItemType.MESSAGE)
     item = <Message data={eventTimeline.data} className={cls.item} />;
   else {
@@ -29,8 +36,12 @@ export const EventTimelineItem = memo((props: EventTimelineItemProps) => {
   return (
     <div className={classNames(cls.EventTimelineItem, {}, [className])}>
       {item}
-      <Button onClick={() => {}}>
-        <CopySvg className={cls.CopySvg} />
+      <Button onClick={onCopy}>
+        {isCopied ? (
+          <MarkSvg className={cls.markSvg} />
+        ) : (
+          <CopySvg className={cls.copySvg} />
+        )}
       </Button>
     </div>
   );

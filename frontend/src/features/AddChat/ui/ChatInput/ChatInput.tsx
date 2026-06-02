@@ -54,6 +54,7 @@ export const ChatInput = memo((props: ChatInputProps) => {
 
     if (addChat.fulfilled.match(result)) {
       const chatId = result.payload;
+      dispatch(startChatStream(chatId));
       navigate(`/chats/${chatId}`);
     } else {
       const error = result.payload;

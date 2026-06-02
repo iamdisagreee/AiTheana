@@ -74,6 +74,7 @@ const Sidebar = memo((props: SidebarProps) => {
       ])}
     >
       <div className={cls.header}>
+        {/* <Button onClick={onAddChat}> */}
         <Icon
           Svg={LogoIcon}
           theme={IconTheme.SECONDARY}
@@ -86,6 +87,8 @@ const Sidebar = memo((props: SidebarProps) => {
           fontWeight={FontWeightText.MEDIUM}
           className={cls.application}
         />
+        {/* </Button> */}
+
         {/* Будущая фича */}
         {/* <Button
           onClick={onToggle}
@@ -113,7 +116,6 @@ const Sidebar = memo((props: SidebarProps) => {
       </div>
 
       <Button onClick={onAddChat} className={cls.addWrapper}>
-        {/* <div className={cls.addWrapper}> */}
         <div className={cls.addSvgWrapper}>
           <Icon
             Svg={PlusSvg}

@@ -19,6 +19,7 @@ import { useAppDispatch } from "shared/lib/hooks/useAppDispatch/useAppDispatch";
 import { useNavigate } from "react-router-dom";
 import { prettyTime } from "shared/lib/functions/prettyTime";
 import { Chat, ChatList } from "units/Chat";
+import { RoutePath } from "shared/config/routeConfig/routeConfig";
 
 interface ChatListModalProps {
   className?: string;
@@ -40,9 +41,14 @@ export const ChatListModal = memo((props: ChatListModalProps) => {
   });
 
   const onChatClick = useCallback(
-    (chat: Chat) => navigate(`/chats/${chat.id}`),
-    [navigate],
+    (chat: Chat) => {
+      navigate(`${RoutePath.chat_details}${chat.id}`);
+      onClose();
+    },
+    [navigate, onClose],
   );
+
+  const onAddChat = useCallback(() => navigate(RoutePath.chats), [navigate]);
 
   const renderChat = (chat: Chat) => {
     // className={""}
@@ -83,6 +89,7 @@ export const ChatListModal = memo((props: ChatListModalProps) => {
         />
         <Button
           theme={ButtonTheme.BACKGROUND_SECONDARY}
+          onClick={onAddChat}
           className={cls.addChatBtn}
         >
           <Text

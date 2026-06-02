@@ -45,6 +45,12 @@
   color: var(--inverted-primary-color);
 }
 
+.outline_inverted {
+  border-radius: 66px;
+  background: none;
+  border: 1px solid var(--secondary-color);
+}
+
 .outline {
   padding: 10px 15px;
   border: 1px solid var(--primary-color);

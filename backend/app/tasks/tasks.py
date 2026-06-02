@@ -12,8 +12,13 @@ from app.core.redis import redis_client_celery
 from app.core.s3.s3_sync import S3SyncClient
 from app.database import sync_engine
 from app.modules.auth.models import User
-from app.modules.chats.models import Analys, Chat, File
-from app.modules.chats.schemas import ChatStatus, FileType
+from app.modules.chats.models import Analys, Chat, File, Message
+from app.modules.chats.schemas import (
+    ChatStatus,
+    EventTimelineItemType,
+    FileType,
+    MessageType,
+)
 from celery import shared_task
 from sqlalchemy.orm import Session
 
@@ -38,6 +43,7 @@ def processing_chat_task(
     raw_bytes: bytes,
     username: str,
 ):
+    # sleep(5)
     settings = get_settings()
     session = Session(bind=sync_engine)
 
@@ -86,6 +92,14 @@ def processing_chat_task(
         status=ChatStatus.PREPROCESSING,
         extra={"content": "Чат успешно загружен!"},
     )
+    message = Message(
+        chat_id=chat_id,
+        type=MessageType.AI_TEXT,
+        content="Чат успешно загружен!",
+    )
+    session.add(message)
+    session.commit()
+
     # print(raw_bytes)
     raw_json = UserChatPreprocessing.model_validate_json(raw_bytes)
     preprocessed_file = preprocessing_raw_json(user_chat=raw_json)

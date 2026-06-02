@@ -1,0 +1,43 @@
+.MainPage {
+  display: flex;
+}
+
+.leftSide {
+  width: 771px;
+  position: fixed;
+  top: 165px;
+  left: -260px;
+  object-fit: cover;
+  z-index: 0;
+}
+
+.rightSide {
+  width: 597px;
+  position: fixed;
+  top: 135px;
+  right: -210px;
+  object-fit: cover;
+  z-index: 0;
+}
+
+.content {
+  margin: auto;
+  z-index: 1;
+}
+
+.title {
+  margin-bottom: 30px;
+}
+
+.info {
+  margin-bottom: 50px;
+}
+
+.subtitle {
+  margin-bottom: 30px;
+}
+
+.forwardBtn {
+  width: 250px;
+  height: 70px;
+}
