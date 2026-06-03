@@ -1,16 +1,21 @@
 .Navbar {
-  width: 100%;
+  // width: 100%;
   height: var(--navbar-height);
-  background: var(--inverted-bg-color);
   display: flex;
   align-items: center;
-  padding: 20px;
-  gap: 10px;
+  padding: 35px 120px 0px 120px;
+  margin-bottom: 165px;
+  // width: 1000px;
+
 }
 
-.links {
-  display: flex;
+.loginBtn {
   margin-left: auto;
-  margin-right: 10px;
-  gap: 10px;
 }
+
+// .links {
+//   display: flex;
+//   margin-left: auto;
+//   margin-right: 10px;
+//   gap: 10px;
+// }

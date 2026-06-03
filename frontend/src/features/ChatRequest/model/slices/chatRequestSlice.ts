@@ -2,6 +2,7 @@ import {
   createEntityAdapter,
   createSelector,
   createSlice,
+  PayloadAction,
 } from "@reduxjs/toolkit";
 import { StateSchema } from "app/providers/StoreProvider";
 import { Chat } from "units/Chat";
@@ -23,7 +24,7 @@ const chatRequestSlice = createSlice({
   initialState: chatsAdapter.getInitialState<ChatRequestSchema>({
     error: undefined,
     isLoading: false,
-    params: {
+    sidebarParams: {
       page: 1,
       limit: 10,
       search: undefined,
@@ -33,12 +34,28 @@ const chatRequestSlice = createSlice({
       replace: false,
       hasMore: true,
     },
+    modalByIntelocutorIdParams: {},
     chatIds: [],
     chatsByInterlocutorId: {},
+    sidebarInited: false,
     ids: [],
     entities: {},
   }),
-  reducers: {},
+  reducers: {
+    setSidebarSearch: (state, action: PayloadAction<string>) => {
+      state.sidebarParams.search = action.payload;
+    },
+    setModalSearchByIntelocutorId: (
+      state,
+      action: PayloadAction<{ interlocutorId: number; search: string }>,
+    ) => {
+      const { interlocutorId, search } = action.payload;
+      state.modalByIntelocutorIdParams[interlocutorId].search = search;
+    },
+    initSidebarState: (state) => {
+      state.sidebarInited = true;
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(fetchChats.pending, (state) => {
@@ -47,7 +64,8 @@ const chatRequestSlice = createSlice({
       })
       .addCase(fetchChats.fulfilled, (state, action) => {
         state.isLoading = false;
-        state.params.hasMore = action.payload.length === state.params?.limit;
+        state.sidebarParams.hasMore =
+          action.payload.length === state.sidebarParams?.limit;
 
         const chats = action.payload;
         const params = action.meta.arg;

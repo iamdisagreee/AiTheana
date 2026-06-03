@@ -3,6 +3,7 @@ import { ThunkConfig } from "app/providers/StoreProvider/config/StateSchema";
 import { Chat } from "units/Chat";
 import { ChatQueryParams } from "../types/chatQueryParams";
 import { FetchChatsResponse } from "../types/fetchChatsResponse";
+import { addQueryParams } from "shared/lib/url/addQueryParams";
 
 export const fetchChats = createAsyncThunk<
   Chat[],
@@ -10,6 +11,10 @@ export const fetchChats = createAsyncThunk<
   ThunkConfig<string>
 >("chats/fetchChats", async (params, thunkApi) => {
   const { extra, rejectWithValue } = thunkApi;
+  const { search } = params;
+
+  addQueryParams({ search });
+
   try {
     const response = await extra.api.get<FetchChatsResponse>(`/chats`, {
       params,

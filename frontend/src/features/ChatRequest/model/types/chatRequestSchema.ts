@@ -10,5 +10,8 @@ export interface ChatRequestSchema extends EntityState<Chat> {
 
   chatsByInterlocutorId: Record<number, number[]>;
 
-  params: ChatQueryParams;
+  sidebarParams: ChatQueryParams;
+  modalByIntelocutorIdParams: Record<number, ChatQueryParams>;
+
+  sidebarInited: boolean;
 }

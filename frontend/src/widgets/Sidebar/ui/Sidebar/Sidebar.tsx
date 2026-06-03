@@ -25,6 +25,15 @@ import { APPLICATION_NAME } from "shared/const/const";
 import { Chat, ChatList } from "units/Chat";
 import { ChatListModal } from "widgets/ChatListModal";
 import { useNavigate } from "react-router-dom";
+import { Logo, SizeLogo } from "shared/ui/Logo/Logo";
+import { useAppDispatch } from "shared/lib/hooks/useAppDispatch/useAppDispatch";
+import {
+  chatRequestActions,
+  fetchChats,
+  getModalSearchByIntelocutorId,
+  getSidebarSearch,
+} from "features/ChatRequest";
+import { useDebounce } from "shared/lib/hooks/useDebounce/useDebounce";
 
 interface SidebarProps {
   className?: string;
@@ -37,6 +46,13 @@ const Sidebar = memo((props: SidebarProps) => {
   const [collapsed, setCollapsed] = useState(false);
   const { t } = useTranslation();
   const [currentChat, setCurrentChat] = useState<Chat | undefined>(undefined);
+  const dispatch = useAppDispatch();
+  const search = useSelector(getSidebarSearch);
+
+  const debounceFetchData = useDebounce(
+    (search: string) => dispatch(fetchChats({ search, replace: true })),
+    1000,
+  );
 
   const onAddChat = useCallback(() => {
     navigate(RoutePath.chats);
@@ -54,6 +70,19 @@ const Sidebar = memo((props: SidebarProps) => {
   const onChatClick = (chat: Chat) => {
     setCurrentChat(chat);
   };
+
+  const onChangeSearch = useCallback(
+    (value: string) => {
+      dispatch(chatRequestActions.setSidebarSearch(value));
+      // dispatch(articlesPageActions.setPage(1));
+      debounceFetchData(value);
+    },
+    [dispatch, debounceFetchData],
+  );
+
+  // const onSearch = () => {
+
+  // }
 
   const renderChat = (chat: Chat) => {
     return (
@@ -73,24 +102,13 @@ const Sidebar = memo((props: SidebarProps) => {
         className,
       ])}
     >
-      <div className={cls.header}>
-        {/* <Button onClick={onAddChat}> */}
-        <Icon
-          Svg={LogoIcon}
-          theme={IconTheme.SECONDARY}
-          className={cls.headerSvg}
-        />
-        <Text
-          text={APPLICATION_NAME}
-          theme={ThemeText.SECONDARY}
-          size={SizeText.L}
-          fontWeight={FontWeightText.MEDIUM}
-          className={cls.application}
-        />
-        {/* </Button> */}
+      {/* <div className={cls.header}> */}
+      {/* <Button onClick={onAddChat}> */}
+      <Logo size={SizeLogo.BIG} className={cls.header} />
+      {/* </Button> */}
 
-        {/* Будущая фича */}
-        {/* <Button
+      {/* Будущая фича */}
+      {/* <Button
           onClick={onToggle}
           size={ButtonSize["4XL"]}
           theme={ButtonTheme.CLEAR_SECONDARY}
@@ -98,7 +116,7 @@ const Sidebar = memo((props: SidebarProps) => {
         >
           {collapsed ? ">" : "<"}
         </Button> */}
-      </div>
+      {/* </div> */}
       <div className={cls.searchWrapper}>
         <Icon
           Svg={SearchSvg}
@@ -108,8 +126,8 @@ const Sidebar = memo((props: SidebarProps) => {
         <Input
           placeholder={t("Поиск")}
           theme={InputTheme.CLEAR}
-          onChange={() => {}}
-          value={""}
+          onChange={onChangeSearch}
+          value={search}
           type={InputType.TEXT}
           className={cls.searchInput}
         />

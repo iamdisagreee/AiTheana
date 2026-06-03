@@ -39,7 +39,7 @@ export const initArticlesPage = createAsyncThunk<
         }
       });
 
-      dispatch(articlesPageActions.initState());
+      // dispatch(articlesPageActions.initState());
       dispatch(fetchArticlesList({ replace: false }));
     });
   } catch (e) {

@@ -5,11 +5,10 @@ import { useSelector } from "react-redux";
 import {
   chatRequestReducer,
   fetchChats,
-  getChatRequestIsLoading,
   getChats,
+  initChats,
 } from "features/ChatRequest";
 import { useAppDispatch } from "shared/lib/hooks/useAppDispatch/useAppDispatch";
-import { useInitialEffect } from "shared/lib/hooks/useInitialEffect/useInitialEffect";
 import DynamicModuleLoader, {
   ReducersList,
 } from "shared/lib/components/DynamicModuleLoader/DynamicModuleLoader";
@@ -24,10 +23,9 @@ import {
 import {
   eventTimelineReducer,
   fetchEventTimeline,
-  getEventTimelineErrorByChatId,
   getEventTimelineIsLoadedByChatId,
 } from "features/EventTimeline";
-import { useParams } from "react-router-dom";
+import { useParams, useSearchParams } from "react-router-dom";
 import { ChatStatus } from "units/Chat";
 import { InfoPanel } from "widgets/InfoPanel";
 
@@ -45,6 +43,7 @@ const reducers: ReducersList = {
 const ChatDetailsPage = memo((props: ChatDetailsPageProps) => {
   const { className } = props;
   const chats = useSelector(getChats);
+  const [searchParams] = useSearchParams();
   const dispatch = useAppDispatch();
   const { id } = useParams();
   const chatId = Number(id);
@@ -52,9 +51,10 @@ const ChatDetailsPage = memo((props: ChatDetailsPageProps) => {
     getEventTimelineIsLoadedByChatId(chatId),
   );
 
+  dispatch(initChats(searchParams));
+
   useEffect(() => {
     dispatch(fetchChats({ replace: true }));
-    console.log("AAAA", chatId, eventTimelineIsLoaded);
     if (chatId && !eventTimelineIsLoaded) {
       dispatch(fetchEventTimeline(chatId));
       dispatch(

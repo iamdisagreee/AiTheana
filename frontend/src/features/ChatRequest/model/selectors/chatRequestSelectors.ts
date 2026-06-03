@@ -8,6 +8,16 @@ export const getChatRequestError = (state: StateSchema) =>
 export const getChatRequestIsLoading = (state: StateSchema) =>
   state.chatRequest?.isLoading;
 
+export const getSidebarSearch = (state: StateSchema) =>
+  state.chatRequest?.sidebarParams.search || "";
+
+export const getSidebarInited = (state: StateSchema) =>
+  state.chatRequest?.sidebarInited;
+
+export const getModalSearchByIntelocutorId =
+  (chatId: number) => (state: StateSchema) =>
+    state.chatRequest?.modalByIntelocutorIdParams[chatId].search || "";
+
 export const getChats = createSelector(
   [
     (state: StateSchema) => state.chatRequest?.chatIds || [],

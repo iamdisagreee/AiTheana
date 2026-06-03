@@ -9,6 +9,9 @@ import {
   getChatRequestIsLoading,
   getChats,
   getChatsByInterlocutorId,
+  getSidebarSearch,
+  getModalSearchByIntelocutorId,
+  getSidebarInited,
 } from "./model/selectors/chatRequestSelectors";
 import {
   chatRequestActions,
@@ -16,6 +19,7 @@ import {
 } from "./model/slices/chatRequestSlice";
 
 import { fetchChats } from "./model/services/fetchChats";
+import { initChats } from "./model/services/initChats";
 
 export {
   ChatRequestSchema,
@@ -29,4 +33,8 @@ export {
   chatRequestActions,
   chatRequestReducer,
   fetchChats,
+  getSidebarSearch,
+  getModalSearchByIntelocutorId,
+  getSidebarInited,
+  initChats,
 };

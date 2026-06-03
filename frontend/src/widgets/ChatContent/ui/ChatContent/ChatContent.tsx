@@ -2,21 +2,14 @@ import { classNames } from "shared/lib/classNames/classNames";
 import cls from "./ChatContent.module.scss";
 import { memo, useEffect } from "react";
 import { EventTimelineList } from "units/EventTimeline";
-import { addChatActions, ChatInput, getAddChatChatId } from "features/AddChat";
+import { addChatActions, ChatInput } from "features/AddChat";
 import { useSelector } from "react-redux";
 import {
   getEventTimelineByChatId,
   getEventTimelineErrorByChatId,
-  getEventTimelineIsLoadedByChatId,
 } from "features/EventTimeline";
 import { useNavigate, useParams } from "react-router-dom";
 import { useAppDispatch } from "shared/lib/hooks/useAppDispatch/useAppDispatch";
-import {
-  getChatStreamStatusByChatId,
-  startChatStream,
-} from "features/ChatStream";
-import { ChatStatus } from "units/Chat";
-import Loader from "shared/ui/Loader/Loader";
 import Text, { AlignText, ThemeText } from "shared/ui/Text/Text";
 import { useTranslation } from "react-i18next";
 
