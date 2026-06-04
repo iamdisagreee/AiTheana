@@ -95,7 +95,7 @@ class ChatRepository:
             sort_order = sort_column.desc()
 
         stmt = select(Chat).where(
-            Chat.user_id == user_id,
+            and_(Chat.user_id == user_id, Chat.status != ChatStatus.EMPTY)
         )
 
         if params.search:

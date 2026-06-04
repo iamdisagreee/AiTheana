@@ -11,9 +11,13 @@ export const fetchChats = createAsyncThunk<
   ThunkConfig<string>
 >("chats/fetchChats", async (params, thunkApi) => {
   const { extra, rejectWithValue } = thunkApi;
-  const { search } = params;
+  const { search, interlocutorId } = params;
 
   addQueryParams({ search });
+
+  if (!interlocutorId) {
+    params = {...params, }
+  }
 
   try {
     const response = await extra.api.get<FetchChatsResponse>(`/chats`, {

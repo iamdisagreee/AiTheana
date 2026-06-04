@@ -18,6 +18,7 @@ import { eventTimelineActions } from "features/EventTimeline";
 import { MessageType } from "units/Message";
 import { EventTimelineItemType } from "units/EventTimeline";
 import { useNavigate } from "react-router-dom";
+import { fetchChats } from "features/ChatRequest";
 
 interface ChatInputProps {
   className?: string;

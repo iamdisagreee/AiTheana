@@ -28,6 +28,7 @@ import {
 import { useParams, useSearchParams } from "react-router-dom";
 import { ChatStatus } from "units/Chat";
 import { InfoPanel } from "widgets/InfoPanel";
+import { getChatStreamStatusByChatId } from "features/ChatStream";
 
 interface ChatDetailsPageProps {
   className?: string;
@@ -50,18 +51,26 @@ const ChatDetailsPage = memo((props: ChatDetailsPageProps) => {
   const eventTimelineIsLoaded = useSelector(
     getEventTimelineIsLoadedByChatId(chatId),
   );
+  const chatStatus = useSelector(getChatStreamStatusByChatId(chatId));
 
   dispatch(initChats(searchParams));
 
   useEffect(() => {
-    dispatch(fetchChats({ replace: true }));
+    if (chatStatus === ChatStatus.UPLOADING_PREPROCESSED) {
+      dispatch(
+        fetchChats({ replace: true, search: searchParams.get("search") || "" }),
+      );
+    }
+  }, [chatStatus, dispatch, searchParams]);
+
+  useEffect(() => {
     if (chatId && !eventTimelineIsLoaded) {
       dispatch(fetchEventTimeline(chatId));
       dispatch(
         chatStreamActions.setStatus({ chatId, status: ChatStatus.COMPLETED }),
       );
     }
-  }, [chatId, dispatch, eventTimelineIsLoaded]);
+  }, [chatId, dispatch, eventTimelineIsLoaded, searchParams]);
 
   return (
     <DynamicModuleLoader reducers={reducers} removeAfterUnmount={false}>

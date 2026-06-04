@@ -23,6 +23,7 @@ def check_file_extension(filename: str):
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
             detail="Incorrect file extension",
+
         )
 
 
@@ -67,15 +68,19 @@ def generate_filename(username: str) -> str:
 
 
 def is_valid_message(msg: dict) -> bool:
-    return all(
-        [
-            msg["type"] == "message",
-            msg["date"],
-            msg["from"],
-            msg["text"],
-            isinstance(msg["text"], str),
-        ]
-    )
+    try:
+        # print(msg)
+        return all(
+            [
+                msg["type"] == "message",
+                msg["date"],
+                msg["from"],
+                msg["text"],
+                isinstance(msg["text"], str),
+            ]
+        )
+    except KeyError:
+        return False
 
 
 def map_message(msg: dict) -> UserMessage:
@@ -92,7 +97,7 @@ def preprocessing_raw_json(
         for msg in user_chat.messages
         if is_valid_message(msg=msg)
     ]
-
+    # print(processed_messages)
     return UserChatPreprocessed(
         title=user_chat.name,
         interlocutor_id=user_chat.id,
