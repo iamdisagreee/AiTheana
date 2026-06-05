@@ -4,6 +4,7 @@ import { memo } from "react";
 import { MessageData, MessageType } from "../../model/types/message";
 import { MessageAIText } from "../MessageAIText/MessageAIText";
 import { MessageAIError } from "../MessageAIError/MessageAIError";
+import { MessageAIWelcome } from "../MessageAIWelcome/MessageAIWelcome";
 
 interface MessageProps {
   className?: string;
@@ -21,8 +22,8 @@ export const Message = memo((props: MessageProps) => {
     case MessageType.AI_ERROR:
       item = <MessageAIError data={data} />;
       break;
-    case MessageType.USER_TEXT:
-      item = null;
+    case MessageType.AI_WELCOME:
+      item = <MessageAIWelcome />;
       break;
   }
 

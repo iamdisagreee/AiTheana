@@ -22,7 +22,7 @@ def check_file_extension(filename: str):
     if filename.split(".")[-1] != VALID_EXTENSION:
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
-            detail="Incorrect file extension",
+            detail="Некорректное расширение файла",
 
         )
 
@@ -32,7 +32,7 @@ def check_file_content_type(content_type: str):
     if content_type != VALID_CONTENT_TYPE:
         raise HTTPException(
             status_code=status.HTTP_415_UNSUPPORTED_MEDIA_TYPE,
-            detail="Invalid MIME-type of a file",
+            detail="Некорректный MIME-type файла",
         )
 
 
@@ -47,7 +47,7 @@ def check_file_size(file_size: int):
     if file_size > MAX_FILE_SIZE:
         raise HTTPException(
             status_code=status.HTTP_413_REQUEST_ENTITY_TOO_LARGE,
-            detail="File size exceeded",
+            detail=f"Размер файла больше {MAX_FILE_SIZE / 1024 / 1024} MB",
         )
 
 
@@ -58,7 +58,7 @@ def check_file_sctructure(raw_bytes: bytes):
     except ValidationError:
         raise HTTPException(
             status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
-            detail="Invalid json structure",
+            detail="Некорректная структура json-файла",
         ) from None
 
 

@@ -31,7 +31,7 @@ class AuthService:
         if user and user.is_activated:
             raise HTTPException(
                 status_code=status.HTTP_400_BAD_REQUEST,
-                detail="Email already registered",
+                detail="Email уже зарегестрирован",
             )
 
         header = "Код подтверждения"
@@ -47,13 +47,13 @@ class AuthService:
             print(e)
             raise HTTPException(
                 status_code=status.HTTP_503_SERVICE_UNAVAILABLE,
-                detail="Mistake with authorization in smtp service",
+                detail="Ошибка при отправке письма",
             ) from None
         except smtplib.SMTPRecipientsRefused as e:
             print(e)
             raise HTTPException(
                 status_code=status.HTTP_503_SERVICE_UNAVAILABLE,
-                detail="Invalide credentials for smtplib",
+                detail="Ошибка при отправке письма",
             ) from None
 
         username = self.create_username(email=email)
@@ -79,13 +79,13 @@ class AuthService:
         if not user:
             raise HTTPException(
                 status_code=status.HTTP_404_NOT_FOUND,
-                detail="Email did not start activation",
+                detail="Email не доступен для активации",
             )
 
         if user.is_activated:
             raise HTTPException(
                 status_code=status.HTTP_400_BAD_REQUEST,
-                detail="Email already activated",
+                detail="Email уже зарегестрирован",
             )
 
         correct_code = await self.redis.get(email)
@@ -93,21 +93,15 @@ class AuthService:
         if not correct_code:
             raise HTTPException(
                 status_code=status.HTTP_404_NOT_FOUND,
-                detail=f"No code for email {email}",
+                detail=f"Нет кода для email {email}",
             )
 
         if int(correct_code) != entered_code:
             raise HTTPException(
                 status_code=status.HTTP_400_BAD_REQUEST,
-                detail="Incorrect code entered",
+                detail="Введен некорректный код",
             )
 
-        # username = self.create_username(email=email)
-        # user = await self.repo.add_user(
-        #     username=username,
-        #     email=email,
-        #     hashed_password=hash_password(password=password),
-        # )
         await self.repo.update_user_activated(email=email)
 
         access_token, refresh_token = create_tokens(
@@ -137,29 +131,29 @@ class AuthService:
 
         if not user:
             raise HTTPException(
-                status_code=status.HTTP_401_UNAUTHORIZED,
-                detail="Incorrect email",
+                status_code=status.HTTP_403_FORBIDDEN,
+                detail="Неправильная почта",
                 headers={"WWW-Authentication": "Bearer"},
             )
 
         if not user.is_activated:
             raise HTTPException(
                 status_code=status.HTTP_400_BAD_REQUEST,
-                detail="User not activated",
+                detail="Пользователь не активирован",
             )
 
         try:
             verify_password(password, user.hashed_password)
         except VerifyMismatchError:
             raise HTTPException(
-                status_code=status.HTTP_401_UNAUTHORIZED,
-                detail="Incorrect password",
+                status_code=status.HTTP_403_FORBIDDEN,
+                detail="Неправильный пароль",
                 headers={"WWW-Authentication": "Bearer"},
             ) from None
         except InvalidHashError:
             raise HTTPException(
                 status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
-                detail="Incorrect hashed password",
+                detail="Ошибка с хешированным паролем",
                 headers={"WWW-Authentication": "Bearer"},
             ) from None
 
@@ -183,7 +177,7 @@ class AuthService:
         if not user.is_activated:
             raise HTTPException(
                 status_code=status.HTTP_400_BAD_REQUEST,
-                detail="User not activated",
+                detail="Пользователь не активирован",
             )
 
         await self.repo.delete_refresh_token(user_id=user.id)
@@ -199,7 +193,7 @@ class AuthService:
         if not refresh_token:
             raise HTTPException(
                 status_code=status.HTTP_401_UNAUTHORIZED,
-                detail="Refresh token not found in cookies",
+                detail="Рефреш-токен не найден в куках",
                 headers={"WWW-Authentication": "Bearer"},
             )
         try:
@@ -207,13 +201,13 @@ class AuthService:
         except jwt.ExpiredSignatureError:
             raise HTTPException(
                 status_code=status.HTTP_401_UNAUTHORIZED,
-                detail="Refresh token has expired",
+                detail="Закончился рефреш-токен",
                 headers={"WWW-Authenticate": "Bearer"},
             ) from None
         except (jwt.InvalidTokenError, ValidationError):
             raise HTTPException(
                 status_code=status.HTTP_403_FORBIDDEN,
-                detail="Could not validate credentials",
+                detail="Не получается распарсить данные из токена",
                 headers={"WWW-Authentication": "Bearer"},
             ) from None
 
@@ -224,7 +218,7 @@ class AuthService:
         if not token_from_db:
             raise HTTPException(
                 status_code=status.HTTP_401_UNAUTHORIZED,
-                detail="Refresh token not found in db",
+                detail="Рефреш-токен не найден в бд",
                 headers={"WWW-Authentication": "Bearer"},
             )
 
@@ -233,7 +227,7 @@ class AuthService:
         if not user.is_activated:
             raise HTTPException(
                 status_code=status.HTTP_400_BAD_REQUEST,
-                detail="User not activated",
+                detail="Пользователь не активирован",
             )
 
         access_token, refresh_token = create_tokens(

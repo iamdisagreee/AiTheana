@@ -69,7 +69,7 @@ async def get_current_user(
         ) from None
     except (jwt.InvalidTokenError, ValidationError):
         raise HTTPException(
-            status_code=status.HTTP_403_FORBIDDEN,
+            status_code=status.HTTP_401_UNAUTHORIZED,
             detail="Could not validate credentials",
             headers={"WWW-Authentication": "Bearer"},
         ) from None

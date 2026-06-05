@@ -15,6 +15,7 @@ declare module "*.jpg";
 declare module "*.jpeg";
 declare module "*.png";
 declare module "*.woff2";
+declare module "*.webm";
 
 declare const __IS_DEV__: boolean;
 declare const __API__: string;

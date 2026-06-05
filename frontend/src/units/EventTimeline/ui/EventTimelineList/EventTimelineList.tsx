@@ -23,9 +23,8 @@ const initTimeline = {
   eventType: EventTimelineItemType.MESSAGE,
   createdAt: new Date().toISOString(),
   data: {
-    content:
-      "Привет! Чтобы загрузить чат нажми на скрепку и следуя инструкциям прикрепи файл в формате json",
-    type: MessageType.AI_TEXT,
+    content: "",
+    type: MessageType.AI_WELCOME,
   },
 };
 

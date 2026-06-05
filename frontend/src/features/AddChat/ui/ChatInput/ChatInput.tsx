@@ -2,23 +2,15 @@ import { classNames } from "shared/lib/classNames/classNames";
 import cls from "./ChatInput.module.scss";
 import { ChangeEvent, memo, useCallback, useRef, useState } from "react";
 import ClipSvg from "shared/assets/icons/clip.svg";
-import { Icon, IconTheme } from "shared/ui/Icon/Icon";
 import ArrowSvg from "shared/assets/icons/arrow.svg";
 import Button from "shared/ui/Button/Button";
-import Input, { InputTheme } from "shared/ui/Input/Input";
 import { useTranslation } from "react-i18next";
 import { Textarea } from "shared/ui/Textarea/Textarea";
 import { FilePreview } from "../FilePreview/FilePreview";
 import { useAppDispatch } from "shared/lib/hooks/useAppDispatch/useAppDispatch";
 import { addChat } from "../../model/services/addChat";
-import { useSelector } from "react-redux";
-import { getAddChatChatId } from "../../model/selectors/addChatSelectors";
 import { startChatStream } from "features/ChatStream";
-import { eventTimelineActions } from "features/EventTimeline";
-import { MessageType } from "units/Message";
-import { EventTimelineItemType } from "units/EventTimeline";
 import { useNavigate } from "react-router-dom";
-import { fetchChats } from "features/ChatRequest";
 
 interface ChatInputProps {
   className?: string;
