@@ -1,9 +1,12 @@
 import { createSelector } from "@reduxjs/toolkit";
 import { StateSchema } from "app/providers/StoreProvider";
 import { timelineSelector } from "../slices/eventTimelineSlice";
-import { EventTimeline } from "units/EventTimeline";
+import { EventTimeline, EventTimelineItemType } from "units/EventTimeline";
 
-export const getEventTimelineByChatId = (chatId?: number) =>
+export const getEventTimelineByChatId = (
+  chatId?: number,
+  // eventType: EventTimelineItemType,
+) =>
   createSelector(
     [
       (state: StateSchema) =>

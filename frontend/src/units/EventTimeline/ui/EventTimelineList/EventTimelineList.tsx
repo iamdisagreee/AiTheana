@@ -18,8 +18,12 @@ interface EventTimelineListProps {
   eventTimelines: EventTimeline[];
 }
 
+function getRandomInt(min: number, max: number) {
+  return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
 const initTimeline = {
-  id: -2,
+  id: getRandomInt(1, 100000),
   eventType: EventTimelineItemType.MESSAGE,
   createdAt: new Date().toISOString(),
   data: {
@@ -35,7 +39,10 @@ export const EventTimelineList = memo((props: EventTimelineListProps) => {
 
   const renderEventTimeline = (eventTimeline: EventTimeline) => {
     return (
-      <EventTimelineItem key={eventTimeline.id} eventTimeline={eventTimeline} />
+      <EventTimelineItem
+        key={eventTimeline.createdAt}
+        eventTimeline={eventTimeline}
+      />
     );
   };
 

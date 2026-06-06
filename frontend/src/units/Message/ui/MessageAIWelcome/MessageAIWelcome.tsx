@@ -33,14 +33,14 @@ export const MessageAIWelcome = memo((props: MessageAIWelcomeProps) => {
         />
         <Button onClick={onOpenModal}>
           <Text
-            text={"инструкциям"}
+            text={"инструкци"}
             size={SizeText.M}
             theme={ThemeText.SECONDARY}
             className={classNames(cls.MessageAIText, {}, [className])}
           />
         </Button>
         <Text
-          text={"прикрепи файл в формате json размером до 2 МБ"}
+          text={"прикрепи файл в формате json размером до 3 МБ"}
           size={SizeText.M}
           theme={ThemeText.PRIMARY}
           className={classNames(cls.MessageAIText, {}, [className])}

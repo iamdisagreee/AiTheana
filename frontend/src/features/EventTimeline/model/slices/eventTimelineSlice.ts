@@ -9,7 +9,7 @@ import { EventTimelineSchema } from "../types/eventTimelinSchema";
 import { fetchEventTimeline } from "../services/fetchEventTimeline";
 
 const timelineAdapter = createEntityAdapter<EventTimeline>({
-  selectId: (timeline: EventTimeline) => timeline.id,
+  selectId: (timeline: EventTimeline) => `${timeline.eventType}_${timeline.id}`,
 });
 
 export const timelineSelector = timelineAdapter.getSelectors<StateSchema>(
@@ -37,7 +37,10 @@ const eventTimelineSlice = createSlice({
       const { timeline, chatId } = action.payload;
       timelineAdapter.addOne(state, timeline);
       const currentIds = state.timelines[chatId] || [];
-      state.timelines[chatId] = [...currentIds, timeline.id];
+      state.timelines[chatId] = [
+        ...currentIds,
+        `${timeline.eventType}_${timeline.id}`,
+      ];
     },
   },
   extraReducers: (builder) => {
@@ -48,9 +51,13 @@ const eventTimelineSlice = createSlice({
       })
       .addCase(fetchEventTimeline.fulfilled, (state, action) => {
         const { chat, timeline } = action.payload;
+        // console.log(timeline);
         state.isLoading = false;
         timelineAdapter.addMany(state, action.payload.timeline);
-        state.timelines[chat.id] = timeline.map((event) => event.id);
+        state.timelines[chat.id] = timeline.map(
+          (timeline) => `${timeline.eventType}_${timeline.id}`,
+        );
+        // console.log(state.timelines[chat.id]);
       })
       .addCase(fetchEventTimeline.rejected, (state, action) => {
         state.isLoading = false;
