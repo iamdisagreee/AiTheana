@@ -9,7 +9,7 @@ import "app/styles/index.scss";
 import { StoreProvider } from "app/providers/StoreProvider";
 
 render(
-  <HashRouter>
+  <BrowserRouter>
     <StoreProvider>
       <ErrorBoundary>
         <ThemeProvider>
@@ -17,6 +17,6 @@ render(
         </ThemeProvider>
       </ErrorBoundary>
     </StoreProvider>
-  </HashRouter>,
+  </BrowserRouter>,
   document.getElementById("root"),
 );
