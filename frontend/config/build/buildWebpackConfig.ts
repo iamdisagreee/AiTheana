@@ -17,7 +17,7 @@ export function buildWebpackConfig(
       filename: "[name].[contenthash].js",
       path: paths.build,
       clean: true,
-      publicPath: isDev ? "/" : "/AiTheana/",
+      publicPath: isDev ? "/" : "/111.88.158.171/",
     },
     plugins: buildPlugins(options),
     module: {
