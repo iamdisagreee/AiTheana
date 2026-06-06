@@ -15,7 +15,6 @@ class ChatStatus(StrEnum):
     ANALYZING = "ANALYZING"
     COMPLETED = "COMPLETED"
     FAILED = "FAILED"
-    CANCELLED = "CANCELLED"
 
 
 class Chat(CamelCaseModel):

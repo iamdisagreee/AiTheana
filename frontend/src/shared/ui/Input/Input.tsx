@@ -1,5 +1,4 @@
 import React, {
-  FC,
   InputHTMLAttributes,
   memo,
   MutableRefObject,

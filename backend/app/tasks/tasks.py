@@ -19,7 +19,7 @@ from app.modules.chats.schemas import (
     MessageType,
 )
 from celery import shared_task
-from openai import OpenAI
+from openai import APITimeoutError, OpenAI
 from sqlalchemy.orm import Session
 
 
@@ -27,7 +27,6 @@ def publish_status(chat_id: int, status: str, extra: dict | None = None):
     data = {"status": status}
     if extra:
         data.update(extra)
-    # print(status)
     redis_client_celery.publish(f"chat:{chat_id}", json.dumps(data))
 
 
@@ -69,9 +68,9 @@ def processing_chat_task(
         endpoint_url=settings.s3_endpoint_url,
         bucket_name=settings.s3_bucket_name,
     )
-    # s3_sync_client.upload_bytes(
-    #     data=raw_bytes, object_name=raw_storage_path
-    # )
+    s3_sync_client.upload_bytes(
+        data=raw_bytes, object_name=raw_storage_path
+    )
 
     file = File(
         chat_id=chat_id,
@@ -126,9 +125,9 @@ def processing_chat_task(
     preprocessed_storage_path = f"{FileType.PREPROCESSED.lower()}/{chat_id}/{preprocessed_filename}"  # noqa
     preprocessed_file_size = get_file_size(raw_bytes)
 
-    # s3_sync_client.upload_bytes(
-    #     data=preprocessed_json, object_name=preprocessed_storage_path
-    # )
+    s3_sync_client.upload_bytes(
+        data=preprocessed_json, object_name=preprocessed_storage_path
+    )
     file = File(
         chat_id=chat_id,
         type=FileType.PREPROCESSED,
@@ -140,27 +139,6 @@ def processing_chat_task(
     session.commit()
 
     # Анализирование (API)
-    client = OpenAI(
-        api_key=settings.deepseek_key, base_url="https://api.vsellm.ru/v1"
-    )
-    response = client.chat.completions.create(
-        model="qwen/qwen3-vl-plus",
-        messages=[
-            {
-                "role": "system",
-                "content": """"
-                    Ты аналитик переписок Telegram.
-                    Проанализируй переписку и верни чистый текст
-                    без markdown-разметки в 5 предложениях:
-                    1. Эмоциональный фон переписки
-                    2. Интересные наблюдения с психологической точки зрения
-                """,
-            },
-            {"role": "user", "content": f"```json{preprocessed_json}```"},
-        ],
-        max_tokens=200,
-    )
-
     update_chat_status(
         session=session,
         chat=chat,
@@ -171,27 +149,73 @@ def processing_chat_task(
         status=ChatStatus.ANALYZING,
         extra={"content": "Start analyzing chat"},
     )
-    print(response, response.choices[0].message.content)
-    # response = "Дорогие друзья, новая модель организационной деятельности требует определения и уточнения форм воздействия? Равным образом повышение уровня гражданского сознания создаёт предпосылки качественно новых шагов для направлений прогрессивного развития. Практический опыт показывает, что консультация с профессионалами из IT способствует повышению актуальности позиций, занимаемых участниками в отношении поставленных задач. Равным образом постоянное информационно-техническое обеспечение нашей деятельности создаёт предпосылки качественно новых шагов для всесторонне сбалансированных нововведений! Разнообразный и богатый опыт постоянный количественный рост и сфера нашей активности обеспечивает широкому кругу специалистов участие в формировании направлений прогрессивного развития! С другой стороны консультация с профессионалами из IT способствует подготовке и реализации позиций, занимаемых участниками в отношении поставленных задач. Практический опыт показывает, что повышение уровня гражданского сознания позволяет выполнить важнейшие задания по разработке дальнейших направлений развития проекта! Задача организации, в особенности же курс на социально-ориентированный национальный проект способствует подготовке и реализации соответствующих условий активизации. Повседневная практика показывает, что рамки и место обучения кадров напрямую зависит от соответствующих условий активизации. Дорогие друзья, постоянный количественный рост и сфера нашей активности требует от нас системного анализа направлений прогрессивного развития. С другой стороны консультация с профессионалами из IT играет важную роль в формировании ключевых компонентов планируемого обновления? Повседневная практика показывает, что новая модель организационной деятельности требует от нас системного анализа всесторонне..."
 
-    answer = response.choices[0].message.content
-    # answer = response
-    analys = Analys(
-        chat_id=chat_id,
-        # content=response.choices[0].message.content,
-        content=answer,
-    )
-    session.add(analys)
-    session.commit()
+    client = OpenAI(api_key=settings.ai_key, base_url=settings.ai_url)
+    try:
+        # raise APITimeoutError(
+        #     request=httpx.Request("POST", "https://example.com")
+        # )
+        response = client.chat.completions.create(
+            model="qwen/qwen3-vl-plus",
+            messages=[
+                {
+                    "role": "system",
+                    "content": """"
+                        Ты аналитик переписок Telegram.
+                        Проанализируй переписку и верни чистый текст
+                        без markdown-разметки в 5 предложениях:
+                        1. Эмоциональный фон переписки
+                        2. Интересные наблюдения с психологической точки зрения
+                    """,
+                },
+                {
+                    "role": "user",
+                    "content": f"```json{preprocessed_json}```",
+                },
+            ],
+            max_tokens=200,
+        )
+        # response = "Дорогие друзья, новая модель организационной деятельности требует определения и уточнения форм воздействия? Равным образом повышение уровня гражданского сознания создаёт предпосылки качественно новых шагов для направлений прогрессивного развития. Практический опыт показывает, что консультация с профессионалами из IT способствует повышению актуальности позиций, занимаемых участниками в отношении поставленных задач. Равным образом постоянное информационно-техническое обеспечение нашей деятельности создаёт предпосылки качественно новых шагов для всесторонне сбалансированных нововведений! Разнообразный и богатый опыт постоянный количественный рост и сфера нашей активности обеспечивает широкому кругу специалистов участие в формировании направлений прогрессивного развития! С другой стороны консультация с профессионалами из IT способствует подготовке и реализации позиций, занимаемых участниками в отношении поставленных задач. Практический опыт показывает, что повышение уровня гражданского сознания позволяет выполнить важнейшие задания по разработке дальнейших направлений развития проекта! Задача организации, в особенности же курс на социально-ориентированный национальный проект способствует подготовке и реализации соответствующих условий активизации. Повседневная практика показывает, что рамки и место обучения кадров напрямую зависит от соответствующих условий активизации. Дорогие друзья, постоянный количественный рост и сфера нашей активности требует от нас системного анализа направлений прогрессивного развития. С другой стороны консультация с профессионалами из IT играет важную роль в формировании ключевых компонентов планируемого обновления? Повседневная практика показывает, что новая модель организационной деятельности требует от нас системного анализа всесторонне..."
+        answer = response.choices[0].message.content
+        # answer = response
+        analys = Analys(
+            chat_id=chat_id,
+            content=answer,
+        )
+        session.add(analys)
+        session.commit()
 
-    # Все успешно
-    update_chat_status(
-        session=session,
-        chat=chat,
-        new_status=ChatStatus.COMPLETED,
-    )
-    publish_status(
-        chat_id=chat_id,
-        status=ChatStatus.COMPLETED,
-        extra={"content": answer},
-    )
+        # Все успешно
+        update_chat_status(
+            session=session,
+            chat=chat,
+            new_status=ChatStatus.COMPLETED,
+        )
+        publish_status(
+            chat_id=chat_id,
+            status=ChatStatus.COMPLETED,
+            extra={"content": answer},
+        )
+    except APITimeoutError:
+        # Упала ошибка
+        update_chat_status(
+            session=session,
+            chat=chat,
+            new_status=ChatStatus.FAILED,
+        )
+        publish_status(
+            chat_id=chat_id,
+            status=ChatStatus.FAILED,
+            extra={
+                "content": "Ошибка работы на стороне сервера. "
+                "Попробуйте создать новый чат"
+            },
+        )
+        message = Message(
+            chat_id=chat_id,
+            type=MessageType.AI_ERROR,
+            content="Ошибка работы на стороне сервера. "
+            "Попробуйте создать новый чат",
+        )
+        session.add(message)
+        session.commit()

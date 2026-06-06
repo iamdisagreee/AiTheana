@@ -1,6 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { ChatStreamSchema } from "../types/chatStremSchema";
-import { act } from "react-dom/test-utils";
 import { ChatStatus } from "units/Chat";
 
 const initialState: ChatStreamSchema = {
@@ -55,21 +54,6 @@ export const chatStreamSlice = createSlice({
       delete state.isStreamingByChatId[chatId];
     },
   },
-  // extraReducers: (builder) => {
-  // builder
-  //   .addCase(addChat.pending, (state) => {
-  //     state.isLoading = true;
-  //     state.error = undefined;
-  //   })
-  //   .addCase(addChat.fulfilled, (state, action) => {
-  //     state.isLoading = false;
-  //     state.chatId = action.payload;
-  //   })
-  //   .addCase(addChat.rejected, (state, action) => {
-  //     state.isLoading = false;
-  //     state.error = action.payload;
-  //   });
-  // },
 });
 
 export const { actions: chatStreamActions } = chatStreamSlice;

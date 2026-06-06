@@ -1,6 +1,6 @@
 import { classNames } from "shared/lib/classNames/classNames";
 import cls from "./Image.module.scss";
-import { ImgHTMLAttributes, memo, SVGProps } from "react";
+import { ImgHTMLAttributes, memo } from "react";
 import { useTranslation } from "react-i18next";
 
 export interface ImageProps extends ImgHTMLAttributes<HTMLImageElement> {

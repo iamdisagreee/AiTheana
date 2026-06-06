@@ -11,9 +11,7 @@ from fastapi.staticfiles import StaticFiles
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     try:
-        # consumer_task = asyncio.create_task(run_consumer())
         yield
-        # consumer_task.cancel()
     except Exception:
         pass
     finally:

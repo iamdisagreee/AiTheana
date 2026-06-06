@@ -40,7 +40,7 @@ export const MessageAIWelcome = memo((props: MessageAIWelcomeProps) => {
           />
         </Button>
         <Text
-          text={"прикрепи файл в формате json"}
+          text={"прикрепи файл в формате json размером до 2 МБ"}
           size={SizeText.M}
           theme={ThemeText.PRIMARY}
           className={classNames(cls.MessageAIText, {}, [className])}

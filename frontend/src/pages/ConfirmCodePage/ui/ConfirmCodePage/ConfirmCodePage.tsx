@@ -30,8 +30,6 @@ import Button from "shared/ui/Button/Button";
 import { useNavigate } from "react-router-dom";
 import { RoutePath } from "shared/config/routeConfig/routeConfig";
 import { getUserAuthData } from "units/User";
-import { loginByUsername } from "features/LoginByUsername";
-// import { loginByUsername } from "pages/LoginPage/model/services/loginByUsername";
 
 interface ConfirmCodePageProps {
   className?: string;
@@ -70,10 +68,6 @@ const ConfirmCodePage = memo((props: ConfirmCodePageProps) => {
     () => navigate(RoutePath.registration),
     [navigate],
   );
-
-  // if (isLoading) {
-  //   return <div>AAAA</div>;
-  // }
 
   return (
     <DynamicModuleLoader reducers={reducers} removeAfterUnmount>

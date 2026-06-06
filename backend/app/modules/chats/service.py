@@ -1,4 +1,3 @@
-import asyncio
 import json
 
 import redis.asyncio as aioredis
@@ -27,7 +26,6 @@ from .schemas import (
     GetChatsResponse,
     MessageData,
     MessageEvent,
-    MessageType,
 )
 
 settings = get_settings()
@@ -46,22 +44,11 @@ class ChatService:
             check_file_size(file_size=file.size)
             check_file_sctructure(raw_bytes=raw_bytes)
         except HTTPException as e:
-            # await self.repo.add_message(
-            #     chat_id=chat.id,
-            #     type=MessageType.AI_ERROR,
-            #     content=e.detail,
-            # )
             raise
 
         chat = await self.repo.add_chat(
             user_id=user.id, status=ChatStatus.EMPTY
         )
-        # await self.repo.add_message(
-        #     chat_id=chat.id, type=MessageType.AI_TEXT, content=ai_text
-        # )
-
-        # print(file, file.filename, file.content_type)
-        # print(raw_bytes)
 
         processing_chat_task.delay(
             chat_id=chat.id, raw_bytes=raw_bytes, username=user.username
@@ -76,12 +63,9 @@ class ChatService:
         )
         pubsub = redis.pubsub()
         await pubsub.subscribe(f"chat:{chat_id}")
-        print("CONNECT")
         try:
             async for message in pubsub.listen():
-                # await asyncio.sleep(1)
                 if message["type"] == "message":
-                    # await asyncio.sleep(5)
                     data = message["data"]
                     yield f"data: {data}\n\n"
                     status = json.loads(data).get("status")
@@ -92,7 +76,6 @@ class ChatService:
                     ):
                         break
         finally:
-            print("DISCONNECT")
             await pubsub.unsubscribe(f"chat:{chat_id}")
             await pubsub.close()
             await redis.close()

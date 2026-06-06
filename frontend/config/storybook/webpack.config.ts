@@ -1,5 +1,5 @@
 import path from "path";
-import { BuildEnv, BuildPaths } from "../build/types/config";
+import { BuildPaths } from "../build/types/config";
 import webpack from "webpack";
 import { buildCssLoader } from "../build/buildLoaders/buildCssLoader";
 import { buildSvgLoader } from "../build/buildLoaders/buildSvgLoader";

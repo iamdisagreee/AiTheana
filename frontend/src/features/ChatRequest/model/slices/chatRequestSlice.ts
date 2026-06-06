@@ -1,6 +1,5 @@
 import {
   createEntityAdapter,
-  createSelector,
   createSlice,
   PayloadAction,
 } from "@reduxjs/toolkit";
@@ -94,12 +93,6 @@ const chatRequestSlice = createSlice({
             ? chatIds
             : [...currentIds, ...chatIds];
         }
-
-        // eslint-disable-next-line
-        // action.meta.arg.replace
-        //   ? chatsAdapter.setAll(state, action.payload)
-        //   : chatsAdapter.addMany(state, action.payload);
-        // state.isLoading = false;
       })
       .addCase(fetchChats.rejected, (state, action) => {
         state.isLoading = false;

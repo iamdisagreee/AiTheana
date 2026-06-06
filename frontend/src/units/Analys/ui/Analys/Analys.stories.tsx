@@ -12,9 +12,7 @@ export default {
   },
 } as ComponentMeta<typeof Analys>;
 
-const Template: ComponentStory<typeof Analys> = (args) => (
-  <Analys {...args} />
-);
+const Template: ComponentStory<typeof Analys> = (args) => <Analys {...args} />;
 
 export const Primary = Template.bind({});
 Primary.args = {};

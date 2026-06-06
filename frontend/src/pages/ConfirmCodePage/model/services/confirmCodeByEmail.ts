@@ -1,6 +1,5 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { ThunkConfig } from "app/providers/StoreProvider/config/StateSchema";
-import { getRegistrationPageUsername } from "pages/RegistrationPage";
 import {
   getUserAuthData,
   SendCodeUser,
@@ -33,8 +32,6 @@ export const confirmCodeByEmail = createAsyncThunk<
 
     const userSchema = response.data as UserSchema;
     dispatch(userActions.setAuthData(userSchema));
-
-    // return extra.navigate?.("/");
   } catch (e) {
     return rejectWithValue(
       e.response?.data?.detail[0].msg ?? e.response?.data?.detail ?? e.message,

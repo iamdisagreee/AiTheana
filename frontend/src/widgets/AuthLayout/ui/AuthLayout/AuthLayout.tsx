@@ -1,11 +1,7 @@
-import { classNames } from "shared/lib/classNames/classNames";
 import cls from "./AuthLayout.module.scss";
-import { memo, ReactNode, useEffect } from "react";
+import { memo, ReactNode } from "react";
 import { Page } from "widgets/Page/Page";
 import backgroundImage from "shared/assets/png/background-login.png";
-import { Navigate, Outlet, useLocation } from "react-router-dom";
-import { useSelector } from "react-redux";
-import { getUserAuthData } from "units/User";
 
 interface AuthLayoutProps {
   className?: string;
@@ -13,7 +9,7 @@ interface AuthLayoutProps {
 }
 
 export const AuthLayout = memo((props: AuthLayoutProps) => {
-  const { className, children } = props;
+  const { children } = props;
 
   return (
     <Page

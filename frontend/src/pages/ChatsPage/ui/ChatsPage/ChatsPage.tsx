@@ -2,18 +2,11 @@ import { classNames } from "shared/lib/classNames/classNames";
 import cls from "./ChatsPage.module.scss";
 import { memo } from "react";
 import { useSelector } from "react-redux";
-import {
-  chatRequestReducer,
-  fetchChats,
-  getChatRequestIsLoading,
-  getChats,
-  initChats,
-} from "features/ChatRequest";
+import { chatRequestReducer, getChats, initChats } from "features/ChatRequest";
 import DynamicModuleLoader, {
   ReducersList,
 } from "shared/lib/components/DynamicModuleLoader/DynamicModuleLoader";
 import { Page } from "widgets/Page/Page";
-import { useInitialEffect } from "shared/lib/hooks/useInitialEffect/useInitialEffect";
 import { useAppDispatch } from "shared/lib/hooks/useAppDispatch/useAppDispatch";
 import { addChatReducer } from "features/AddChat";
 import { ChatContent } from "widgets/ChatContent";
@@ -38,14 +31,9 @@ const ChatsPage = memo((props: ChatsPageProps) => {
   const { className } = props;
   const [searchParams] = useSearchParams();
   const chats = useSelector(getChats);
-  const isLoading = useSelector(getChatRequestIsLoading);
   const dispatch = useAppDispatch();
 
   dispatch(initChats(searchParams));
-
-  // const onLoadNextPart = useCallback(() => {
-  //   dispatch(fetchNextArticlePage());
-  // }, [dispatch]);
 
   return (
     <DynamicModuleLoader reducers={reducers} removeAfterUnmount={false}>

@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { User, UserSchema } from "../types/UserSchema";
+import { UserSchema } from "../types/UserSchema";
 import {
   ACCESS_TOKEN_LOCALSTORAGE_KEY,
   USER_LOCALSTORAGE_KEY,

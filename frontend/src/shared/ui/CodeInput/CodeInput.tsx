@@ -1,10 +1,4 @@
-import React, {
-  useState,
-  useRef,
-  ChangeEvent,
-  KeyboardEvent,
-  memo,
-} from "react";
+import { useRef, ChangeEvent, memo } from "react";
 import cls from "./CodeInput.module.scss";
 import { classNames } from "shared/lib/classNames/classNames";
 import { SizeText, ThemeText } from "../Text/Text";

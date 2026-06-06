@@ -39,7 +39,6 @@ const reducers: ReducersList = {
 };
 
 const RegistrationPage = memo((props: RegistrationPageProps) => {
-  const { className } = props;
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const { t } = useTranslation();

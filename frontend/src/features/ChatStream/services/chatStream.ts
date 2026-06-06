@@ -25,15 +25,11 @@ export const startChatStream = (chatId: number) => {
       onmessage(event) {
         const data = JSON.parse(event.data) as EventOnMessage;
 
-        // if (data.status === ChatStatus.UPLOADING_PREPROCESSED) {
-        //   dispatch(fetchChats({ replace: true }));
-        // }
-
         if (data.status === ChatStatus.PREPROCESSING) {
           dispatch(
             eventTimelineActions.setTimeline({
               timeline: {
-                id: -1,
+                id: -2,
                 createdAt: new Date().toISOString(),
                 eventType: EventTimelineItemType.MESSAGE,
                 data: {
@@ -46,12 +42,22 @@ export const startChatStream = (chatId: number) => {
           );
         }
 
-        dispatch(
-          chatStreamActions.setStatus({
-            chatId,
-            status: data.status,
-          }),
-        );
+        if (data.status === ChatStatus.FAILED) {
+          dispatch(
+            eventTimelineActions.setTimeline({
+              timeline: {
+                id: -1,
+                createdAt: new Date().toISOString(),
+                eventType: EventTimelineItemType.MESSAGE,
+                data: {
+                  content: data.content || "",
+                  type: MessageType.AI_ERROR,
+                },
+              } as EventTimeline,
+              chatId: chatId,
+            }),
+          );
+        }
 
         if (data.status === ChatStatus.COMPLETED) {
           dispatch(
@@ -68,6 +74,13 @@ export const startChatStream = (chatId: number) => {
             }),
           );
         }
+
+        dispatch(
+          chatStreamActions.setStatus({
+            chatId,
+            status: data.status,
+          }),
+        );
       },
 
       // onerror(error) {

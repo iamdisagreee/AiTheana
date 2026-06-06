@@ -1,6 +1,6 @@
 import { classNames } from "shared/lib/classNames/classNames";
 import cls from "./Logo.module.scss";
-import { CSSProperties, memo, useMemo } from "react";
+import { memo } from "react";
 import { Icon, IconTheme } from "../Icon/Icon";
 import LogoIcon from "shared/assets/icons/logo.svg";
 import { APPLICATION_NAME } from "shared/const/const";
@@ -18,13 +18,6 @@ interface LogoProps {
 
 export const Logo = memo((props: LogoProps) => {
   const { className, size = SizeLogo.SMALL } = props;
-
-  // const style = useMemo<CSSProperties>(() => {
-  //   return {
-  //     width: width || 100,
-  //     height: height || 100,
-  //   };
-  // }, [width, height]);
 
   return (
     <div className={classNames(cls.Logo, {}, [className])}>

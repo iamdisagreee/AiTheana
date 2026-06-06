@@ -1,6 +1,6 @@
 import { classNames } from "shared/lib/classNames/classNames";
 import cls from "./ChatListModal.module.scss";
-import { memo, ReactNode, useCallback } from "react";
+import { memo, useCallback } from "react";
 import Modal from "shared/ui/Modal/Modal";
 import Text, {
   AlignText,
@@ -10,8 +10,6 @@ import Text, {
 } from "shared/ui/Text/Text";
 import Button, { ButtonTheme } from "shared/ui/Button/Button";
 import { t } from "i18next";
-import { Icon, IconTheme } from "shared/ui/Icon/Icon";
-import PlusSvg from "shared/assets/icons/plus.svg";
 import { useSelector } from "react-redux";
 import { fetchChats, getChatsByInterlocutorId } from "features/ChatRequest";
 import { useInitialEffect } from "shared/lib/hooks/useInitialEffect/useInitialEffect";

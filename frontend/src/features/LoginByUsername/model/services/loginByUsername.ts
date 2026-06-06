@@ -12,7 +12,7 @@ export const loginByUsername = createAsyncThunk<
   LoginByUsernameProps,
   ThunkConfig<string>
 >("user/loginByUsername", async (props, thunkApi) => {
-  const { extra, dispatch, rejectWithValue, getState } = thunkApi;
+  const { extra, dispatch, rejectWithValue } = thunkApi;
   const { username, password } = props;
 
   const formData = new FormData();

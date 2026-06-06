@@ -16,7 +16,7 @@ export const fetchChats = createAsyncThunk<
   addQueryParams({ search });
 
   if (!interlocutorId) {
-    params = {...params, }
+    params = { ...params };
   }
 
   try {

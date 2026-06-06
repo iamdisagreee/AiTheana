@@ -1,12 +1,11 @@
 import { classNames } from "shared/lib/classNames/classNames";
 import cls from "./EventTimelineItem.module.scss";
-import { memo, ReactNode, useCallback, useState } from "react";
+import { memo, useState } from "react";
 import {
   EventTimeline,
   EventTimelineItemType,
 } from "../../model/types/eventTimeline";
 import { Message } from "units/Message";
-import { Icon, IconTheme } from "shared/ui/Icon/Icon";
 import CopySvg from "shared/assets/icons/copy.svg";
 import Button from "shared/ui/Button/Button";
 import { Analys } from "units/Analys";

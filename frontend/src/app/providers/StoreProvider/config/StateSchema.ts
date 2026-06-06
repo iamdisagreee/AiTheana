@@ -1,17 +1,8 @@
-import { CounterSchema } from "units/Counter";
 import { UserSchema } from "units/User/model/types/UserSchema";
 import { ReducerManager } from "./ReducerManager";
 import { EnhancedStore } from "@reduxjs/toolkit";
 import { createReduxStore } from "./store";
-import { ProfileSchema } from "units/Profile";
 import { AxiosInstance } from "axios";
-import { NavigateOptions, To } from "react-router-dom";
-import { ArticleDetailsSchema } from "units/Article";
-import {
-  AddCommentForArticleSchema,
-  ArticleDetailsCommentsSchema,
-} from "pages/ArticleDetailsPage";
-import { ArticlesPageSchema } from "pages/ArticlesPage";
 import { ScrollSaveSchema } from "features/ScrollSave";
 import { RegistrationPageSchema } from "pages/RegistrationPage";
 import { ConfirmCodePageSchema } from "pages/ConfirmCodePage";
@@ -22,18 +13,8 @@ import { ChatStreamSchema } from "features/ChatStream";
 import { EventTimelineSchema } from "features/EventTimeline";
 
 export interface StateSchema {
-  counter: CounterSchema;
   userSchema: UserSchema;
   scrollSave: ScrollSaveSchema;
-
-  //async
-  // login?: LoginSchema;
-  profile?: ProfileSchema;
-  articleDetails?: ArticleDetailsSchema;
-  articleDetailsComments?: ArticleDetailsCommentsSchema;
-  addCommentForArticle?: AddCommentForArticleSchema;
-  articlesPage?: ArticlesPageSchema;
-  //diplom
   login?: LoginSchema;
   registrationPage?: RegistrationPageSchema;
   confirmCodePage?: ConfirmCodePageSchema;
@@ -51,7 +32,6 @@ export interface ReducerManagerStore extends EnhancedStore<StateSchema> {
 
 export interface ExtraArgumentType {
   api: AxiosInstance;
-  // navigate?: (to: To, options?: NavigateOptions) => void;
 }
 
 export interface ThunkConfig<T> {

@@ -45,9 +45,9 @@ export const EventTimelineList = memo((props: EventTimelineListProps) => {
     <>
       <div className={classNames(cls.EventTimelineList, {}, [className])}>
         {timelines.map(renderEventTimeline)}
-        {chatId && status !== ChatStatus.COMPLETED && (
-          <Loader className={cls.loader} />
-        )}
+        {chatId &&
+          status !== ChatStatus.COMPLETED &&
+          status != ChatStatus.FAILED && <Loader className={cls.loader} />}
       </div>
     </>
   );
