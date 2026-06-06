@@ -1,5 +1,6 @@
 {
-  "name": "ulbi_frontentd",
+  "homepage": "https://iamdisagreee.github.io/AiTheana",
+  "name": "ai_theana",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -9,6 +10,7 @@
     "start:dev:server": "node ./json-server/index.js",
     "build:prod": "webpack --env mode=production",
     "build:dev": "webpack --env mode=development",
+    "deploy": "gh-pages -d build",
     "lint:ts": "eslint \"**/*.{ts,tsx}\"",
     "lint:ts:fix": "eslint \"**/*.{ts,tsx}\" --fix",
     "test:unit": "jest --config ./config/jest/jest.config.ts",
@@ -63,6 +65,7 @@
     "eslint-plugin-react": "^7.37.5",
     "eslint-plugin-react-hooks": "^4.6.2",
     "file-loader": "^6.2.0",
+    "gh-pages": "^6.3.0",
     "globals": "^17.1.0",
     "html-webpack-plugin": "^5.5.0",
     "husky": "^9.1.7",

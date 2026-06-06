@@ -25,7 +25,7 @@ export function buildPlugins(
     }),
   ];
 
-  buildPlugins.push(new BundleAnalyzerPlugin({ openAnalyzer: false }));
+  // buildPlugins.push(new BundleAnalyzerPlugin({ openAnalyzer: false }));
 
   if (options.isDev) {
     buildPlugins.push(...[new ReactRefreshWebpackPlugin()].filter(Boolean));
