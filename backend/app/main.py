@@ -22,7 +22,7 @@ app = FastAPI(title="AiTheana", version="1.0.0", lifespan=lifespan)
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:3000", "https://iamdisagreee.github.io/AiTheana/"],
+    allow_origins=["http://localhost:3000", "http://111.88.158.171"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
