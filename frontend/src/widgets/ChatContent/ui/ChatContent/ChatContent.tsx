@@ -27,8 +27,6 @@ export const ChatContent = memo((props: ChatContentProps) => {
   const dispatch = useAppDispatch();
   const errorFetchTimeline = useSelector(getEventTimelineErrorByChatId(chatId));
 
-  // console.log(errorFetchTimeline, chatId !== 0, chatId);
-
   useEffect(() => {
     if (chatId) {
       dispatch(addChatActions.setChatId(chatId));

@@ -33,7 +33,7 @@ export const MessageAIWelcome = memo((props: MessageAIWelcomeProps) => {
         />
         <Button onClick={onOpenModal}>
           <Text
-            text={"инструкци"}
+            text={"инструкции"}
             size={SizeText.M}
             theme={ThemeText.SECONDARY}
             className={classNames(cls.MessageAIText, {}, [className])}
