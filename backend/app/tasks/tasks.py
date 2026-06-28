@@ -167,8 +167,7 @@ def processing_chat_task(
                     "role": "user",
                     "content": f"```json{preprocessed_json}```",
                 },
-            ],
-            max_tokens=200,
+            ]
         )
         answer = response.choices[0].message.content
         analys = Analys(
