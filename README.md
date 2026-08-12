@@ -17,13 +17,10 @@
 **Backend:**
 - **FastAPI**
 - **PostgreSQL**
-- **GigaChat API** (?)
+- **QWEN API**
 
 **Frontend (веб-интерфейс):**
-- **JavaScript** (текущая стадия)
-- **React** (будущее внедрение)
-- **TypeScript** (будущее внедрение)
-
+- **React** + **TypeScript**
 
 ## Команда проекта
 - **Владимир** — Lead fullstack developer
